@@ -261,6 +261,7 @@ const icons = {
               <li class="videocard">
                 <div class="videocard__frame">
                   <video class="videocard__video" src={v.src} poster={v.poster || undefined} playsinline preload="metadata"></video>
+                  <span class="videocard__fade" aria-hidden="true"></span>
                   <button class="videocard__play" type="button" data-video-play aria-label={`Assistir vídeo ${v.cliente}`}>
                     <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M8 5v14l11-7z" /></svg>
                   </button>
@@ -748,14 +749,11 @@ const icons = {
     background: conic-gradient(from var(--c92-angle), transparent 0deg 240deg, var(--green-500) 300deg, #3fe0a0 330deg, var(--green-500) 355deg, transparent 360deg);
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude;
-    animation: c92-spin 4s linear infinite;
+    opacity: 0; transition: opacity 0.3s;
   }
+  .cliente:hover::before { opacity: 1; animation: c92-spin 3.5s linear infinite; }
   @keyframes c92-spin { to { --c92-angle: 360deg; } }
-  .cliente:nth-child(4n+1)::before { animation-delay: -0.5s; }
-  .cliente:nth-child(4n+2)::before { animation-delay: -1.6s; }
-  .cliente:nth-child(4n+3)::before { animation-delay: -2.7s; }
-  .cliente:nth-child(4n)::before { animation-delay: -3.4s; }
-  @media (prefers-reduced-motion: reduce) { .cliente::before { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .cliente:hover::before { animation: none; } }
   .cliente__logo { width: 100%; height: 68px; display: grid; place-items: center; background: var(--green-900); border-radius: 9px; padding: 0 0.9rem; }
   .cliente__logo img { max-height: 41px; max-width: 100%; object-fit: contain; filter: grayscale(1) brightness(1.3); opacity: 0.9; }
   .cliente__nome { font-weight: 700; font-size: 0.92rem; color: var(--ink); line-height: 1.2; }
@@ -808,6 +806,7 @@ const icons = {
   .videocard { scroll-snap-align: start; flex: 0 0 clamp(180px, 40vw, 224px); display: flex; flex-direction: column; gap: 0.8rem; }
   .videocard__frame { position: relative; aspect-ratio: 9 / 16; border-radius: var(--radius); overflow: hidden; display: grid; place-items: center; border: 1px solid var(--line); background: var(--green-900) center / cover no-repeat; }
   .videocard__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: var(--green-900); }
+  .videocard__fade { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(90deg, var(--paper) 0%, transparent 13%, transparent 87%, var(--paper) 100%); }
   .videocard__frame::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(6,23,15,0.1), rgba(6,23,15,0.6)); transition: opacity 0.3s; }
   .videocard__frame.is-playing::after { opacity: 0; }
   .videocard__play { position: relative; z-index: 1; width: 58px; height: 58px; border-radius: 50%; background: rgba(255,255,255,0.92); color: var(--green-800); display: grid; place-items: center; padding-left: 3px; transition: transform 0.25s var(--ease), background 0.25s; }
