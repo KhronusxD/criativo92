@@ -73,12 +73,7 @@ h1, h2, h3, h4 { font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; c
 .container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
 .section { padding-block: clamp(3rem, 5.5vw, 5rem); position: relative; }
 
-/* lineart decorativo por seção (canto superior direito) */
-.sec-art { position: absolute; top: clamp(1rem, 3vw, 2.4rem); right: clamp(1rem, 4vw, 3rem); width: clamp(74px, 10vw, 138px); color: var(--green-600); opacity: 0.15; pointer-events: none; z-index: 0; }
-.sec-art svg { width: 100%; height: auto; display: block; }
 .section > .container { position: relative; z-index: 1; }
-.panel-dark .sec-art, .panel-ink .sec-art { color: #7fd0a9; opacity: 0.16; }
-@media (max-width: 620px) { .sec-art { width: 64px; opacity: 0.12; } }
 .section--tight { padding-block: clamp(3rem, 6vw, 5rem); }
 
 /* seções escuras */
