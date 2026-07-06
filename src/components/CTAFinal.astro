@@ -1,0 +1,42 @@
+---
+import Rio from './illustrations/Rio.astro';
+import VitoriaRegia from './illustrations/VitoriaRegia.astro';
+---
+
+<section class="cta section" id="contato" data-fireflies="14">
+  <div class="container cta__inner">
+    <p class="eyebrow cta__eyebrow" data-reveal>Bora criar?</p>
+    <h2 class="cta__title display" data-reveal>
+      A correnteza<br />já começou.<br /><span class="hand">entra nela.</span>
+    </h2>
+    <p class="lead cta__lead" data-reveal>
+      Conta o seu desafio. A gente responde rápido — com ideia, plano e tabela na mão.
+    </p>
+
+    <div class="cta__actions" data-reveal>
+      <a href="https://wa.me/5592999999999" class="btn btn--primary" data-magnetic>
+        <span class="btn-glow"></span>
+        <span>Chamar no WhatsApp →</span>
+      </a>
+      <a href="mailto:oi@criativo92.com.br" class="btn btn--ghost"><span>oi@criativo92.com.br</span></a>
+    </div>
+
+    <div class="cta__vreg" aria-hidden="true"><VitoriaRegia /></div>
+  </div>
+
+  <div class="cta__rio"><Rio /></div>
+</section>
+
+<style>
+  .cta { position: relative; overflow: hidden; padding-bottom: 0; background: linear-gradient(180deg, var(--negro-800), var(--negro-900)); }
+  .cta__inner { position: relative; z-index: 2; text-align: center; padding-bottom: clamp(6rem, 14vw, 12rem); }
+  .cta__eyebrow { justify-content: center; color: var(--vitoria); }
+  .cta__eyebrow::before { background: var(--vitoria); }
+  .cta__title { margin: 1.2rem 0; }
+  .cta__lead { margin: 0 auto 2.4rem; }
+  .cta__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .cta__vreg { position: absolute; right: 2%; bottom: -2rem; width: clamp(140px, 18vw, 240px); z-index: -1; opacity: 0.85; }
+  .cta__rio { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; height: clamp(80px, 12vw, 160px); }
+
+  @media (max-width: 640px) { .cta__vreg { display: none; } }
+</style>

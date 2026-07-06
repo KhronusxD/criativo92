@@ -1,0 +1,59 @@
+---
+const frase = [
+  ['Não fazemos', false],
+  ['marketing genérico', true],
+  ['de escritório', false],
+  ['com ar-condicionado.', false],
+  ['Fazemos o que', false],
+  ['só quem é da terra', true],
+  ['sabe fazer.', false],
+];
+---
+
+<section class="man section" id="manifesto" data-fireflies="18">
+  <div class="man__arara" aria-hidden="true">
+    <img src="/arara-1.png" class="arara-frame arara-frame--up" alt="" width="820" height="820" />
+    <img src="/arara-2.png" class="arara-frame arara-frame--down" alt="" width="820" height="820" />
+  </div>
+
+  <div class="container">
+    <p class="eyebrow man__eyebrow" data-reveal>Manifesto</p>
+    <h2 class="man__text display">
+      {frase.map(([t, hl]) => (
+        <span class="line-mask"><span class="man__line" data-reveal>{hl ? <em>{t}</em> : t}</span></span>
+      ))}
+    </h2>
+    <p class="man__sign hand" data-reveal>— time Criativo 92, da beira do Negro pro mundo.</p>
+  </div>
+</section>
+
+<style>
+  .man { position: relative; overflow: hidden; background:
+    radial-gradient(120% 80% at 50% 0%, var(--floresta-700), transparent 60%),
+    var(--negro-900); }
+  .man .container { position: relative; z-index: 2; }
+  .man__eyebrow { color: var(--arara); }
+  .man__eyebrow::before { background: var(--arara); }
+  .man__text { font-size: clamp(2rem, 1rem + 5.5vw, 5rem); margin-top: 1.4rem; }
+  .line-mask { display: block; overflow: hidden; }
+  .man__line { display: block; }
+  .man__line em { font-style: normal; color: var(--arara); }
+  .man__sign { font-size: clamp(1.3rem, 1rem + 1.5vw, 2rem); margin-top: 2rem; display: block; }
+  .man__arara { position: absolute; top: 10%; width: clamp(130px, 16vw, 250px); aspect-ratio: 1; z-index: 1; left: -22%; animation: arara-cross 17s linear infinite; filter: drop-shadow(0 16px 26px rgba(0,0,0,0.4)); }
+  .arara-frame { position: absolute; inset: 0; width: 100%; height: auto; }
+  /* alterna os 2 frames em oposição -> só UM visível por vez (bater de asa) */
+  .arara-frame--up { animation: arara-flap-up 0.46s steps(1, end) infinite; }
+  .arara-frame--down { animation: arara-flap-down 0.46s steps(1, end) infinite; }
+  @keyframes arara-flap-up { 0%, 49.9% { opacity: 0; } 50%, 100% { opacity: 1; } }
+  @keyframes arara-flap-down { 0%, 49.9% { opacity: 1; } 50%, 100% { opacity: 0; } }
+  @keyframes arara-cross {
+    0% { transform: translateX(0) translateY(0) rotate(5deg); }
+    50% { transform: translateX(62vw) translateY(-34px) rotate(-3deg); }
+    100% { transform: translateX(135vw) translateY(12px) rotate(5deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .man__arara { animation: none; left: 6%; }
+    .arara-frame--up { animation: none; opacity: 1; }
+    .arara-frame--down { animation: none; opacity: 0; }
+  }
+</style>

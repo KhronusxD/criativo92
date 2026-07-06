@@ -1,20 +1,37 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Criativo 92 — Landing Page
 
-# Run and deploy your AI Studio app
+Agência de marketing manauara (DDD 92). Conceito **Encontro das Águas**: fusão de
+criatividade (Rio Negro) e estratégia/dados (Solimões).
 
-This contains everything you need to run your app locally.
+Stack: **Astro** + **GSAP/ScrollTrigger** + **Lenis** (smooth scroll). Todas as
+ilustrações amazônicas são **SVG vetorial autoral animado** (boto, vitória-régia,
+arara, peixe-boi, grafismo marajoara, rio). Sem imagens externas.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1NE8tej44alqG44CXg4TW58TBIoROj1tE
+## Rodar
 
-## Run Locally
+```bash
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # gera /dist
+npm run preview
+```
 
-**Prerequisites:**  Node.js
+## Motion implementado (referência: showcase Framer)
 
+- Smooth scroll com inércia (Lenis sincronizado ao GSAP ticker)
+- Reveal on scroll com stagger + blur-in (`[data-reveal]`)
+- Headline com reveal palavra-por-palavra com máscara
+- Botões magnéticos (`[data-magnetic]`) com brilho que segue o cursor
+- Cards com tilt 3D (`[data-tilt]`)
+- Counters animados (`[data-counter]`)
+- Seção "Encontro das Águas" sticky com scroll-scrub (fusão das correntes)
+- Portfólio com scroll horizontal preso (pin + scrub)
+- Marquee infinito bidirecional
+- Vaga-lumes / partículas, rio em loop, cursor customizado
+- Tudo respeita `prefers-reduced-motion`
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Acessibilidade / performance
+
+- HTML semântico, foco visível, contraste alto.
+- Motion pesado desligado em `prefers-reduced-motion` e simplificado no mobile.
+- Apenas GSAP + Lenis como libs.

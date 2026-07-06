@@ -1,0 +1,119 @@
+/* ============================================================
+   CRIATIVO 92 — versão LIGHT (institucional, profissional)
+   Paleta: branco / preto→cinza / verde escuro. Sem libs pesadas.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --white: #ffffff;
+  --paper: #f5f6f4;
+  --paper-2: #eef0ec;
+
+  --ink: #10130f;
+  --ink-soft: #363b34;
+  --muted: #6c736a;
+
+  --line: #e4e7e2;
+  --line-strong: #cfd4cc;
+
+  --green-900: #0a241b;
+  --green-800: #0e3527;
+  --green-700: #124b36;
+  --green-600: #176246;
+  --green-500: #1e7a56;
+  --green-050: #eaf2ee;
+
+  --bg: var(--white);
+  --fg: var(--ink);
+  --accent: var(--green-700);
+
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+
+  --container: 1200px;
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --radius: 14px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: clamp(1rem, 0.97rem + 0.2vw, 1.075rem);
+  line-height: 1.6;
+  overflow-x: clip;
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+ul { list-style: none; }
+::selection { background: var(--green-700); color: #fff; }
+
+/* ---------------- tipografia ---------------- */
+h1, h2, h3, h4 { font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; color: var(--ink); text-wrap: balance; }
+.display { font-weight: 800; font-size: clamp(2.4rem, 1.4rem + 4.4vw, 5rem); line-height: 1.0; letter-spacing: -0.035em; }
+.h2 { font-size: clamp(1.9rem, 1.3rem + 2.6vw, 3.2rem); letter-spacing: -0.03em; }
+.lead { color: var(--muted); font-size: clamp(1.05rem, 1rem + 0.4vw, 1.3rem); line-height: 1.55; max-width: 56ch; }
+.accent { color: var(--green-600); }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 0.6em;
+  font-weight: 700; font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--green-600);
+}
+.eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--green-600); }
+
+/* ---------------- layout ---------------- */
+.container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
+.section { padding-block: clamp(3rem, 5.5vw, 5rem); }
+.section--tight { padding-block: clamp(3rem, 6vw, 5rem); }
+
+/* seções escuras */
+.panel-dark { background: var(--green-900); color: #eef2ef; }
+.panel-dark h1, .panel-dark h2, .panel-dark h3 { color: #fff; }
+.panel-dark .lead { color: #b9c6bf; }
+.panel-ink { background: var(--ink); color: #eef0ec; }
+.panel-ink h2, .panel-ink h3 { color: #fff; }
+.panel-paper { background: var(--paper); }
+
+/* ---------------- botões ---------------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.55em;
+  padding: 0.95em 1.5em; border-radius: 10px;
+  font-weight: 600; font-size: 0.98rem; letter-spacing: -0.01em;
+  transition: transform 0.25s var(--ease), background 0.25s, color 0.25s, border-color 0.25s;
+  will-change: transform;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn--primary { background: var(--green-700); color: #fff; }
+.btn--primary:hover { background: var(--green-600); }
+.btn--dark { background: var(--ink); color: #fff; }
+.btn--dark:hover { background: #000; }
+.btn--ghost { border: 1.5px solid var(--line-strong); color: var(--ink); }
+.btn--ghost:hover { border-color: var(--green-600); color: var(--green-700); }
+.btn--on-dark { background: #fff; color: var(--ink); }
+.btn--on-dark:hover { background: var(--green-050); }
+
+/* ---------------- reveal leve ---------------- */
+[data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+[data-reveal].in { opacity: 1; transform: none; }
+[data-reveal-delay="1"] { transition-delay: 0.08s; }
+[data-reveal-delay="2"] { transition-delay: 0.16s; }
+[data-reveal-delay="3"] { transition-delay: 0.24s; }
+
+/* ---------------- utilidades ---------------- */
+.hr { height: 1px; background: var(--line); border: 0; }
+.badge { display: inline-flex; align-items: center; gap: 0.5em; padding: 0.4em 0.8em; border: 1px solid var(--line); border-radius: 999px; font-size: 0.82rem; color: var(--ink-soft); background: #fff; }
+.badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green-500); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .btn:hover { transform: none; }
+}

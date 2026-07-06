@@ -1,0 +1,62 @@
+---
+const links = [
+  { href: '#servicos', label: 'Serviços' },
+  { href: '#encontro', label: 'Encontro' },
+  { href: '#portfolio', label: 'Cases' },
+  { href: '#manifesto', label: 'Manifesto' },
+];
+---
+
+<header class="hdr" data-header>
+  <div class="hdr__inner container">
+    <a href="#topo" class="hdr__logo" aria-label="Criativo 92 — início">
+      <span class="hdr__logo-c">Criativo</span><span class="hdr__logo-92">92</span>
+    </a>
+
+    <nav class="hdr__nav" aria-label="Navegação principal">
+      {links.map((l) => <a href={l.href} class="hdr__link">{l.label}</a>)}
+    </nav>
+
+    <a href="#contato" class="btn btn--primary hdr__cta" data-magnetic>
+      <span class="btn-glow"></span>
+      <span>Fala com a gente</span>
+    </a>
+  </div>
+</header>
+
+<style>
+  .hdr {
+    position: fixed; inset: 0 0 auto 0; z-index: 1000;
+    padding-block: 1.1rem;
+    transition: padding 0.4s var(--ease-out), background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
+    border-bottom: 1px solid transparent;
+  }
+  .hdr.is-scrolled {
+    padding-block: 0.6rem;
+    background: rgba(8, 21, 26, 0.62);
+    backdrop-filter: blur(14px) saturate(140%);
+    border-bottom-color: var(--linha);
+  }
+  .hdr__inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+  .hdr__logo { font-family: var(--font-display); font-weight: 900; font-size: 1.4rem; letter-spacing: -0.03em; display: inline-flex; align-items: baseline; gap: 0.12em; }
+  .hdr__logo-92 {
+    color: var(--negro-900);
+    background: var(--vitoria);
+    padding: 0 0.28em; border-radius: 7px;
+    transform: rotate(-3deg); display: inline-block;
+  }
+  .hdr__nav { display: flex; gap: 1.6rem; }
+  .hdr__link { font-weight: 600; font-size: 0.95rem; color: var(--claro-dim); position: relative; transition: color 0.3s; }
+  .hdr__link::after { content: ''; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px; background: var(--vitoria); transition: width 0.3s var(--ease-out); }
+  .hdr__link:hover { color: var(--claro); }
+  .hdr__link:hover::after { width: 100%; }
+  .hdr__cta { padding: 0.7em 1.2em; font-size: 0.92rem; }
+
+  @media (max-width: 860px) {
+    .hdr__nav { display: none; }
+  }
+  @media (max-width: 520px) {
+    .hdr__cta span:last-child { display: none; }
+    .hdr__cta::after { content: 'Fala'; }
+  }
+</style>

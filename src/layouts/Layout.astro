@@ -1,0 +1,43 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'Criativo 92 — Agência de marketing nascida na Amazônia',
+  description = 'Marketing que corre como rio. Branding, social, tráfego e audiovisual com a força criativa de Manaus. Encontro das águas entre criatividade e estratégia.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23ff4d7e'/%3E%3Ctext x='50' y='68' font-size='48' font-family='Arial' font-weight='900' text-anchor='middle' fill='%23081519'%3E92%3C/text%3E%3C/svg%3E" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0b1a1f" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="pt_BR" />
+  </head>
+  <body>
+    <!-- grão / textura global -->
+    <svg class="grain" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <filter id="grainFilter">
+        <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+      </filter>
+      <rect width="100%" height="100%" filter="url(#grainFilter)" />
+    </svg>
+
+    <slot />
+
+    <script>
+      import '../scripts/motion.js';
+    </script>
+  </body>
+</html>

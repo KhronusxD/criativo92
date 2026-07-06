@@ -1,0 +1,38 @@
+---
+const rowA = ['Branding', 'Social Media', 'Tráfego Pago', 'Audiovisual', 'Sites & LPs', 'Estratégia', 'UGC', 'Identidade Visual'];
+const rowB = ['égua, que criativo', 'tá tudo dominado', 'feito na beira do rio', 'maninho, bora', 'orgulho manauara', 'da floresta pro mundo'];
+const star = '✷';
+---
+
+<div class="mq" aria-hidden="true">
+  <div class="mq__row">
+    <div class="mq__track mq__track--a">
+      {[...rowA, ...rowA].map((t) => (<span class="mq__item">{t}<i>{star}</i></span>))}
+    </div>
+  </div>
+  <div class="mq__row mq__row--alt">
+    <div class="mq__track mq__track--b">
+      {[...rowB, ...rowB].map((t) => (<span class="mq__item mq__item--alt">{t}<i>{star}</i></span>))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .mq { padding-block: 2.4rem; overflow: hidden; border-block: 1px solid var(--linha); background: var(--negro-900); }
+  .mq__row { overflow: hidden; }
+  .mq__row--alt { margin-top: 0.4rem; }
+  .mq__track { display: inline-flex; white-space: nowrap; will-change: transform; }
+  .mq__track--a { animation: mq-left 32s linear infinite; }
+  .mq__track--b { animation: mq-right 26s linear infinite; }
+  .mq__item {
+    font-family: var(--font-display); font-weight: 900; font-size: clamp(1.6rem, 1rem + 3vw, 3.4rem);
+    letter-spacing: -0.02em; color: var(--claro); display: inline-flex; align-items: center; gap: 0.6em; padding-inline: 0.5em;
+    text-transform: uppercase;
+  }
+  .mq__item i { color: var(--solimoes-500); font-style: normal; font-size: 0.5em; }
+  .mq__item--alt { color: transparent; -webkit-text-stroke: 1.5px var(--areia-300); }
+  .mq__item--alt i { color: var(--vitoria); -webkit-text-stroke: 0; }
+  @keyframes mq-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes mq-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+  @media (prefers-reduced-motion: reduce) { .mq__track { animation: none; } }
+</style>

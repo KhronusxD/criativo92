@@ -1,0 +1,57 @@
+---
+/* Vitória-régia — folhas circulares que bóiam + flor que desabrocha no scroll. */
+interface Props { class?: string }
+const { class: className = '' } = Astro.props;
+---
+
+<svg class:list={['vreg', className]} viewBox="0 0 360 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vitória-régia">
+  <defs>
+    <radialGradient id="padG" cx="0.4" cy="0.35" r="0.8">
+      <stop offset="0" stop-color="#3a9a63" />
+      <stop offset="1" stop-color="#1f5c3d" />
+    </radialGradient>
+  </defs>
+
+  <!-- folhas que bóiam -->
+  <g class="vreg__pad" style="--d:0s">
+    <path d="M40 210a78 30 0 1 0 156 0a78 30 0 1 0 -156 0z" fill="url(#padG)" />
+    <path d="M118 180 L122 210" stroke="#0d3322" stroke-width="3" />
+  </g>
+  <g class="vreg__pad" style="--d:.8s">
+    <path d="M210 235a55 22 0 1 0 110 0a55 22 0 1 0 -110 0z" fill="url(#padG)" opacity="0.92" />
+    <path d="M265 213 L267 235" stroke="#0d3322" stroke-width="2.5" />
+  </g>
+
+  <!-- flor que desabrocha -->
+  <g class="vreg__flower" transform="translate(120 150)">
+    {Array.from({ length: 10 }).map((_, i) => (
+      <path
+        class="vreg__petal"
+        style={`--i:${i}`}
+        transform={`rotate(${i * 36})`}
+        d="M0 0 C 10 -34 8 -58 0 -74 C -8 -58 -10 -34 0 0 Z"
+        fill={i % 2 ? '#ffd9e4' : '#ff9cc0'}
+      />
+    ))}
+    <circle r="13" fill="#ffc32b" />
+    <circle r="7" fill="#e6502b" />
+  </g>
+</svg>
+
+<style>
+  .vreg { width: 100%; height: auto; overflow: visible; }
+  .vreg__pad { transform-box: fill-box; transform-origin: center; animation: vreg-bob 6s ease-in-out infinite; animation-delay: var(--d); }
+  .vreg__flower { transform-box: fill-box; transform-origin: center; }
+  /* estado fechado por padrão; a classe .bloom (via ScrollTrigger) abre */
+  .vreg__petal { transform-box: fill-box; transform-origin: center bottom; transform: scale(0.15); opacity: 0; transition: transform .7s var(--ease-out, ease), opacity .5s ease; transition-delay: calc(var(--i) * 45ms); }
+  .vreg.bloom .vreg__petal { transform: scale(1); opacity: 1; }
+  .vreg__flower { transform: scale(0.6); transition: transform .8s var(--ease-out, ease); }
+  .vreg.bloom .vreg__flower { transform: scale(1); }
+
+  @keyframes vreg-bob { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-8px) rotate(2deg); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vreg__pad { animation: none; }
+    .vreg__petal, .vreg__flower { transform: none; opacity: 1; transition: none; }
+  }
+</style>

@@ -1,0 +1,55 @@
+---
+const stats = [
+  { n: 120, suf: '+', label: 'marcas atendidas da capital ao interior' },
+  { n: 8, suf: ' anos', label: 'criando na beira do rio' },
+  { n: 540, suf: '+', label: 'campanhas no ar' },
+  { n: 27, suf: 'M', label: 'de pessoas alcançadas' },
+];
+---
+
+<section class="stats section">
+  <div class="container stats__grid">
+    <div class="stats__brand">
+      <span class="stats__92" aria-hidden="true">92</span>
+      <p class="stats__brandtxt" data-reveal>
+        O DDD que virou jeito de fazer marketing. <br />
+        <span class="hand">do Norte pro Brasil inteiro.</span>
+      </p>
+    </div>
+
+    <ul class="stats__list">
+      {stats.map((s) => (
+        <li class="stats__item" data-reveal>
+          <span class="stats__num">
+            <span data-counter={s.n}>0</span>{s.suf}
+          </span>
+          <span class="stats__label">{s.label}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .stats { background: linear-gradient(180deg, var(--negro-900), var(--negro-800)); }
+  .stats__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 5rem); align-items: center; }
+  .stats__brand { position: relative; }
+  .stats__92 {
+    display: block; font-family: var(--font-display); font-weight: 900; line-height: 0.8;
+    font-size: clamp(9rem, 6rem + 20vw, 22rem); letter-spacing: -0.06em;
+    background: linear-gradient(180deg, var(--vitoria) 38%, rgba(255,77,126,0.25) 60%, transparent);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .stats__brandtxt { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.1rem, 1rem + 0.8vw, 1.7rem); line-height: 1.15; margin-top: -1rem; }
+  .stats__list { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); }
+  .stats__item { border-top: 2px solid var(--linha); padding-top: 1rem; }
+  .stats__num { display: block; font-family: var(--font-display); font-weight: 900; font-size: clamp(2.4rem, 1.5rem + 4vw, 4.2rem); letter-spacing: -0.03em; color: var(--areia-300); }
+  .stats__label { color: var(--claro-dim); font-size: 0.98rem; }
+
+  @media (max-width: 860px) {
+    .stats__grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .stats__list { grid-template-columns: 1fr; }
+  }
+</style>

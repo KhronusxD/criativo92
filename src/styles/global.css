@@ -1,0 +1,189 @@
+/* ============================================================
+   CRIATIVO 92 — design system
+   Conceito: Encontro das Águas (Rio Negro × Solimões)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap');
+
+:root {
+  /* --- cor: Rio Negro (fundo / criatividade) --- */
+  --negro-900: #08151a;
+  --negro-800: #0b1a1f;
+  --negro-700: #10262b;
+  --negro-600: #163339;
+
+  /* --- cor: Solimões (areia barrenta / estratégia) --- */
+  --solimoes-700: #9a6531;
+  --solimoes-500: #c8884b;
+  --areia-300: #e3c9a6;
+
+  /* --- cor: Floresta --- */
+  --floresta-700: #1f5c3d;
+  --floresta-500: #2e7d4f;
+
+  /* --- cor: accents vibrantes --- */
+  --vitoria: #ff4d7e;   /* rosa vitória-régia / boto */
+  --arara: #ffc32b;     /* amarelo arara */
+  --guarana: #e6502b;   /* laranja guaraná */
+
+  /* --- neutros / texto --- */
+  --claro: #f4efe6;
+  --claro-dim: #cdc6b9;
+  --linha: rgba(244, 239, 230, 0.12);
+
+  /* --- semânticos --- */
+  --bg: var(--negro-800);
+  --fg: var(--claro);
+
+  /* --- tipografia --- */
+  --font-display: 'Archivo', system-ui, sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-hand: 'Caveat', cursive;
+
+  /* --- layout --- */
+  --container: 1240px;
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+  --radius: 22px;
+
+  /* --- motion --- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.45, 0, 0.15, 1);
+}
+
+/* ---------------- reset ---------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+/* Lenis assume o scroll; remover smooth nativo quando ativo */
+html.lenis,
+html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem);
+  line-height: 1.6;
+  overflow-x: clip;
+  position: relative;
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+ul { list-style: none; }
+::selection { background: var(--vitoria); color: var(--negro-900); }
+
+/* ---------------- tipografia ---------------- */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+.display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.6rem, 1.2rem + 6.2vw, 6.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--solimoes-500);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+}
+.eyebrow::before {
+  content: "";
+  width: 28px; height: 2px;
+  background: var(--solimoes-500);
+}
+.hand {
+  font-family: var(--font-hand);
+  color: var(--vitoria);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+.lead { color: var(--claro-dim); font-size: clamp(1.05rem, 1rem + 0.4vw, 1.35rem); max-width: 54ch; }
+
+/* ---------------- layout helpers ---------------- */
+.container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
+.section { position: relative; padding-block: clamp(5rem, 10vw, 9rem); }
+.stack > * + * { margin-top: 1.2rem; }
+
+/* ---------------- grão / textura global ---------------- */
+.grain {
+  position: fixed; inset: 0; z-index: 9999;
+  pointer-events: none; opacity: 0.05; mix-blend-mode: overlay;
+}
+
+/* ---------------- estados de reveal (anti-flash) ---------------- */
+[data-reveal] { opacity: 0; transform: translateY(28px); filter: blur(6px); will-change: opacity, transform, filter; }
+[data-reveal].is-in { opacity: 1; transform: none; filter: none; }
+.split-line { display: block; overflow: hidden; }
+.split-line > span { display: block; }
+
+/* ---------------- botões ---------------- */
+.btn {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 0.6em;
+  padding: 1.05em 1.7em;
+  border-radius: 999px;
+  font-family: var(--font-body); font-weight: 700; font-size: 1rem;
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  transition: transform 0.4s var(--ease-out), color 0.3s;
+}
+.btn span { position: relative; z-index: 2; }
+.btn--primary { background: var(--vitoria); color: var(--negro-900); }
+.btn--primary .btn-glow {
+  position: absolute; z-index: 1; width: 140px; height: 140px; border-radius: 50%;
+  background: radial-gradient(circle, var(--arara), transparent 65%);
+  transform: translate(-50%, -50%); left: var(--mx, 50%); top: var(--my, 50%);
+  opacity: 0; transition: opacity 0.35s; pointer-events: none;
+}
+.btn--primary:hover .btn-glow { opacity: 0.9; }
+.btn--ghost { border: 1.5px solid var(--linha); color: var(--claro); }
+.btn--ghost:hover { border-color: var(--solimoes-500); color: var(--areia-300); }
+
+/* ---------------- cursor customizado ---------------- */
+.cursor-dot {
+  position: fixed; top: 0; left: 0; z-index: 10000;
+  width: 14px; height: 14px; margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  background: var(--vitoria);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  transition: width 0.3s var(--ease-out), height 0.3s var(--ease-out), background 0.3s;
+}
+.cursor-dot.is-hover { width: 46px; height: 46px; margin: -23px 0 0 -23px; background: var(--arara); }
+@media (pointer: fine) and (min-width: 761px) {
+  body { cursor: none; }
+  a, button, [data-tilt] { cursor: none; }
+}
+
+/* ---------------- reduced motion ---------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  [data-reveal] { opacity: 1 !important; transform: none !important; filter: none !important; }
+  html { scroll-behavior: auto; }
+}

@@ -1,0 +1,51 @@
+---
+/* Arara-canindé — bate as asas em loop. Pode cruzar a tela via offset-path (motion). */
+interface Props { class?: string }
+const { class: className = '' } = Astro.props;
+---
+
+<svg class:list={['arara', className]} viewBox="0 0 260 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Arara-canindé voando">
+  <defs>
+    <linearGradient id="araraBody" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2f8ae0" />
+      <stop offset="1" stop-color="#1656b0" />
+    </linearGradient>
+  </defs>
+
+  <!-- asa de trás -->
+  <g class="arara__wing arara__wing--back" >
+    <path d="M120 96 C 70 60 30 64 8 96 C 40 104 70 110 116 112 Z" fill="#134a98" />
+    <path d="M118 100 C 80 86 52 88 34 104" stroke="#ffc32b" stroke-width="6" stroke-linecap="round" />
+  </g>
+
+  <!-- cauda longa -->
+  <path d="M150 110 C 200 120 234 150 252 188 C 226 176 196 168 158 122 Z" fill="#1f6fd6" />
+  <path d="M156 116 C 196 130 222 152 240 184" stroke="#ffc32b" stroke-width="5" />
+
+  <!-- corpo -->
+  <ellipse cx="126" cy="104" rx="46" ry="34" fill="url(#araraBody)" transform="rotate(-12 126 104)" />
+  <path d="M96 118 C 116 128 146 126 162 110 C 150 130 118 138 96 118 Z" fill="#ffc32b" />
+
+  <!-- cabeça -->
+  <circle cx="92" cy="78" r="24" fill="#2f8ae0" />
+  <path d="M70 80 q -20 2 -28 14 q 18 4 30 -2 z" fill="#f2f2f2" />
+  <path d="M70 80 q -22 6 -30 20 q 4 6 14 4" fill="none" stroke="#222" stroke-width="2" opacity="0.5" />
+  <path d="M58 78 C 44 74 36 82 40 96 C 52 96 64 92 70 84 Z" fill="#1c1c1c" />
+  <circle cx="92" cy="72" r="6" fill="#fff" /><circle cx="90" cy="72" r="3" fill="#1a1a1a" />
+
+  <!-- asa da frente (bate) -->
+  <g class="arara__wing arara__wing--front">
+    <path d="M124 92 C 78 50 36 50 6 80 C 44 92 80 98 130 110 Z" fill="#2f8ae0" />
+    <path d="M126 96 C 86 70 56 70 34 88" stroke="#ffc32b" stroke-width="7" stroke-linecap="round" />
+    <path d="M120 104 C 88 86 64 88 46 102" stroke="#e6502b" stroke-width="5" stroke-linecap="round" />
+  </g>
+</svg>
+
+<style>
+  .arara { width: 100%; height: auto; overflow: visible; }
+  .arara__wing { transform-box: fill-box; transform-origin: 88% 80%; }
+  .arara__wing--front { animation: wing-flap 0.45s ease-in-out infinite; }
+  .arara__wing--back { animation: wing-flap 0.45s ease-in-out infinite reverse; opacity: 0.85; }
+  @keyframes wing-flap { 0%, 100% { transform: rotate(0deg) scaleY(1); } 50% { transform: rotate(-22deg) scaleY(0.8); } }
+  @media (prefers-reduced-motion: reduce) { .arara__wing { animation: none; } }
+</style>

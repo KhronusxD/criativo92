@@ -1,0 +1,63 @@
+---
+const ano = new Date().getFullYear();
+const nav = [
+  { href: '#servicos', label: 'Serviços' },
+  { href: '#portfolio', label: 'Cases' },
+  { href: '#manifesto', label: 'Manifesto' },
+  { href: '#contato', label: 'Contato' },
+];
+const social = [
+  { href: 'https://instagram.com/criativo92', label: 'Instagram' },
+  { href: 'https://www.behance.net/criativo92', label: 'Behance' },
+  { href: 'https://www.linkedin.com/company/criativo92', label: 'LinkedIn' },
+  { href: 'https://www.tiktok.com/@criativo92', label: 'TikTok' },
+];
+---
+
+<footer class="ft">
+  <div class="container ft__inner">
+    <div class="ft__brand">
+      <a href="#topo" class="ft__logo">Criativo<span>92</span></a>
+      <p class="ft__tag">Marketing que corre como rio.<br />Feito em Manaus — Amazonas.</p>
+    </div>
+
+    <nav class="ft__col" aria-label="Páginas">
+      <span class="ft__h">Navegar</span>
+      {nav.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+
+    <nav class="ft__col" aria-label="Redes">
+      <span class="ft__h">Redes</span>
+      {social.map((l) => <a href={l.href} target="_blank" rel="noopener">{l.label}</a>)}
+    </nav>
+
+    <div class="ft__col">
+      <span class="ft__h">Fala com a gente</span>
+      <a href="https://wa.me/5592999999999">(92) 99999-9999</a>
+      <a href="mailto:oi@criativo92.com.br">oi@criativo92.com.br</a>
+      <span class="ft__addr">Av. do Turismo, Tarumã<br />Manaus — AM</span>
+    </div>
+  </div>
+
+  <div class="container ft__base">
+    <span>© {ano} Criativo 92. Toda criatividade vem da floresta.</span>
+    <span>CNPJ 92.000.000/0001-92</span>
+  </div>
+</footer>
+
+<style>
+  .ft { background: var(--negro-900); border-top: 1px solid var(--linha); padding-block: clamp(3rem, 7vw, 5rem) 2rem; }
+  .ft__inner { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.4fr; gap: 2rem; }
+  .ft__logo { font-family: var(--font-display); font-weight: 900; font-size: 1.8rem; letter-spacing: -0.03em; }
+  .ft__logo span { color: var(--negro-900); background: var(--vitoria); padding: 0 0.2em; border-radius: 6px; margin-left: 0.1em; display: inline-block; transform: rotate(-3deg); }
+  .ft__tag { color: var(--claro-dim); margin-top: 1rem; font-size: 0.95rem; }
+  .ft__col { display: flex; flex-direction: column; gap: 0.6rem; }
+  .ft__h { font-weight: 700; font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--solimoes-500); margin-bottom: 0.4rem; }
+  .ft__col a { color: var(--claro-dim); transition: color 0.3s; width: fit-content; }
+  .ft__col a:hover { color: var(--vitoria); }
+  .ft__addr { color: var(--claro-dim); font-size: 0.9rem; }
+  .ft__base { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: clamp(2.5rem, 6vw, 4rem); padding-top: 1.5rem; border-top: 1px solid var(--linha); color: var(--claro-dim); font-size: 0.85rem; }
+
+  @media (max-width: 760px) { .ft__inner { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 460px) { .ft__inner { grid-template-columns: 1fr; } }
+</style>
