@@ -1,0 +1,102 @@
+---
+import LightLayout from '../../layouts/LightLayout.astro';
+import { posts } from '../../data/posts.js';
+
+export function getStaticPaths() {
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const outros = posts.filter((p) => p.slug !== post.slug).slice(0, 2);
+---
+
+<LightLayout title={`${post.title} — Criativo 92`} description={post.excerpt}>
+  <header class="bhd">
+    <div class="container bhd__in">
+      <a href="/light" class="bhd__logo" aria-label="Criativo 92"><img src="/logo-c92.png" alt="Criativo 92" /></a>
+      <a href="/light#contato" class="btn btn--primary bhd__cta">Falar com a gente</a>
+    </div>
+  </header>
+
+  <main class="article">
+    <div class="container article__wrap">
+      <a href="/light#blog" class="article__back">← Voltar</a>
+      <span class="article__cat">{post.cat}</span>
+      <h1 class="article__title">{post.title}</h1>
+      <p class="article__meta">Criativo 92 · {post.dateLabel}</p>
+    </div>
+
+    <figure class="article__cover">
+      <img src={post.cover} alt={post.title} />
+    </figure>
+
+    <article class="container article__body">
+      {post.body.map((b) => (b.h ? <h2>{b.h}</h2> : <p>{b.p}</p>))}
+    </article>
+
+    <aside class="container article__cta">
+      <h2>Quer resultado assim na sua marca?</h2>
+      <p>Conte seu desafio. Em até 1 dia útil você recebe um diagnóstico e os próximos passos.</p>
+      <a href="/light#contato" class="btn btn--primary">Falar com um especialista</a>
+    </aside>
+
+    <section class="container article__outros">
+      <h3>Continue lendo</h3>
+      <div class="article__outros-grid">
+        {outros.map((p) => (
+          <a class="pcard" href={`/blog/${p.slug}`}>
+            <div class="pcard__img"><img src={p.cover} alt={p.title} loading="lazy" /></div>
+            <span class="pcard__cat">{p.cat}</span>
+            <h4 class="pcard__title">{p.title}</h4>
+          </a>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <footer class="bft">
+    <div class="container bft__in">
+      <a href="/light" class="bhd__logo bhd__logo--dark"><img src="/logo-c92.png" alt="Criativo 92" /></a>
+      <span>© 2026 Criativo 92. Marketing e estratégia com método. Manaus, Amazonas.</span>
+    </div>
+  </footer>
+</LightLayout>
+
+<style>
+  .bhd { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  .bhd__in { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+  .bhd__logo { display: inline-flex; align-items: center; background: var(--green-900); border-radius: 10px; padding: 6px 11px; }
+  .bhd__logo img { height: 30px; width: auto; display: block; }
+  .bhd__cta { padding: 0.6em 1.1em; font-size: 0.92rem; }
+
+  .article { padding-bottom: clamp(3rem, 6vw, 5rem); }
+  .article__wrap { max-width: 780px; padding-top: clamp(2rem, 5vw, 3.5rem); }
+  .article__back { display: inline-block; color: var(--muted); font-weight: 600; font-size: 0.9rem; margin-bottom: 1.6rem; transition: color .2s; }
+  .article__back:hover { color: var(--green-700); }
+  .article__cat { display: inline-block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--green-600); }
+  .article__title { font-size: clamp(1.9rem, 1.3rem + 2.8vw, 3.1rem); letter-spacing: -0.03em; margin: 0.6rem 0 0.9rem; }
+  .article__meta { color: var(--muted); font-size: 0.95rem; }
+  .article__cover { max-width: 980px; margin: clamp(1.8rem, 4vw, 2.8rem) auto; border-radius: var(--radius); overflow: hidden; padding-inline: var(--gutter); }
+  .article__cover img { width: 100%; height: clamp(240px, 42vw, 460px); object-fit: cover; border-radius: var(--radius); display: block; }
+  .article__body { max-width: 720px; }
+  .article__body h2 { font-size: clamp(1.35rem, 1.1rem + 1vw, 1.7rem); margin: 2.2rem 0 0.9rem; letter-spacing: -0.02em; }
+  .article__body p { color: var(--ink-soft); font-size: 1.08rem; line-height: 1.7; margin-bottom: 1.1rem; }
+  .article__cta { max-width: 720px; margin-top: clamp(2.5rem, 5vw, 3.5rem); padding: clamp(1.8rem, 4vw, 2.6rem); background: var(--green-050); border: 1px solid var(--line); border-radius: var(--radius); text-align: center; }
+  .article__cta h2 { font-size: clamp(1.4rem, 1.1rem + 1.2vw, 1.9rem); }
+  .article__cta p { color: var(--ink-soft); margin: 0.7rem auto 1.4rem; max-width: 46ch; }
+  .article__outros { max-width: 980px; margin-top: clamp(3rem, 6vw, 4.5rem); }
+  .article__outros h3 { font-size: 1.3rem; margin-bottom: 1.4rem; }
+  .article__outros-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+  .pcard { display: block; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: #fff; transition: border-color .25s, box-shadow .25s, transform .25s var(--ease); }
+  .pcard:hover { border-color: var(--line-strong); box-shadow: 0 20px 44px -32px rgba(10,36,27,0.28); transform: translateY(-3px); }
+  .pcard__img { height: 150px; overflow: hidden; }
+  .pcard__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pcard__cat { display: inline-block; margin: 1rem 1.2rem 0; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--green-600); }
+  .pcard__title { font-size: 1.1rem; margin: 0.4rem 1.2rem 1.2rem; letter-spacing: -0.02em; }
+  @media (max-width: 620px) { .article__outros-grid { grid-template-columns: 1fr; } }
+
+  .bft { background: var(--ink); color: #c8cdc6; padding-block: 2rem; margin-top: clamp(3rem, 6vw, 5rem); }
+  .bft__in { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-size: 0.85rem; }
+  .bhd__logo--dark { background: transparent; padding: 0; }
+  .bhd__logo--dark img { height: 40px; }
+</style>

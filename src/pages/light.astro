@@ -1,5 +1,6 @@
 ---
 import LightLayout from '../layouts/LightLayout.astro';
+import { posts } from '../data/posts.js';
 
 const nav = [
   { href: '#servicos', label: 'Serviços' },
@@ -60,6 +61,15 @@ const videos = [
   { cliente: 'Óticas Veja', src: 'https://pub-03976d682fc84dd499f28b1d0c91d8ed.r2.dev/videos/video-oticas-veja.mp4', poster: '/fotos/case-otica-veja.jpg' },
 ];
 
+const faqs = [
+  { q: 'Vocês atendem negócios fora de Manaus?', a: 'Sim. Somos de Manaus e temos orgulho disso, mas atendemos marcas de todo o Amazonas e do Brasil. Boa parte do trabalho é remoto, com reuniões e relatórios claros; captações e visitas presenciais são combinadas conforme o projeto.' },
+  { q: 'Como funciona o primeiro contato?', a: 'Você fala com a gente pelo WhatsApp ou formulário e conta seu desafio. Em até 1 dia útil devolvemos um diagnóstico inicial e os próximos passos. Sem enrolação e sem compromisso.' },
+  { q: 'Vocês fazem tudo ou só uma parte, tipo só tráfego?', a: 'Os dois. Dá pra contratar um serviço específico (tráfego, social, vídeo, site) ou o pacote completo com estratégia unificada e um único ponto de contato. A recomendação sai do diagnóstico, de acordo com a sua meta.' },
+  { q: 'Tem fidelidade ou multa de contrato?', a: 'Trabalhamos com transparência. O formato e o prazo são acordados antes de começar, alinhados ao tempo que a estratégia precisa para dar resultado — nunca uma amarra escondida.' },
+  { q: 'Qual o investimento mínimo?', a: 'Depende do escopo e da mídia. Na conversa inicial montamos uma proposta sob medida para o seu momento, separando o valor do serviço da verba de anúncios. Você sempre sabe onde cada real está indo.' },
+  { q: 'Em quanto tempo eu vejo resultado?', a: 'Tráfego pode gerar movimento nas primeiras semanas; branding e autoridade são construção de médio prazo. A gente define metas realistas por etapa e acompanha os números toda semana para ajustar a rota.' },
+];
+
 const depos = [
   { txt: 'Cada loja virou uma máquina de vendas. R$ 1.500 investidos voltam como R$ 50 mil por mês, e isso em 9 unidades.', nome: 'Rodrigo Nunes', cargo: 'Diretor · Celularis', ini: 'RN', foto: '/fotos/dep/dep-1.jpg' },
   { txt: 'Investimos R$ 2,5 mil e voltaram R$ 65 mil no mês. A Criativo 92 entende de resultado, não de vaidade.', nome: 'Fernanda Lopes', cargo: 'Sócia · Rações Fortaleza', ini: 'FL', foto: '/fotos/dep/dep-2.jpg' },
@@ -116,6 +126,10 @@ const secArt = {
   time: `<svg ${A}><circle cx="48" cy="54" r="20"/><path d="M63 46 q28 1 40 11 q-25 7 -42 3"/><circle cx="54" cy="49" r="2" fill="currentColor"/><path d="M41 73 q4 16 15 16 M56 74 q2 14 12 15"/></svg>`,
   // CTA — sol sobre o rio
   cta: `<svg ${A}><circle cx="60" cy="50" r="15"/><path d="M60 27 v-8 M60 73 v8 M37 50 h-8 M83 50 h8 M44 34 l-6 -6 M76 34 l6 -6 M44 66 l-6 6 M76 66 l6 6"/><path d="M20 92 q10 -6 20 0 t20 0 t20 0 t20 0"/></svg>`,
+  // Blog — livro aberto
+  blog: `<svg ${A}><path d="M60 34 C 48 28 32 28 22 32 V88 C 32 84 48 84 60 90 C 72 84 88 84 98 88 V32 C 88 28 72 28 60 34 Z"/><path d="M60 34 V90"/><path d="M32 46 h18 M32 58 h18 M70 46 h18 M70 58 h18"/></svg>`,
+  // FAQ — interrogação
+  faq: `<svg ${A}><circle cx="60" cy="60" r="34"/><path d="M49 51 a11 11 0 1 1 14 12 c-3 2 -3 5 -3 8"/><circle cx="60" cy="82" r="2" fill="currentColor"/></svg>`,
 };
 
 const icons = {
@@ -261,7 +275,6 @@ const icons = {
               <li class="videocard">
                 <div class="videocard__frame">
                   <video class="videocard__video" src={v.src} poster={v.poster || undefined} playsinline preload="metadata"></video>
-                  <span class="videocard__fade" aria-hidden="true"></span>
                   <button class="videocard__play" type="button" data-video-play aria-label={`Assistir vídeo ${v.cliente}`}>
                     <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M8 5v14l11-7z" /></svg>
                   </button>
@@ -422,6 +435,55 @@ const icons = {
       </div>
     </section>
 
+    <!-- ============ BLOG ============ -->
+    <section class="section panel-paper" id="blog">
+      <div class="sec-art" set:html={secArt.blog} aria-hidden="true"></div>
+      <div class="container">
+        <header class="sec-head">
+          <div data-reveal>
+            <span class="eyebrow">Blog</span>
+            <h2 class="h2">Ideias que fazem a marca crescer.</h2>
+          </div>
+          <p class="lead" data-reveal data-reveal-delay="1">Conteúdo prático sobre marketing, marca e vendas para o comércio da Amazônia.</p>
+        </header>
+        <ul class="posts">
+          {posts.map((p, i) => (
+            <li class="pcard" data-reveal data-reveal-delay={String((i % 3) + 1)}>
+              <a href={`/blog/${p.slug}`}>
+                <div class="pcard__img"><img src={p.cover} alt={p.title} loading="lazy" /></div>
+                <span class="pcard__cat">{p.cat}</span>
+                <h3 class="pcard__title">{p.title}</h3>
+                <p class="pcard__ex">{p.excerpt}</p>
+                <span class="pcard__link">Ler artigo →</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section" id="faq">
+      <div class="sec-art" set:html={secArt.faq} aria-hidden="true"></div>
+      <div class="container faq">
+        <header class="faq__head" data-reveal>
+          <span class="eyebrow">Dúvidas frequentes</span>
+          <h2 class="h2">Perguntas que a gente sempre ouve.</h2>
+        </header>
+        <ul class="faq__list">
+          {faqs.map((f, i) => (
+            <li class="faq__item" data-reveal data-reveal-delay={String((i % 3) + 1)}>
+              <button class="faq__q" type="button" data-faq-q aria-expanded="false">
+                <span>{f.q}</span>
+                <svg class="faq__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path class="faq__ico-v" d="M12 5v14"/></svg>
+              </button>
+              <div class="faq__a"><p>{f.a}</p></div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
     <!-- ============ CTA FINAL ============ -->
     <section class="section panel-dark cta" id="contato">
       <div class="sec-art" set:html={secArt.cta} aria-hidden="true"></div>
@@ -568,6 +630,19 @@ const icons = {
           btn.style.display = 'none';
           const p = vid.play();
           if (p && p.catch) p.catch(() => {});
+        });
+      });
+    })();
+
+    // FAQ acordeão
+    (function () {
+      document.querySelectorAll('[data-faq-q]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const item = btn.closest('.faq__item');
+          const ans = item.querySelector('.faq__a');
+          const open = item.classList.toggle('is-open');
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+          ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0';
         });
       });
     })();
@@ -799,20 +874,50 @@ const icons = {
   .videos-sec { display: grid; grid-template-columns: 0.82fr 1.18fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
   .videos-sec__text .h2 { margin: 0.9rem 0 1.1rem; }
   .videos-nav { display: flex; gap: 0.6rem; margin-top: 1.8rem; }
-  .videos-carousel { overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; -ms-overflow-style: none; cursor: grab; padding-bottom: 0.3rem; }
+  .videos-carousel { overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; -ms-overflow-style: none; cursor: grab; padding-bottom: 0.3rem;
+    -webkit-mask: linear-gradient(90deg, transparent 0, #000 8%, #000 85%, transparent 100%);
+    mask: linear-gradient(90deg, transparent 0, #000 8%, #000 85%, transparent 100%); }
   .videos-carousel::-webkit-scrollbar { display: none; }
   .videos-carousel.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
   .videos-track { display: flex; gap: 1.1rem; width: max-content; }
   .videocard { scroll-snap-align: start; flex: 0 0 clamp(180px, 40vw, 224px); display: flex; flex-direction: column; gap: 0.8rem; }
   .videocard__frame { position: relative; aspect-ratio: 9 / 16; border-radius: var(--radius); overflow: hidden; display: grid; place-items: center; border: 1px solid var(--line); background: var(--green-900) center / cover no-repeat; }
   .videocard__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: var(--green-900); }
-  .videocard__fade { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(90deg, var(--paper) 0%, transparent 13%, transparent 87%, var(--paper) 100%); }
   .videocard__frame::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(6,23,15,0.1), rgba(6,23,15,0.6)); transition: opacity 0.3s; }
   .videocard__frame.is-playing::after { opacity: 0; }
   .videocard__play { position: relative; z-index: 1; width: 58px; height: 58px; border-radius: 50%; background: rgba(255,255,255,0.92); color: var(--green-800); display: grid; place-items: center; padding-left: 3px; transition: transform 0.25s var(--ease), background 0.25s; }
   .videocard:hover .videocard__play { transform: scale(1.08); background: #fff; }
   .videocard__cliente { text-align: center; font-weight: 700; color: var(--ink); }
   @media (max-width: 820px) { .videos-sec { grid-template-columns: 1fr; } }
+
+  /* blog */
+  .posts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+  .posts .pcard { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: #fff; transition: border-color .25s, box-shadow .25s, transform .25s var(--ease); }
+  .posts .pcard:hover { border-color: var(--line-strong); box-shadow: 0 24px 50px -34px rgba(10,36,27,0.3); transform: translateY(-4px); }
+  .posts .pcard a { display: flex; flex-direction: column; height: 100%; }
+  .pcard__img { height: 190px; overflow: hidden; }
+  .pcard__img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s var(--ease); }
+  .posts .pcard:hover .pcard__img img { transform: scale(1.05); }
+  .pcard__cat { margin: 1.2rem 1.4rem 0; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--green-600); }
+  .pcard__title { font-size: 1.18rem; letter-spacing: -0.02em; margin: 0.5rem 1.4rem 0.6rem; line-height: 1.25; }
+  .pcard__ex { color: var(--muted); font-size: 0.95rem; margin: 0 1.4rem 1.1rem; }
+  .pcard__link { margin: auto 1.4rem 1.4rem; font-weight: 700; color: var(--green-700); font-size: 0.92rem; }
+  @media (max-width: 900px) { .posts { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 620px) { .posts { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; } }
+
+  /* faq */
+  .faq { max-width: 800px; }
+  .faq__head { text-align: center; margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .faq__head .eyebrow { justify-content: center; }
+  .faq__head .h2 { margin-top: 0.9rem; }
+  .faq__list { display: flex; flex-direction: column; gap: 0.8rem; }
+  .faq__item { border: 1px solid var(--line); border-radius: var(--radius); background: #fff; overflow: hidden; }
+  .faq__q { display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%; text-align: left; padding: 1.15rem 1.4rem; font-weight: 700; font-size: 1.05rem; color: var(--ink); cursor: pointer; }
+  .faq__ico { width: 22px; height: 22px; flex: 0 0 auto; color: var(--green-600); }
+  .faq__ico-v { transition: opacity .3s; }
+  .faq__item.is-open .faq__ico-v { opacity: 0; }
+  .faq__a { max-height: 0; overflow: hidden; transition: max-height .35s var(--ease); }
+  .faq__a p { color: var(--ink-soft); font-size: 1rem; line-height: 1.6; padding: 0 1.4rem 1.3rem; }
 
   /* ---------- cta ---------- */
   .cta__in { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.6rem; }
