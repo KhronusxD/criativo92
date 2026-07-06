@@ -288,7 +288,7 @@ const icons = {
     </section>
 
     <!-- ============ MÉTODO ============ -->
-    <section class="section panel-paper" id="metodo">
+    <section class="section panel-dark" id="metodo">
       <div class="sec-art" set:html={secArt.metodo} aria-hidden="true"></div>
       <div class="container">
         <header class="sec-head">
@@ -378,7 +378,7 @@ const icons = {
     </section>
 
     <!-- ============ DEPOIMENTOS ============ -->
-    <section class="section panel-paper" id="depoimentos">
+    <section class="section panel-dark" id="depoimentos">
       <div class="sec-art" set:html={secArt.depoimentos} aria-hidden="true"></div>
       <div class="container">
         <header class="sec-head">
@@ -789,6 +789,19 @@ const icons = {
   .mfeat__body { display: flex; flex-direction: column; justify-content: center; }
   .mfeat__n { font-weight: 800; color: var(--green-700); font-size: 1.05rem; margin-bottom: 0.9rem; }
   .mfeat__long { font-size: clamp(1.05rem, 0.98rem + 0.5vw, 1.35rem); line-height: 1.55; color: var(--ink); max-width: 42ch; }
+
+  /* seções do meio com fundo escuro */
+  .panel-dark .eyebrow { color: #7fd0a9; }
+  .panel-dark .eyebrow::before { background: #7fd0a9; }
+  #metodo .step__btn { border-top-color: rgba(255,255,255,0.16); }
+  #metodo .step__t { color: #fff; }
+  #metodo .step__d { color: #9fb3aa; }
+  #metodo .step__n { color: #7fd0a9; }
+  #metodo .mfeat__n { color: #7fd0a9; }
+  #metodo .mfeat__long { color: #e9f1ec; }
+  #depoimentos .deps-hint { color: #9fb3aa; }
+  #depoimentos .deps-btn { border-color: rgba(255,255,255,0.25); color: #eaf1ec; }
+  #depoimentos .deps-btn:hover { border-color: var(--green-500); background: var(--green-600); color: #fff; }
 
   @media (max-width: 820px) { .steps { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 760px) { .mfeat__panel[data-active="true"] { grid-template-columns: 1fr; } }
