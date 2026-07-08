@@ -69,7 +69,7 @@ const faqs = [
   { q: 'Vocês atendem negócios fora de Manaus?', a: 'Sim. Somos de Manaus e temos orgulho disso, mas atendemos marcas de todo o Amazonas e do Brasil. Boa parte do trabalho é remoto, com reuniões e relatórios claros; captações e visitas presenciais são combinadas conforme o projeto.' },
   { q: 'Como funciona o primeiro contato?', a: 'Você fala com a gente pelo WhatsApp ou formulário e conta seu desafio. Em até 1 dia útil devolvemos um diagnóstico inicial e os próximos passos. Sem enrolação e sem compromisso.' },
   { q: 'Vocês fazem tudo ou só uma parte, tipo só tráfego?', a: 'Os dois. Dá pra contratar um serviço específico (tráfego, social, vídeo, site) ou o pacote completo com estratégia unificada e um único ponto de contato. A recomendação sai do diagnóstico, de acordo com a sua meta.' },
-  { q: 'Tem fidelidade ou multa de contrato?', a: 'Trabalhamos com transparência. O formato e o prazo são acordados antes de começar, alinhados ao tempo que a estratégia precisa para dar resultado — nunca uma amarra escondida.' },
+  { q: 'Tem fidelidade ou multa de contrato?', a: 'Trabalhamos com transparência. O formato e o prazo são acordados antes de começar, alinhados ao tempo que a estratégia precisa para dar resultado, nunca uma amarra escondida.' },
   { q: 'Qual o investimento mínimo?', a: 'Depende do escopo e da mídia. Na conversa inicial montamos uma proposta sob medida para o seu momento, separando o valor do serviço da verba de anúncios. Você sempre sabe onde cada real está indo.' },
   { q: 'Em quanto tempo eu vejo resultado?', a: 'Tráfego pode gerar movimento nas primeiras semanas; branding e autoridade são construção de médio prazo. A gente define metas realistas por etapa e acompanha os números toda semana para ajustar a rota.' },
 ];
@@ -137,7 +137,9 @@ const ctaFinal = data.cta || {
   title: 'Vamos crescer juntos?',
   lead: 'Conte seu desafio. Em até 1 dia útil você recebe um diagnóstico e os próximos passos.',
 };
-const diagnostico = data.diagnostico || null;
+const diagUrl = data.diagUrl || null;
+const estrategias = data.estrategias || null; // { titulo, lead, itens: [{t, d}] }
+const crencas = data.crencas || null; // { titulo, lead, itens: [{crenca, resposta}] }
 const orderedCases = (data.casesOrder && data.casesOrder.map((i) => cases[i]).filter(Boolean)) || cases;
 const orderedDepos = (data.deposOrder && data.deposOrder.map((i) => depos[i]).filter(Boolean)) || depos;
 ---
@@ -150,9 +152,7 @@ const orderedDepos = (data.deposOrder && data.deposOrder.map((i) => depos[i]).fi
       <nav class="hd__nav" aria-label="Navegação principal">
         {nav.map((l) => <a href={l.href}>{l.label}</a>)}
       </nav>
-      {diagnostico
-        ? <button class="btn btn--primary hd__cta" data-open-diag>Falar com a gente</button>
-        : <a href="#contato" class="btn btn--primary hd__cta">Falar com a gente</a>}
+      <a href={diagUrl || '#contato'} class="btn btn--primary hd__cta">{diagUrl ? 'Diagnóstico gratuito' : 'Falar com a gente'}</a>
       <button class="hd__burger" type="button" aria-label="Abrir menu" aria-expanded="false" data-menu-toggle>
         <span></span><span></span><span></span>
       </button>
@@ -161,9 +161,7 @@ const orderedDepos = (data.deposOrder && data.deposOrder.map((i) => depos[i]).fi
       <nav aria-label="Navegação mobile">
         {nav.map((l) => <a href={l.href} data-menu-link>{l.label}</a>)}
       </nav>
-      {diagnostico
-        ? <button class="btn btn--primary" data-menu-link data-open-diag>Falar com a gente</button>
-        : <a href="#contato" class="btn btn--primary" data-menu-link>Falar com a gente</a>}
+      <a href={diagUrl || '#contato'} class="btn btn--primary" data-menu-link>{diagUrl ? 'Diagnóstico gratuito' : 'Falar com a gente'}</a>
     </div>
   </header>
 
@@ -176,9 +174,7 @@ const orderedDepos = (data.deposOrder && data.deposOrder.map((i) => depos[i]).fi
           <h1 class="display hero__title" data-reveal data-reveal-delay="1" set:html={hero.titleHtml}></h1>
           <p class="lead hero__lead" data-reveal data-reveal-delay="2">{hero.lead}</p>
           <div class="hero__cta" data-reveal data-reveal-delay="3">
-            {diagnostico
-              ? <button class="btn btn--primary" data-open-diag>{hero.ctaPrimary}</button>
-              : <a href="#contato" class="btn btn--primary">{hero.ctaPrimary}</a>}
+            <a href={diagUrl || '#contato'} class="btn btn--primary">{hero.ctaPrimary}</a>
             <a href={hero.ctaGhostHref || '#servicos'} class="btn btn--ghost">{hero.ctaGhost}</a>
           </div>
           <div class="hero__badges" data-reveal data-reveal-delay="3">
@@ -240,6 +236,29 @@ const orderedDepos = (data.deposOrder && data.deposOrder.map((i) => depos[i]).fi
         </div>
       </div>
     </section>
+
+    {estrategias && (
+      <section class="section panel-dark nstrat" id="estrategias">
+        <div class="container">
+          <header class="sec-head">
+            <div data-reveal>
+              <span class="eyebrow">O que funciona no seu mercado</span>
+              <h2 class="h2">{estrategias.titulo}</h2>
+            </div>
+            <p class="lead" data-reveal data-reveal-delay="1">{estrategias.lead}</p>
+          </header>
+          <ul class="nstrat__grid">
+            {estrategias.itens.map((s, i) => (
+              <li class="nstrat__card" data-reveal data-reveal-delay={String((i % 2) + 1)}>
+                <span class="nstrat__n">{String(i + 1).padStart(2, '0')}</span>
+                <h3 class="nstrat__t">{s.t}</h3>
+                <p class="nstrat__d">{s.d}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )}
 
     <!-- ============ SERVIÇOS ============ -->
     <section class="section" id="servicos">
@@ -416,6 +435,34 @@ const orderedDepos = (data.deposOrder && data.deposOrder.map((i) => depos[i]).fi
       </div>
     </section>
 
+    {crencas && (
+      <section class="section crencas" id="crencas">
+        <div class="container faq">
+          <header class="faq__head" data-reveal>
+            <span class="eyebrow">A gente sabe o que você está pensando</span>
+            <h2 class="h2">{crencas.titulo}</h2>
+            <p class="lead crencas__lead">{crencas.lead}</p>
+          </header>
+          <ul class="faq__list">
+            {crencas.itens.map((c, i) => (
+              <li class="faq__item" data-reveal data-reveal-delay={String((i % 3) + 1)}>
+                <button class="faq__q" type="button" data-faq-q aria-expanded="false">
+                  <span>“{c.crenca}”</span>
+                  <svg class="faq__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path class="faq__ico-v" d="M12 5v14"/></svg>
+                </button>
+                <div class="faq__a"><p>{c.resposta}</p></div>
+              </li>
+            ))}
+          </ul>
+          {diagUrl && (
+            <div class="crencas__cta" data-reveal>
+              <a href={diagUrl} class="btn btn--primary">Fazer meu diagnóstico gratuito</a>
+            </div>
+          )}
+        </div>
+      </section>
+    )}
+
     <!-- ============ EQUIPE ============ -->
     <section class="section" id="time">
       <div class="container">
@@ -493,8 +540,8 @@ const orderedDepos = (data.deposOrder && data.deposOrder.map((i) => depos[i]).fi
           <p class="lead cta__lead">{ctaFinal.lead}</p>
         </div>
         <div class="cta__actions" data-reveal data-reveal-delay="1">
-          {diagnostico
-            ? <button class="btn btn--on-dark" data-open-diag>Fazer diagnóstico gratuito</button>
+          {diagUrl
+            ? <a href={diagUrl} class="btn btn--on-dark">Fazer diagnóstico gratuito</a>
             : <a href={waLink} class="btn btn--on-dark">Falar no WhatsApp</a>}
           <a href="mailto:contato@criativo92.com.br" class="btn btn--ghost btn--ghost-dark">contato@criativo92.com.br</a>
         </div>
@@ -530,18 +577,6 @@ const orderedDepos = (data.deposOrder && data.deposOrder.map((i) => depos[i]).fi
     </div>
   </footer>
 
-  {diagnostico && (
-    <div class="diag" data-diag-modal data-wa={waLink} data-diag={JSON.stringify(diagnostico)} aria-hidden="true">
-      <div class="diag__backdrop" data-diag-close></div>
-      <div class="diag__panel" role="dialog" aria-modal="true" aria-label={diagnostico.titulo}>
-        <button class="diag__x" type="button" data-diag-close aria-label="Fechar diagnóstico">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
-        </button>
-        <div class="diag__bar"><span data-diag-bar></span></div>
-        <div class="diag__body" data-diag-body></div>
-      </div>
-    </div>
-  )}
 
   <script>
     // Header: fundo em vidro escuro só depois de rolar
@@ -679,139 +714,24 @@ const orderedDepos = (data.deposOrder && data.deposOrder.map((i) => depos[i]).fi
       });
     })();
 
-    // Diagnóstico personalizado (quiz que qualifica o lead -> WhatsApp)
-    (function () {
-      const modal = document.querySelector('[data-diag-modal]');
-      if (!modal) return;
-      const cfg = JSON.parse(modal.getAttribute('data-diag') || '{}');
-      const wa = modal.getAttribute('data-wa');
-      const body = modal.querySelector('[data-diag-body]');
-      const bar = modal.querySelector('[data-diag-bar]');
-      const perguntas = cfg.perguntas || [];
-      const totalSteps = perguntas.length + 2; // intro + perguntas + resultado (nome embutido no fim)
-      const answers = new Array(perguntas.length).fill(null);
-      let nome = '';
-      let step = 0; // 0 = intro, 1..N = perguntas, N+1 = nome, N+2 = resultado
-
-      const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-
-      function setProgress() {
-        const done = Math.min(step, perguntas.length + 1);
-        bar.style.width = Math.round((done / (perguntas.length + 1)) * 100) + '%';
-      }
-
-      function render() {
-        setProgress();
-        if (step === 0) {
-          body.innerHTML =
-            '<span class="diag__eyebrow">' + esc(cfg.titulo || 'Diagnóstico gratuito') + '</span>' +
-            '<h3 class="diag__title">Vamos entender seu momento</h3>' +
-            '<p class="diag__lead">' + esc(cfg.intro || '') + '</p>' +
-            '<button class="btn btn--primary diag__next" data-start>Começar diagnóstico →</button>' +
-            '<p class="diag__mini">Leva menos de 1 minuto · sem compromisso</p>';
-          body.querySelector('[data-start]').addEventListener('click', () => { step = 1; render(); });
-          return;
-        }
-        if (step >= 1 && step <= perguntas.length) {
-          const idx = step - 1;
-          const p = perguntas[idx];
-          body.innerHTML =
-            '<span class="diag__count">Pergunta ' + step + ' de ' + perguntas.length + '</span>' +
-            '<h3 class="diag__q">' + esc(p.q) + '</h3>' +
-            '<div class="diag__opts">' +
-            p.opts.map((o, i) => '<button class="diag__opt' + (answers[idx] === o ? ' is-sel' : '') + '" data-opt="' + i + '">' + esc(o) + '</button>').join('') +
-            '</div>' +
-            (step > 1 ? '<button class="diag__back" data-back>← Voltar</button>' : '');
-          body.querySelectorAll('[data-opt]').forEach((b) => b.addEventListener('click', () => {
-            answers[idx] = p.opts[+b.getAttribute('data-opt')];
-            step += 1; render();
-          }));
-          const back = body.querySelector('[data-back]');
-          if (back) back.addEventListener('click', () => { step -= 1; render(); });
-          return;
-        }
-        if (step === perguntas.length + 1) {
-          body.innerHTML =
-            '<span class="diag__count">Última etapa</span>' +
-            '<h3 class="diag__q">Como podemos te chamar?</h3>' +
-            '<input class="diag__input" type="text" placeholder="Seu nome" value="' + esc(nome) + '" data-nome autocomplete="given-name" />' +
-            '<button class="btn btn--primary diag__next" data-finish>Ver meu diagnóstico →</button>' +
-            '<button class="diag__back" data-back>← Voltar</button>';
-          const input = body.querySelector('[data-nome]');
-          input.focus();
-          input.addEventListener('input', () => { nome = input.value; });
-          input.addEventListener('keydown', (e) => { if (e.key === 'Enter') body.querySelector('[data-finish]').click(); });
-          body.querySelector('[data-finish]').addEventListener('click', () => { nome = input.value.trim(); step += 1; render(); });
-          body.querySelector('[data-back]').addEventListener('click', () => { step -= 1; render(); });
-          return;
-        }
-        // resultado
-        const ola = nome ? ('Boa, ' + nome + '! ') : 'Boa! ';
-        let msg = 'Olá, Criativo 92! Fiz o diagnóstico no site.\n\n';
-        if (nome) msg += 'Nome: ' + nome + '\n\n';
-        perguntas.forEach((p, i) => { msg += '• ' + p.q + '\n→ ' + (answers[i] || '-') + '\n\n'; });
-        msg += 'Quero um plano pra crescer.';
-        const href = wa + '?text=' + encodeURIComponent(msg);
-        body.innerHTML =
-          '<span class="diag__eyebrow">Diagnóstico pronto</span>' +
-          '<h3 class="diag__title">' + esc(ola) + 'seu negócio tem espaço pra crescer.</h3>' +
-          '<p class="diag__lead">Com base nas suas respostas, montamos um plano sob medida. Clique abaixo e receba seu diagnóstico com os próximos passos direto no WhatsApp — sem compromisso.</p>' +
-          '<a class="btn btn--primary diag__next" href="' + href + '" target="_blank" rel="noopener" data-diag-send>Receber no WhatsApp</a>' +
-          '<button class="diag__back" data-back>← Revisar respostas</button>';
-        body.querySelector('[data-back]').addEventListener('click', () => { step -= 1; render(); });
-        return;
-      }
-
-      function open() {
-        step = 0; render();
-        modal.classList.add('is-open');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-      }
-      function close() {
-        modal.classList.remove('is-open');
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-      }
-
-      document.querySelectorAll('[data-open-diag]').forEach((b) => b.addEventListener('click', (e) => { e.preventDefault(); open(); }));
-      modal.querySelectorAll('[data-diag-close]').forEach((b) => b.addEventListener('click', close));
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('is-open')) close(); });
-      body.addEventListener('click', (e) => { if (e.target.closest('[data-diag-send]')) setTimeout(close, 300); });
-    })();
   </script>
 </LightLayout>
 
 <style>
-  /* ---------- diagnóstico (modal quiz) ---------- */
-  .diag { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center; padding: 1.2rem; }
-  .diag.is-open { display: flex; }
-  .diag__backdrop { position: absolute; inset: 0; background: rgba(4,12,8,0.74); backdrop-filter: blur(4px); }
-  .diag__panel { position: relative; z-index: 1; width: 100%; max-width: 540px; background: var(--green-900); color: #eef2ef;
-    border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: clamp(1.6rem, 4vw, 2.6rem);
-    box-shadow: 0 40px 90px -30px rgba(0,0,0,0.65); max-height: 92vh; overflow-y: auto; animation: diag-in 0.3s var(--ease); }
-  @keyframes diag-in { from { opacity: 0; transform: translateY(16px) scale(0.98); } to { opacity: 1; transform: none; } }
-  .diag__x { position: absolute; top: 0.9rem; right: 0.9rem; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; color: #cdd8d1; background: rgba(255,255,255,0.06); transition: background 0.2s, color 0.2s; }
-  .diag__x svg { width: 18px; height: 18px; }
-  .diag__x:hover { background: rgba(255,255,255,0.14); color: #fff; }
-  .diag__bar { height: 4px; background: rgba(255,255,255,0.12); border-radius: 99px; overflow: hidden; margin: 0.3rem 0 1.6rem; }
-  .diag__bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--green-500), #45cd8c); border-radius: 99px; transition: width 0.4s var(--ease); }
-  /* conteúdo injetado via JS -> precisa ser :global (sem hash de escopo) */
-  :global(.diag__eyebrow), :global(.diag__count) { display: block; color: #7fd0a9; font-weight: 700; font-size: 0.76rem; letter-spacing: 0.09em; text-transform: uppercase; margin-bottom: 0.5rem; }
-  :global(.diag__title) { color: #fff; font-size: clamp(1.4rem, 1.1rem + 1vw, 1.9rem); line-height: 1.1; margin: 0 0 0.7rem; letter-spacing: -0.02em; }
-  :global(.diag__q) { color: #fff; font-size: clamp(1.2rem, 1rem + 0.7vw, 1.5rem); line-height: 1.15; margin: 0.4rem 0 1.2rem; letter-spacing: -0.02em; }
-  :global(.diag__lead) { color: #b9c6bf; line-height: 1.55; margin-bottom: 1.4rem; }
-  :global(.diag__opts) { display: flex; flex-direction: column; gap: 0.6rem; }
-  :global(.diag__opt) { text-align: left; width: 100%; padding: 0.9rem 1.1rem; border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.16); color: #eef2ef; font-weight: 600; transition: border-color 0.2s, background 0.2s, transform 0.15s; }
-  :global(.diag__opt:hover) { border-color: #7fd0a9; background: rgba(127,208,169,0.08); transform: translateX(2px); }
-  :global(.diag__opt.is-sel) { border-color: var(--green-500); background: rgba(30,122,86,0.28); }
-  :global(.diag__input) { width: 100%; padding: 0.9rem 1.1rem; border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff; font-size: 1rem; margin-bottom: 1.2rem; }
-  :global(.diag__input::placeholder) { color: #8fa79b; }
-  :global(.diag__input:focus) { outline: none; border-color: #7fd0a9; }
-  :global(.diag__next) { width: 100%; justify-content: center; margin-top: 0.4rem; }
-  :global(.diag__mini) { color: #8fa79b; font-size: 0.8rem; text-align: center; margin-top: 0.85rem; }
-  :global(.diag__back) { display: inline-block; margin-top: 1rem; color: #8fa79b; font-weight: 600; font-size: 0.9rem; background: none; cursor: pointer; }
-  :global(.diag__back:hover) { color: #7fd0a9; }
+  /* ---------- estratégias do nicho ---------- */
+  .nstrat__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+  .nstrat__card { background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius); padding: clamp(1.4rem, 3vw, 1.9rem); transition: border-color 0.25s, background 0.25s, transform 0.25s var(--ease); }
+  .nstrat__card:hover { border-color: rgba(127,208,169,0.5); background: rgba(255,255,255,0.07); transform: translateY(-3px); }
+  .nstrat__n { color: #45cd8c; font-weight: 800; font-size: 0.88rem; letter-spacing: 0.06em; }
+  .nstrat__t { color: #fff; font-size: clamp(1.1rem, 1rem + 0.5vw, 1.3rem); letter-spacing: -0.02em; margin: 0.5rem 0 0.55rem; }
+  .nstrat__d { color: #b9c6bf; font-size: 0.97rem; line-height: 1.6; }
+  @media (max-width: 720px) { .nstrat__grid { grid-template-columns: 1fr; } }
+
+  /* ---------- crenças / objeções ---------- */
+  .crencas { background-color: var(--paper); }
+  .crencas__lead { margin-top: 0.9rem; }
+  .crencas .faq__q span:first-child { font-style: italic; }
+  .crencas__cta { text-align: center; margin-top: 2rem; }
 
   /* ---------- TESTE: folhas de fundo (bg-neutro) — marca d'água suave ---------- */
   #servicos::before, #faq::before, #depoimentos::before, #contato::before {

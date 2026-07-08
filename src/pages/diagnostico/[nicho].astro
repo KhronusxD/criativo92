@@ -1,0 +1,295 @@
+---
+import { diagnosticos, WA } from '../../data/diagnosticos.js';
+
+export function getStaticPaths() {
+  return Object.keys(diagnosticos).map((slug) => ({
+    params: { nicho: slug },
+    props: { flow: diagnosticos[slug], slug },
+  }));
+}
+
+const { flow, slug } = Astro.props;
+const backUrl = `/${slug}`;
+const title = `Diagnóstico gratuito · ${flow.label} — Criativo 92`;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23124b36'/%3E%3Ctext x='50' y='70' font-size='52' font-family='Arial' font-weight='900' text-anchor='middle' fill='%23ffffff'%3E92%3C/text%3E%3C/svg%3E" />
+    <title>{title}</title>
+    <meta name="description" content={`Diagnóstico gratuito da Criativo 92 para ${flow.label.toLowerCase()}: descubra em 2 minutos o plano certo pro seu negócio crescer.`} />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#06170f" />
+  </head>
+  <body>
+    <div class="dg" data-dg data-wa={WA} data-flow={JSON.stringify(flow)} data-nicho={flow.label}>
+      <header class="dg__hd">
+        <a href={backUrl} class="dg__logo" aria-label="Voltar para o site"><img src="/logo-c92.png" alt="Criativo 92" /></a>
+        <a href={backUrl} class="dg__exit" aria-label="Sair do diagnóstico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </a>
+      </header>
+      <div class="dg__progress"><span data-dg-bar></span></div>
+
+      <main class="dg__main">
+        <div class="dg__card" data-dg-card></div>
+      </main>
+
+      <footer class="dg__ft">
+        <button class="dg__back" type="button" data-dg-back hidden>← Voltar</button>
+        <span class="dg__brand">Diagnóstico Criativo 92 · sem compromisso</span>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        const root = document.querySelector('[data-dg]');
+        const flow = JSON.parse(root.getAttribute('data-flow'));
+        const WA = root.getAttribute('data-wa');
+        const NICHO = root.getAttribute('data-nicho');
+        const card = root.querySelector('[data-dg-card]');
+        const bar = root.querySelector('[data-dg-bar]');
+        const backBtn = root.querySelector('[data-dg-back]');
+
+        const nodes = flow.nodes;
+        // total de "passos" p/ barra de progresso: caminho mais comum (aprox.)
+        const TOTAL = Object.keys(nodes).length;
+
+        let cur = flow.start;
+        const history = [];
+        const answers = []; // {id, q, a}
+        const flags = new Set();
+        let nome = '';
+
+        const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+        const LETTERS = 'ABCDEFGH';
+
+        function setBar() {
+          const visited = history.length + 1;
+          const pct = cur === 'result' ? 100 : Math.min(92, Math.round((visited / TOTAL) * 100));
+          bar.style.width = pct + '%';
+        }
+
+        function recordAnswer(id, q, a) {
+          const i = answers.findIndex((x) => x.id === id);
+          if (i >= 0) answers.splice(i, answers.length - i); // refez a pergunta -> descarta dali pra frente
+          answers.push({ id, q, a });
+        }
+
+        function goto(next) {
+          history.push(cur);
+          cur = next;
+          render();
+        }
+
+        function goBack() {
+          if (!history.length) return;
+          cur = history.pop();
+          // limpa flags/respostas do nó atual em diante é complexo; simples: recalcula flags das respostas mantidas
+          render();
+        }
+
+        function computeFlags() {
+          flags.clear();
+          answers.forEach(({ id, a }) => {
+            const n = nodes[id];
+            if (!n || !n.opts) return;
+            const opt = n.opts.find((o) => o.t === a);
+            if (opt && opt.flag) flags.add(opt.flag);
+          });
+        }
+
+        function animate() {
+          card.classList.remove('dg-in');
+          void card.offsetWidth;
+          card.classList.add('dg-in');
+        }
+
+        function render() {
+          setBar();
+          backBtn.hidden = history.length === 0 || cur === flow.start;
+          if (cur === 'result') return renderResult();
+          const n = nodes[cur];
+          if (!n) return;
+
+          if (n.type === 'statement') {
+            card.innerHTML =
+              (n.eyebrow ? '<span class="dg__eyebrow">' + esc(n.eyebrow) + '</span>' : '') +
+              '<h1 class="dg__title">' + esc(n.title) + '</h1>' +
+              (n.body ? '<p class="dg__body">' + esc(n.body) + '</p>' : '') +
+              '<button class="dg__btn" data-next>' + esc(n.cta || 'Continuar →') + '</button>' +
+              '<span class="dg__hint">ou aperte <b>Enter ↵</b></span>';
+            card.querySelector('[data-next]').addEventListener('click', () => goto(n.next));
+          }
+
+          if (n.type === 'question') {
+            card.innerHTML =
+              '<h1 class="dg__q">' + esc(n.q) + '</h1>' +
+              (n.sub ? '<p class="dg__body">' + esc(n.sub) + '</p>' : '') +
+              '<div class="dg__opts">' +
+              n.opts.map((o, i) =>
+                '<button class="dg__opt" data-i="' + i + '"><span class="dg__key">' + LETTERS[i] + '</span><span>' + esc(o.t) + '</span></button>'
+              ).join('') +
+              '</div>';
+            card.querySelectorAll('.dg__opt').forEach((b) => b.addEventListener('click', () => {
+              const opt = n.opts[+b.getAttribute('data-i')];
+              b.classList.add('is-sel');
+              recordAnswer(cur, n.q, opt.t);
+              computeFlags();
+              setTimeout(() => goto(opt.next || n.next), 180);
+            }));
+          }
+
+          if (n.type === 'input') {
+            card.innerHTML =
+              '<h1 class="dg__q">' + esc(n.q) + '</h1>' +
+              '<input class="dg__input" type="text" placeholder="' + esc(n.placeholder || '') + '" value="' + esc(nome) + '" data-inp autocomplete="given-name" />' +
+              '<button class="dg__btn" data-next>Ver meu resultado →</button>' +
+              '<span class="dg__hint">ou aperte <b>Enter ↵</b></span>';
+            const inp = card.querySelector('[data-inp]');
+            setTimeout(() => inp.focus(), 60);
+            inp.addEventListener('input', () => { nome = inp.value; });
+            card.querySelector('[data-next]').addEventListener('click', () => { nome = inp.value.trim(); goto(n.next); });
+          }
+
+          animate();
+        }
+
+        function buildWaMsg(apto) {
+          let msg = 'Olá, Criativo 92! Fiz o diagnóstico de ' + NICHO + ' no site.\n';
+          if (nome) msg += 'Nome: ' + nome + '\n';
+          msg += '\n';
+          answers.forEach(({ q, a }) => { msg += '• ' + q + '\n→ ' + a + '\n'; });
+          msg += '\nResultado: ' + (apto ? 'apto pra começar' : 'ainda não é o momento') + '.';
+          if (apto) msg += '\nQuero montar meu plano de crescimento.';
+          return WA + '?text=' + encodeURIComponent(msg);
+        }
+
+        function renderResult() {
+          computeFlags();
+          const apto = !flags.has('fat_baixo') && !flags.has('sem_verba') && !flags.has('pesquisando');
+          const ola = nome ? (nome.split(' ')[0] + ', ') : '';
+          const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+
+          if (apto) {
+            const r = flow.apto;
+            card.innerHTML =
+              '<span class="dg__eyebrow dg__eyebrow--ok">✓ Diagnóstico concluído — você está apto</span>' +
+              '<h1 class="dg__title">' + esc(ola ? cap(ola) + r.title : cap(r.title)) + '</h1>' +
+              '<p class="dg__body">' + esc(r.body) + '</p>' +
+              '<div class="dg__case">' + esc(flow.caseRef) + '</div>' +
+              '<a class="dg__btn dg__btn--wa" href="' + buildWaMsg(true) + '" target="_blank" rel="noopener">Receber meu diagnóstico no WhatsApp</a>' +
+              '<span class="dg__hint">Suas respostas já vão na mensagem. Sem compromisso.</span>';
+          } else {
+            const r = flow.naoApto;
+            card.innerHTML =
+              '<span class="dg__eyebrow dg__eyebrow--warn">Diagnóstico concluído</span>' +
+              '<h1 class="dg__title">' + esc(ola ? cap(ola) + r.title : cap(r.title)) + '</h1>' +
+              '<p class="dg__body">' + esc(r.body) + '</p>' +
+              '<ul class="dg__dicas">' + r.dicas.map((d) => '<li>' + esc(d) + '</li>').join('') + '</ul>' +
+              '<p class="dg__body">Quando o momento chegar, a porta está aberta.</p>' +
+              '<a class="dg__btn dg__btn--ghost" href="' + location.pathname.replace(/\/diagnostico\/.*/, '/') + '">Voltar pro site</a>';
+            // corrigir voltar pro site do nicho
+            const back = card.querySelector('.dg__btn--ghost');
+            back.setAttribute('href', document.querySelector('.dg__logo').getAttribute('href'));
+          }
+          animate();
+        }
+
+        // teclado: Enter avança em statements/input; letras selecionam opção
+        document.addEventListener('keydown', (e) => {
+          if (cur === 'result') return;
+          const n = nodes[cur];
+          if (!n) return;
+          if (e.key === 'Enter') {
+            const next = card.querySelector('[data-next]');
+            if (next) next.click();
+          } else if (n.type === 'question') {
+            const idx = LETTERS.indexOf(e.key.toUpperCase());
+            if (idx >= 0 && idx < n.opts.length) {
+              const btn = card.querySelector('.dg__opt[data-i="' + idx + '"]');
+              if (btn) btn.click();
+            }
+          }
+        });
+
+        backBtn.addEventListener('click', goBack);
+        render();
+      })();
+    </script>
+
+    <style is:global>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { -webkit-font-smoothing: antialiased; }
+      body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #06170f; color: #eef2ef; min-height: 100dvh; }
+      button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+      a { color: inherit; text-decoration: none; }
+
+      .dg { min-height: 100dvh; display: flex; flex-direction: column;
+        background: radial-gradient(120% 90% at 80% -10%, #12492f 0%, #0a241b 45%, #06170f 100%); }
+      .dg__hd { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem clamp(1.2rem, 4vw, 2.5rem); }
+      .dg__logo img { height: 32px; width: auto; display: block; }
+      .dg__exit { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: #cdd8d1; background: rgba(255,255,255,0.07); transition: background 0.2s; }
+      .dg__exit svg { width: 17px; height: 17px; }
+      .dg__exit:hover { background: rgba(255,255,255,0.15); color: #fff; }
+      .dg__progress { height: 4px; background: rgba(255,255,255,0.1); }
+      .dg__progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #1e7a56, #45cd8c); transition: width 0.45s cubic-bezier(0.22,1,0.36,1); }
+
+      .dg__main { flex: 1; display: flex; align-items: center; justify-content: center; padding: clamp(1.5rem, 4vw, 3rem); }
+      .dg__card { width: 100%; max-width: 640px; }
+      .dg-in { animation: dgin 0.4s cubic-bezier(0.22,1,0.36,1); }
+      @keyframes dgin { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+      .dg__eyebrow { display: inline-block; color: #7fd0a9; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+      .dg__eyebrow--ok { color: #45cd8c; }
+      .dg__eyebrow--warn { color: #d8c27a; }
+      .dg__title { color: #fff; font-weight: 800; font-size: clamp(1.7rem, 1.2rem + 2.4vw, 2.7rem); line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 1rem; }
+      .dg__q { color: #fff; font-weight: 800; font-size: clamp(1.45rem, 1.1rem + 1.6vw, 2.1rem); line-height: 1.12; letter-spacing: -0.025em; margin-bottom: 1.6rem; }
+      .dg__body { color: #b9c6bf; font-size: clamp(1rem, 0.95rem + 0.3vw, 1.12rem); line-height: 1.6; margin-bottom: 1.6rem; max-width: 56ch; }
+
+      .dg__opts { display: flex; flex-direction: column; gap: 0.65rem; }
+      .dg__opt { display: flex; align-items: center; gap: 0.85rem; text-align: left; width: 100%; padding: 1rem 1.15rem; border-radius: 12px;
+        border: 1.5px solid rgba(255,255,255,0.16); color: #eef2ef; font-weight: 600; font-size: 1.02rem;
+        transition: border-color 0.18s, background 0.18s, transform 0.14s; }
+      .dg__opt:hover { border-color: #7fd0a9; background: rgba(127,208,169,0.08); transform: translateX(3px); }
+      .dg__opt.is-sel { border-color: #45cd8c; background: rgba(30,122,86,0.32); }
+      .dg__key { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 6px; display: grid; place-items: center;
+        border: 1px solid rgba(255,255,255,0.3); font-size: 0.78rem; font-weight: 700; color: #9fc7b2; }
+      .dg__opt:hover .dg__key { border-color: #7fd0a9; color: #7fd0a9; }
+
+      .dg__btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5em; padding: 0.95em 1.7em; border-radius: 11px;
+        background: #1e7a56; color: #fff; font-weight: 700; font-size: 1.02rem; transition: background 0.2s, transform 0.2s; }
+      .dg__btn:hover { background: #239166; transform: translateY(-2px); }
+      .dg__btn--wa { background: #25d366; color: #06170f; }
+      .dg__btn--wa:hover { background: #3ce27c; }
+      .dg__btn--ghost { background: transparent; border: 1.5px solid rgba(255,255,255,0.3); }
+      .dg__btn--ghost:hover { background: rgba(255,255,255,0.08); }
+      .dg__hint { display: block; color: #8fa79b; font-size: 0.82rem; margin-top: 0.85rem; }
+      .dg__hint b { color: #b9c6bf; }
+
+      .dg__input { width: 100%; max-width: 420px; display: block; padding: 1rem 1.2rem; border-radius: 12px; margin-bottom: 1.4rem;
+        border: 1.5px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.05); color: #fff; font-size: 1.1rem; }
+      .dg__input::placeholder { color: #8fa79b; }
+      .dg__input:focus { outline: none; border-color: #7fd0a9; }
+
+      .dg__case { display: inline-block; padding: 0.7rem 1rem; border-radius: 10px; margin-bottom: 1.5rem;
+        background: rgba(69,205,140,0.1); border: 1px solid rgba(69,205,140,0.3); color: #9fe0bf; font-weight: 600; font-size: 0.92rem; }
+      .dg__dicas { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 1.6rem; }
+      .dg__dicas li { padding-left: 1.6rem; position: relative; color: #cdd8d1; line-height: 1.5; }
+      .dg__dicas li::before { content: '→'; position: absolute; left: 0; color: #45cd8c; font-weight: 700; }
+
+      .dg__ft { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.1rem clamp(1.2rem, 4vw, 2.5rem); }
+      .dg__back { color: #8fa79b; font-weight: 600; font-size: 0.92rem; transition: color 0.2s; }
+      .dg__back:hover { color: #7fd0a9; }
+      .dg__brand { color: #5f7368; font-size: 0.8rem; margin-left: auto; }
+
+      @media (max-width: 560px) {
+        .dg__main { align-items: flex-start; padding-top: clamp(2rem, 8vw, 3rem); }
+        .dg__btn { width: 100%; }
+      }
+    </style>
+  </body>
+</html>
