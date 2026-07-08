@@ -52,7 +52,7 @@ const equipe = [
   { nome: 'Tiago Paixão', cargo: 'Gestor de Tráfego', foto: '/fotos/equipe-tiago.jpg' },
   { nome: 'Lucas Lacke', cargo: 'Especialista Audiovisual', foto: '/fotos/equipe-lucas.jpg' },
   { nome: 'Fernando Souza', cargo: 'Closer', foto: '/fotos/equipe-fernando.png' },
-  { nome: 'Nome Sobrenome', cargo: 'Editor de Vídeo', foto: '/fotos/equipe-editor.jpg' },
+  { nome: 'Alex Moura', cargo: 'Editor de Vídeo', foto: '/fotos/equipe-editor.jpg', zoom: true },
 ];
 
 const videos = [
@@ -394,7 +394,7 @@ const icons = {
         </header>
         <ul class="equipe">
           {equipe.map((m, i) => (
-            <li class="membro" data-reveal data-reveal-delay={String((i % 4) + 1)}>
+            <li class={`membro${m.zoom ? ' membro--zoom' : ''}`} data-reveal data-reveal-delay={String((i % 4) + 1)}>
               <div class="membro__foto"><img src={m.foto} alt={m.nome} loading="lazy" /></div>
               <span class="membro__nome">{m.nome}</span>
               <span class="membro__cargo">{m.cargo}</span>
@@ -490,7 +490,7 @@ const icons = {
     </div>
     <div class="container ft__base">
       <span>© 2026 Criativo 92. Todos os direitos reservados.</span>
-      <span>CNPJ 92.000.000/0001-92</span>
+      <span>CNPJ 55.877.604/0001-02</span>
     </div>
   </footer>
 
@@ -870,6 +870,8 @@ const icons = {
   .membro__foto { border-radius: var(--radius); overflow: hidden; background: #fff; border: 1px solid var(--line); aspect-ratio: 3 / 4; }
   .membro__foto img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform 0.5s var(--ease); }
   .membro:hover .membro__foto img { transform: scale(1.04); }
+  .membro--zoom .membro__foto img { transform: scale(1.2); transform-origin: top center; }
+  .membro--zoom:hover .membro__foto img { transform: scale(1.24); }
   .membro__nome { font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em; margin-top: 0.9rem; }
   .membro__cargo { color: var(--green-600); font-weight: 600; font-size: 0.9rem; }
   .escritorio { position: relative; margin-top: clamp(2rem, 5vw, 3.5rem); border-radius: var(--radius); overflow: hidden; }
