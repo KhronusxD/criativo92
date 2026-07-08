@@ -151,9 +151,6 @@ const icons = {
         </div>
 
       </div>
-      <div class="hero__photo" aria-hidden="true">
-        <img src="/socios-c92.png" alt="Os três sócios da Criativo 92" width="1200" height="675" fetchpriority="high" />
-      </div>
     </section>
 
     <!-- ============ TRUST BAR ============ -->
@@ -630,7 +627,11 @@ const icons = {
   /* ---------- hero ---------- */
   /* HERO escuro — texto e foto lado a lado, foto colada no fim (bottom-flush) */
   .hero { position: relative; min-height: clamp(520px, 70vh, 690px); display: flex; align-items: center; overflow: hidden;
-    background: radial-gradient(118% 100% at 14% 12%, #12492f 0%, var(--green-900) 52%, #06170f 100%); color: #e9f1ec; }
+    background-color: #06170f; color: #e9f1ec; }
+  .hero::before { content: ''; position: absolute; inset: 0; z-index: 0;
+    background: url('/bg-hero-section.png') center right / cover no-repeat; }
+  .hero::after { content: ''; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(90deg, rgba(4,17,11,0.94) 0%, rgba(4,17,11,0.82) 30%, rgba(4,17,11,0.45) 52%, rgba(4,17,11,0.12) 74%, rgba(4,17,11,0.05) 100%); }
   .hero__inner { position: relative; z-index: 2; width: 100%; padding-inline: clamp(1.5rem, 3.8vw, 3.5rem); }
   .hero__col { max-width: 470px; padding-block: clamp(0.5rem, 2vh, 1.5rem); }
   .hero__title { font-size: clamp(1.7rem, 0.9rem + 2vw, 2.95rem); line-height: 1.06; letter-spacing: -0.035em; color: #fff; margin: 1rem 0 1.1rem; }
@@ -645,16 +646,11 @@ const icons = {
   .hero__badges { display: flex; flex-wrap: wrap; gap: 0.6rem; }
   .hero .badge { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.16); color: #cdd8d1; }
 
-  .hero__photo { position: absolute; right: clamp(-180px, -8vw, -40px); bottom: 0; width: clamp(600px, 68vw, 1180px); z-index: 1; }
-  .hero__photo::before { content: ''; position: absolute; inset: 4% -8% 0 2%; z-index: -1;
-    background: radial-gradient(52% 52% at 55% 40%, rgba(69,205,140,0.22), transparent 68%); }
-  .hero__photo img { width: 100%; height: auto; display: block; }
-
   @media (max-width: 900px) {
-    .hero { min-height: auto; display: block; }
+    .hero { min-height: clamp(560px, 78vh, 680px); display: flex; }
     .hero__col { max-width: none; padding-top: clamp(2rem, 8vw, 3.5rem); padding-bottom: 1rem; }
-    .hero__photo { position: relative; right: auto; bottom: auto; width: 100%; max-width: 580px; margin: 0.5rem auto 0; }
-    .hero__photo::before { display: none; }
+    .hero::before { background-position: 72% center; }
+    .hero::after { background: linear-gradient(180deg, rgba(4,17,11,0.72) 0%, rgba(4,17,11,0.55) 40%, rgba(4,17,11,0.78) 100%); }
   }
   @media (max-width: 460px) {
     .hero__cta { flex-wrap: wrap; }
