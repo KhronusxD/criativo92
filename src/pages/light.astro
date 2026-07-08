@@ -151,6 +151,9 @@ const icons = {
         </div>
 
       </div>
+      <div class="hero__photo" aria-hidden="true">
+        <img src="/socios-c92.png" alt="Os três sócios da Criativo 92" width="1200" height="675" fetchpriority="high" />
+      </div>
     </section>
 
     <!-- ============ TRUST BAR ============ -->
@@ -646,11 +649,25 @@ const icons = {
   .hero__badges { display: flex; flex-wrap: wrap; gap: 0.6rem; }
   .hero .badge { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.16); color: #cdd8d1; }
 
+  /* desktop/tablet usam a imagem de fundo → foto recortada escondida */
+  .hero__photo { display: none; }
+  .hero__photo::before { display: none; }
+  .hero__photo img { width: 100%; height: auto; display: block; }
+
+  /* tablet: mantém a imagem de fundo, só ajusta enquadramento */
   @media (max-width: 900px) {
-    .hero { min-height: clamp(560px, 78vh, 680px); display: flex; }
+    .hero { min-height: clamp(520px, 66vh, 640px); }
+    .hero__col { max-width: 60%; }
+    .hero::before { background-position: 78% center; }
+  }
+
+  /* mobile: volta ao layout antigo — fundo em degradê + foto recortada dos sócios */
+  @media (max-width: 640px) {
+    .hero { min-height: auto; display: block;
+      background: radial-gradient(118% 100% at 14% 12%, #12492f 0%, var(--green-900) 52%, #06170f 100%); }
+    .hero::before, .hero::after { display: none; }
     .hero__col { max-width: none; padding-top: clamp(2rem, 8vw, 3.5rem); padding-bottom: 1rem; }
-    .hero::before { background-position: 72% center; }
-    .hero::after { background: linear-gradient(180deg, rgba(4,17,11,0.72) 0%, rgba(4,17,11,0.55) 40%, rgba(4,17,11,0.78) 100%); }
+    .hero__photo { display: block; position: relative; right: auto; bottom: auto; width: 100%; max-width: 580px; margin: 0.5rem auto 0; z-index: 1; }
   }
   @media (max-width: 460px) {
     .hero__cta { flex-wrap: wrap; }
