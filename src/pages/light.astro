@@ -231,7 +231,7 @@ const icons = {
     </section>
 
     <!-- ============ VÍDEOS ============ -->
-    <section class="section panel-paper" id="videos">
+    <section class="section" id="videos">
       <div class="videos-sec">
         <div class="videos-sec__text" data-reveal>
           <span class="eyebrow">Audiovisual</span>
@@ -625,6 +625,19 @@ const icons = {
 </LightLayout>
 
 <style>
+  /* ---------- TESTE: folhas de fundo (bg-neutro) — marca d'água suave ---------- */
+  #servicos::before, #faq::before, #depoimentos::before, #contato::before {
+    content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-repeat: no-repeat; background-size: cover; }
+  /* seções claras -> folhas brancas (folha à esquerda) */
+  #servicos { background-color: var(--paper); }
+  #servicos::before { background-image: url('/bg/leaf-branco-3.webp'); background-position: left center; opacity: 0.15; }
+  #faq { background-color: var(--paper); }
+  #faq::before { background-image: url('/bg/leaf-faq.webp'); background-position: right center; opacity: 0.15; transform: scaleX(-1); }
+  /* seções escuras -> folhas verdes (folha à direita) */
+  #depoimentos::before { background-image: url('/bg/leaf-verde-2.webp'); background-position: right center; opacity: 0.5; }
+  #contato::before { background-image: url('/bg/leaf-verde-1.webp'); background-position: right center; opacity: 0.55; }
+
   /* ---------- header ---------- */
   .hd { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: transparent; border-bottom: 1px solid transparent;
     transition: background 0.3s, backdrop-filter 0.3s, border-color 0.3s; }
@@ -645,7 +658,7 @@ const icons = {
   .hero { position: relative; min-height: clamp(520px, 70vh, 690px); display: flex; align-items: center; overflow: hidden;
     background-color: #06170f; color: #e9f1ec; }
   .hero::before { content: ''; position: absolute; inset: 0; z-index: 0;
-    background: url('/bg-hero-section.png') center right / cover no-repeat; }
+    background: url('/bg-hero-section.webp') center right / cover no-repeat; }
   .hero::after { content: ''; position: absolute; inset: 0; z-index: 1;
     background: linear-gradient(90deg, rgba(4,17,11,0.94) 0%, rgba(4,17,11,0.82) 30%, rgba(4,17,11,0.45) 52%, rgba(4,17,11,0.12) 74%, rgba(4,17,11,0.05) 100%); }
   .hero__inner { position: relative; z-index: 2; width: 100%; padding-inline: clamp(1.5rem, 3.8vw, 3.5rem); }
@@ -709,7 +722,7 @@ const icons = {
 
   /* ---------- números ---------- */
   /* números: foto do escritório ao fundo, opacidade 0% (topo) -> 50% (base) */
-  .nums { position: relative; overflow: hidden; }
+  .nums { position: relative; overflow: hidden; background: #0B1815; }
   .nums::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
     background: url('/fotos/escritorio-c92.jpg') center / cover no-repeat; opacity: 0.5;
     -webkit-mask: linear-gradient(180deg, transparent 0%, #000 100%); mask: linear-gradient(180deg, transparent 0%, #000 100%); }
@@ -870,8 +883,8 @@ const icons = {
   .membro__foto { border-radius: var(--radius); overflow: hidden; background: #fff; border: 1px solid var(--line); aspect-ratio: 3 / 4; }
   .membro__foto img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform 0.5s var(--ease); }
   .membro:hover .membro__foto img { transform: scale(1.04); }
-  .membro--zoom .membro__foto img { transform: scale(1.2); transform-origin: top center; }
-  .membro--zoom:hover .membro__foto img { transform: scale(1.24); }
+  .membro--zoom .membro__foto img { transform: translateY(calc(-7% - 5px)) scale(1.2); transform-origin: top center; }
+  .membro--zoom:hover .membro__foto img { transform: translateY(calc(-7% - 5px)) scale(1.24); }
   .membro__nome { font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em; margin-top: 0.9rem; }
   .membro__cargo { color: var(--green-600); font-weight: 600; font-size: 0.9rem; }
   .escritorio { position: relative; margin-top: clamp(2rem, 5vw, 3.5rem); border-radius: var(--radius); overflow: hidden; }
@@ -881,7 +894,14 @@ const icons = {
   @media (max-width: 460px) { .equipe { grid-template-columns: 1fr; max-width: 320px; margin-inline: auto; } }
 
   /* vídeos dos clientes */
-  #videos { padding-block: clamp(3.5rem, 6vw, 6rem); overflow: hidden; }
+  #videos { padding-block: clamp(3.5rem, 6vw, 6rem); overflow: hidden; background: #04100C; color: #eef2ef; }
+  #videos .eyebrow, #videos .eyebrow::before { color: #7fd0a9; }
+  #videos .eyebrow::before { background: #7fd0a9; }
+  #videos .h2 { color: #fff; }
+  #videos .lead { color: #b9c6bf; }
+  #videos .videocard__cliente { color: #eef2ef; }
+  #videos .deps-btn { border-color: rgba(255,255,255,0.25); color: #eaf1ec; }
+  #videos .deps-btn:hover { border-color: var(--green-500); background: var(--green-600); color: #fff; }
   /* texto alinhado ao container à esquerda; carrossel estende até a borda direita da página */
   .videos-sec { display: grid; grid-template-columns: minmax(280px, 0.7fr) 1.3fr; gap: clamp(2rem, 5vw, 4rem); align-items: center;
     padding-left: max(var(--gutter), calc((100% - var(--container)) / 2 + var(--gutter))); padding-right: 0; }
