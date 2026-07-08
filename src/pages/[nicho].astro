@@ -1,0 +1,15 @@
+---
+import SiteLight from '../components/SiteLight.astro';
+import { nichos } from '../data/nichos.js';
+
+export function getStaticPaths() {
+  return Object.keys(nichos).map((slug) => ({
+    params: { nicho: slug },
+    props: { data: nichos[slug] },
+  }));
+}
+
+const { data } = Astro.props;
+---
+
+<SiteLight data={data} />
