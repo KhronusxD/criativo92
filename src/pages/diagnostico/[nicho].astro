@@ -11,6 +11,7 @@ export function getStaticPaths() {
 
 const { flow, slug } = Astro.props;
 const backUrl = slug === 'geral' ? '/' : `/${slug}`;
+const PIXEL_ID = '1217455870239799';
 const title = `Diagnóstico gratuito · ${flow.label} — Criativo 92`;
 ---
 
@@ -27,7 +28,7 @@ const title = `Diagnóstico gratuito · ${flow.label} — Criativo 92`;
     <MetaPixel />
   </head>
   <body>
-    <div class="dg" data-dg data-wa={WA} data-flow={JSON.stringify(flow)} data-nicho={flow.label}>
+    <div class="dg" data-dg data-wa={WA} data-flow={JSON.stringify(flow)} data-nicho={flow.label} data-pixel={PIXEL_ID}>
       <header class="dg__hd">
         <a href={backUrl} class="dg__logo" aria-label="Voltar para o site"><img src="/logo-c92.png" alt="Criativo 92" /></a>
         <a href={backUrl} class="dg__exit" aria-label="Sair do diagnóstico">
@@ -52,6 +53,7 @@ const title = `Diagnóstico gratuito · ${flow.label} — Criativo 92`;
         const flow = JSON.parse(root.getAttribute('data-flow'));
         const WA = root.getAttribute('data-wa');
         const NICHO = root.getAttribute('data-nicho');
+        const PIXEL_ID = root.getAttribute('data-pixel');
         const card = root.querySelector('[data-dg-card]');
         const bar = root.querySelector('[data-dg-bar]');
         const backBtn = root.querySelector('[data-dg-back]');
@@ -191,8 +193,18 @@ const title = `Diagnóstico gratuito · ${flow.label} — Criativo 92`;
         function renderResult() {
           computeFlags();
           const apto = !flags.has('fat_baixo') && !flags.has('sem_verba') && !flags.has('pesquisando');
-          // Meta Pixel: lead preencheu o formulário e chegou ao fim do diagnóstico
+          // Meta Pixel: lead preencheu o formulário e chegou ao fim do diagnóstico.
+          // Envia os dados coletados p/ advanced matching (o pixel normaliza e faz o hash SHA-256).
           if (!leadFired && window.fbq) {
+            const parts = (contato.nome || '').trim().split(/\s+/).filter(Boolean);
+            let ph = (contato.numero || '').replace(/\D/g, '');
+            if (ph && ph.length >= 10 && ph.length <= 11) ph = '55' + ph; // BR: DDD+número -> +55
+            const am = {};
+            if (parts[0]) am.fn = parts[0].toLowerCase();
+            if (parts.length > 1) am.ln = parts.slice(1).join(' ').toLowerCase();
+            if (ph) am.ph = ph;
+            // instagram e empresa não são campos de advanced matching do Meta — vão só no WhatsApp/custom_data.
+            try { if (PIXEL_ID && Object.keys(am).length) window.fbq('init', PIXEL_ID, am); } catch (e) {}
             window.fbq('track', 'Lead', {
               content_name: 'Diagnóstico ' + NICHO,
               content_category: NICHO,
