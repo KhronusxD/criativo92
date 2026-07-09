@@ -13,14 +13,14 @@ const outros = posts.filter((p) => p.slug !== post.slug).slice(0, 2);
 <LightLayout title={`${post.title} — Criativo 92`} description={post.excerpt}>
   <header class="bhd">
     <div class="container bhd__in">
-      <a href="/light" class="bhd__logo" aria-label="Criativo 92"><img src="/logo-c92.png" alt="Criativo 92" /></a>
-      <a href="/light#contato" class="btn btn--primary bhd__cta">Falar com a gente</a>
+      <a href="/" class="bhd__logo" aria-label="Criativo 92"><img src="/logo-c92.png" alt="Criativo 92" /></a>
+      <a href="/#contato" class="btn btn--primary bhd__cta">Falar com a gente</a>
     </div>
   </header>
 
   <main class="article">
     <div class="container article__wrap">
-      <a href="/light#blog" class="article__back">← Voltar</a>
+      <a href="/#blog" class="article__back">← Voltar</a>
       <span class="article__cat">{post.cat}</span>
       <h1 class="article__title">{post.title}</h1>
       <p class="article__meta">Criativo 92 · {post.dateLabel}</p>
@@ -37,7 +37,7 @@ const outros = posts.filter((p) => p.slug !== post.slug).slice(0, 2);
     <aside class="container article__cta">
       <h2>Quer resultado assim na sua marca?</h2>
       <p>Conte seu desafio. Em até 1 dia útil você recebe um diagnóstico e os próximos passos.</p>
-      <a href="/light#contato" class="btn btn--primary">Falar com um especialista</a>
+      <a href="/#contato" class="btn btn--primary">Falar com um especialista</a>
     </aside>
 
     <section class="container article__outros">
@@ -56,7 +56,7 @@ const outros = posts.filter((p) => p.slug !== post.slug).slice(0, 2);
 
   <footer class="bft">
     <div class="container bft__in">
-      <a href="/light" class="bhd__logo bhd__logo--dark"><img src="/logo-c92.png" alt="Criativo 92" /></a>
+      <a href="/" class="bhd__logo bhd__logo--dark"><img src="/logo-c92.png" alt="Criativo 92" /></a>
       <span>© 2026 Criativo 92. Marketing e estratégia com método. Manaus, Amazonas.</span>
     </div>
   </footer>

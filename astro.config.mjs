@@ -5,4 +5,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://criativo92.com.br',
   compressHTML: true,
+  redirects: {
+    '/light': '/',
+  },
 });

@@ -10,6 +10,91 @@ export const WA = 'https://wa.me/5592981074692';
 export const INVESTIMENTO_MIN = 'R$ 3.000/mês';
 
 export const diagnosticos = {
+  // ============================================================ GERAL
+  geral: {
+    label: 'Geral',
+    caseRef: 'Celularis, Rações Fortaleza e Óticas Veja: resultados reais, publicados no site',
+    start: 'intro',
+    nodes: {
+      intro: { type: 'statement', eyebrow: 'Diagnóstico gratuito', title: 'Seu negócio tem espaço pra vender mais. Vamos descobrir quanto.', body: 'Algumas perguntas rápidas (leva uns 2 minutos). No caminho, você já vê o que funciona pra negócios como o seu. No final, a gente te diz com honestidade se faz sentido conversar.', cta: 'Começar →', next: 'q_ramo' },
+
+      q_ramo: { type: 'question', q: 'Qual é o seu ramo?', opts: [
+        { t: 'Varejo (loja física)' },
+        { t: 'Serviços (clínica, salão, oficina...)' },
+        { t: 'Alimentação (restaurante, delivery...)' },
+        { t: 'Indústria ou distribuição' },
+        { t: 'Outro' },
+      ], next: 'q_desafio' },
+
+      q_desafio: { type: 'question', q: 'Qual é o maior desafio do negócio hoje?', opts: [
+        { t: 'Atrair mais clientes', next: 'st_atrair' },
+        { t: 'Concorrência brigando por preço', next: 'st_preco' },
+        { t: 'Minha marca é pouco conhecida', next: 'st_marca' },
+        { t: 'Fazer quem já comprou voltar', next: 'st_recompra' },
+      ] },
+
+      st_atrair: { type: 'statement', eyebrow: 'O que funciona', title: 'Cliente não aparece por acaso. Ele pesquisa.', body: '76% de quem busca "perto de mim" no Google visita um negócio em até 24 horas. Quem aparece nessa hora leva o cliente; quem não aparece, doa ele pro concorrente. Anúncio local com oferta certa, caindo no WhatsApp, é o caminho mais curto pra encher o caixa.', next: 'q_anuncios' },
+      st_preco: { type: 'statement', eyebrow: 'O que funciona', title: 'Quem briga por preço perde pra quem briga por marca.', body: 'Quando o negócio constrói autoridade (conteúdo, prova social, presença constante), o cliente para de comparar centavos e passa a comprar confiança. Foi assim que a Óticas Veja dobrou o faturamento, de R$ 150 mil pra R$ 300 mil/mês, sem baixar preço.', next: 'q_anuncios' },
+      st_marca: { type: 'statement', eyebrow: 'O que funciona', title: 'Marca desconhecida é loja vazia em rua movimentada.', body: 'Presença digital constante muda isso mais rápido do que você imagina: perfil ativo, vídeos do dia a dia, avaliações no Google e anúncio local. Primeira lembrança do bairro vira primeira compra.', next: 'q_anuncios' },
+      st_recompra: { type: 'statement', eyebrow: 'O que funciona', title: 'Seu maior ativo é quem já comprou de você.', body: 'Com a base organizada e campanhas de retorno (WhatsApp + remarketing), a segunda venda custa uma fração da primeira. Pouco negócio faz isso direito. Quem faz, fatura.', next: 'q_anuncios' },
+
+      q_anuncios: { type: 'question', q: 'Você já investe em anúncios (Meta ou Google)?', opts: [
+        { t: 'Nunca investi', next: 'st_nunca' },
+        { t: 'Já tentei, não funcionou', next: 'q_erro' },
+        { t: 'Invisto todo mês', next: 'st_otimizar' },
+      ] },
+
+      st_nunca: { type: 'statement', eyebrow: 'Sendo direto', title: '"Meu cliente vem por indicação"... até o concorrente anunciar.', body: 'Indicação é ótima e continua valendo. O problema: ela não escala e não é previsível. Anúncio local bem feito não substitui a indicação, multiplica ela, porque coloca seu negócio na frente de quem já está procurando o que você vende.', next: 'q_faturamento' },
+      q_erro: { type: 'question', q: 'O que você acha que deu errado?', opts: [
+        { t: 'Fiz por conta própria (impulsionar post)' },
+        { t: 'Contratei agência que não entendia meu mercado' },
+        { t: 'Investi pouco tempo ou pouca verba' },
+        { t: 'Sinceramente, não sei dizer' },
+      ], next: 'st_erro' },
+      st_erro: { type: 'statement', eyebrow: 'A gente vê isso todo dia', title: 'Anúncio sem estratégia é rifa. Com estratégia, é matemática.', body: 'A maioria das tentativas frustradas tem a mesma raiz: sem oferta clara, sem segmentação local e sem leitura de dados. Nosso método começa pelo diagnóstico exatamente pra não repetir esse filme. Cada real tem que voltar com juros, e você acompanha os números.', next: 'q_faturamento' },
+      st_otimizar: { type: 'statement', eyebrow: 'Bom sinal', title: 'Você já sabe que funciona. A pergunta é: quanto está ficando na mesa?', body: 'Quem já investe todo mês geralmente tem 20% a 40% de resultado preso em campanhas sem otimização, criativos cansados e verba mal distribuída. É o cenário onde nossa gestão mais gera salto rápido.', next: 'q_faturamento' },
+
+      q_faturamento: { type: 'question', q: 'Qual o faturamento médio mensal do negócio?', opts: [
+        { t: 'Até R$ 20 mil', flag: 'fat_baixo' },
+        { t: 'R$ 20 mil a R$ 100 mil' },
+        { t: 'R$ 100 mil a R$ 300 mil' },
+        { t: 'Acima de R$ 300 mil' },
+      ], next: 'st_investimento' },
+
+      st_investimento: { type: 'statement', eyebrow: 'Transparência antes de tudo', title: 'Nosso trabalho começa em R$ 3.000/mês.', body: 'Isso cobre estratégia, criativos, gestão e a verba de anúncios pra começar com força. Pra calibrar a régua: a Rações Fortaleza investe R$ 2,5 mil só de mídia e tira R$ 65 mil/mês em vendas. Investimento sem retorno é custo; nosso trabalho é fazer virar receita.', next: 'q_verba' },
+      q_verba: { type: 'question', q: 'Um investimento a partir de R$ 3.000/mês cabe no seu momento?', opts: [
+        { t: 'Cabe, se trouxer retorno' },
+        { t: 'Agora não cabe', flag: 'sem_verba' },
+      ], next: 'q_urgencia' },
+
+      q_urgencia: { type: 'question', q: 'Se fizer sentido, quando você quer começar?', opts: [
+        { t: 'O quanto antes' },
+        { t: 'Nos próximos 30 dias' },
+        { t: 'Só pesquisando por enquanto', flag: 'pesquisando' },
+      ], next: 'input_nome' },
+
+      input_nome: { type: 'form', q: 'Pra fechar, seus dados:', fields: [
+        { k: 'nome', label: 'Nome', placeholder: 'Seu nome' },
+        { k: 'empresa', label: 'Nome da empresa', placeholder: 'Nome da empresa' },
+        { k: 'numero', label: 'Número (WhatsApp)', placeholder: '(92) 9 0000-0000', type: 'tel' },
+        { k: 'instagram', label: '@ do Instagram', placeholder: '@suaempresa', opt: true },
+      ], next: 'result' },
+    },
+    apto: {
+      title: 'seu negócio está pronto pra crescer.',
+      body: 'Pelo seu cenário, dá pra montar um plano com previsibilidade: presença local forte, oferta certa e mídia otimizada. Recebemos suas respostas e o próximo passo é uma conversa rápida: clica abaixo que seu diagnóstico chega pronto no nosso WhatsApp.',
+    },
+    naoApto: {
+      title: 'sendo honestos: ainda não é o momento.',
+      body: 'Pelo que você respondeu, investir R$ 3.000/mês agora forçaria o caixa, e a gente não coloca cliente em risco pra bater meta. O que recomendamos pra esse momento:',
+      dicas: [
+        'Capriche no Google Maps: fotos reais, horário atualizado e peça avaliação a cada venda.',
+        'Grave vídeos simples do dia a dia do negócio e poste com constância.',
+        'Organize os contatos de quem já comprou e ative por WhatsApp de tempos em tempos.',
+      ],
+    },
+  },
+
   // ============================================================ ÓTICAS
   oticas: {
     label: 'Óticas',

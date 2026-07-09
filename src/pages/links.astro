@@ -1,0 +1,101 @@
+---
+// Árvore de links da Criativo 92 (pra bio do Instagram e afins)
+const SITE = 'https://criativo92.com.br';
+const links = [
+  {
+    t: 'Diagnóstico gratuito',
+    d: 'Descubra em 2 minutos o plano certo pro seu negócio',
+    href: `${SITE}/diagnostico/geral`,
+    destaque: true,
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>',
+  },
+  {
+    t: 'Site oficial',
+    d: 'criativo92.com.br',
+    href: SITE,
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.9 5.7 3.9 9S14.5 18.4 12 21c-2.5-2.6-3.9-5.7-3.9-9S9.5 5.6 12 3z"/></svg>',
+  },
+  {
+    t: 'Endereço',
+    d: 'Av. Djalma Batista, 2056, Sala 70 · Chapada, Manaus',
+    href: 'https://maps.google.com/?q=Av.+Djalma+Batista,+2056+-+Chapada,+Manaus+-+AM,+69055-038',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+  },
+  {
+    t: 'Falar no WhatsApp',
+    d: '(92) 98107-4692',
+    href: 'https://wa.me/5592981074692?text=' + encodeURIComponent('Olá, Criativo 92! Vim pela árvore de links.'),
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 21l1.9-5.6A8.5 8.5 0 1 1 21 11.5z"/></svg>',
+  },
+];
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23124b36'/%3E%3Ctext x='50' y='70' font-size='52' font-family='Arial' font-weight='900' text-anchor='middle' fill='%23ffffff'%3E92%3C/text%3E%3C/svg%3E" />
+    <title>Criativo 92 · Links</title>
+    <meta name="description" content="Agência de marketing em Manaus. Diagnóstico gratuito, site oficial, endereço e WhatsApp." />
+    <meta name="theme-color" content="#06170f" />
+  </head>
+  <body>
+    <main class="lk">
+      <div class="lk__card">
+        <img class="lk__logo" src="/logo-c92.png" alt="Criativo 92" width="120" height="68" />
+        <h1 class="lk__name">Criativo 92</h1>
+        <p class="lk__bio">Agência de marketing · Manaus, AM<br />Propósito, criatividade e resultado.</p>
+
+        <nav class="lk__list" aria-label="Links">
+          {links.map((l) => (
+            <a class={`lk__btn${l.destaque ? ' lk__btn--hot' : ''}`} href={l.href} target={l.href.startsWith('http') ? '_blank' : undefined} rel="noopener">
+              <span class="lk__ico" set:html={l.icon} />
+              <span class="lk__txt">
+                <strong>{l.t}</strong>
+                <small>{l.d}</small>
+              </span>
+              <span class="lk__arrow">→</span>
+            </a>
+          ))}
+        </nav>
+
+        <footer class="lk__ft">© 2026 Criativo 92 · Manaus, Amazonas</footer>
+      </div>
+    </main>
+
+    <style is:global>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { -webkit-font-smoothing: antialiased; }
+      body { font-family: 'Inter', system-ui, -apple-system, sans-serif; min-height: 100dvh; color: #eef2ef;
+        background: radial-gradient(120% 90% at 50% -10%, #12492f 0%, #0a241b 48%, #06170f 100%) fixed; }
+      a { color: inherit; text-decoration: none; }
+
+      .lk { min-height: 100dvh; display: flex; align-items: flex-start; justify-content: center; padding: clamp(2rem, 6vw, 4rem) 1.25rem; }
+      .lk__card { width: 100%; max-width: 480px; text-align: center; }
+      .lk__logo { height: 56px; width: auto; margin-inline: auto; display: block; }
+      .lk__name { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; color: #fff; margin-top: 1.1rem; }
+      .lk__bio { color: #b9c6bf; font-size: 0.95rem; line-height: 1.5; margin: 0.5rem 0 1.8rem; }
+
+      .lk__list { display: flex; flex-direction: column; gap: 0.8rem; }
+      .lk__btn { display: flex; align-items: center; gap: 0.9rem; text-align: left; padding: 1rem 1.15rem; border-radius: 14px;
+        border: 1.5px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.05);
+        transition: border-color 0.2s, background 0.2s, transform 0.18s; }
+      .lk__btn:hover { border-color: #7fd0a9; background: rgba(127,208,169,0.1); transform: translateY(-2px); }
+      .lk__btn--hot { background: #1e7a56; border-color: #1e7a56; }
+      .lk__btn--hot:hover { background: #239166; border-color: #239166; }
+      .lk__ico { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center;
+        background: rgba(255,255,255,0.09); color: #9fe0bf; }
+      .lk__btn--hot .lk__ico { background: rgba(255,255,255,0.16); color: #fff; }
+      .lk__ico svg { width: 20px; height: 20px; }
+      .lk__txt { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
+      .lk__txt strong { font-weight: 700; font-size: 1rem; color: #fff; }
+      .lk__txt small { color: #b9c6bf; font-size: 0.82rem; line-height: 1.35; }
+      .lk__btn--hot .lk__txt small { color: #d7ecdf; }
+      .lk__arrow { margin-left: auto; color: #7fd0a9; font-weight: 700; }
+      .lk__btn--hot .lk__arrow { color: #fff; }
+
+      .lk__ft { color: #5f7368; font-size: 0.78rem; margin-top: 2rem; }
+    </style>
+  </body>
+</html>

@@ -9,7 +9,7 @@ export function getStaticPaths() {
 }
 
 const { flow, slug } = Astro.props;
-const backUrl = `/${slug}`;
+const backUrl = slug === 'geral' ? '/' : `/${slug}`;
 const title = `Diagnóstico gratuito · ${flow.label} — Criativo 92`;
 ---
 
