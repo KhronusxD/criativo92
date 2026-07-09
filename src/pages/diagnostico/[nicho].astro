@@ -1,5 +1,6 @@
 ---
 import { diagnosticos, WA } from '../../data/diagnosticos.js';
+import MetaPixel from '../../components/MetaPixel.astro';
 
 export function getStaticPaths() {
   return Object.keys(diagnosticos).map((slug) => ({
@@ -23,6 +24,7 @@ const title = `Diagnóstico gratuito · ${flow.label} — Criativo 92`;
     <meta name="description" content={`Diagnóstico gratuito da Criativo 92 para ${flow.label.toLowerCase()}: descubra em 2 minutos o plano certo pro seu negócio crescer.`} />
     <meta name="robots" content="noindex" />
     <meta name="theme-color" content="#06170f" />
+    <MetaPixel />
   </head>
   <body>
     <div class="dg" data-dg data-wa={WA} data-flow={JSON.stringify(flow)} data-nicho={flow.label}>
@@ -63,6 +65,7 @@ const title = `Diagnóstico gratuito · ${flow.label} — Criativo 92`;
         const answers = []; // {id, q, a}
         const flags = new Set();
         let nome = '';
+        let leadFired = false;
         const contato = { nome: '', empresa: '', numero: '', instagram: '' };
 
         const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -188,6 +191,15 @@ const title = `Diagnóstico gratuito · ${flow.label} — Criativo 92`;
         function renderResult() {
           computeFlags();
           const apto = !flags.has('fat_baixo') && !flags.has('sem_verba') && !flags.has('pesquisando');
+          // Meta Pixel: lead preencheu o formulário e chegou ao fim do diagnóstico
+          if (!leadFired && window.fbq) {
+            window.fbq('track', 'Lead', {
+              content_name: 'Diagnóstico ' + NICHO,
+              content_category: NICHO,
+              status: apto ? 'apto' : 'nao_apto',
+            });
+            leadFired = true;
+          }
           const ola = nome ? (nome.split(' ')[0] + ', ') : '';
           const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
