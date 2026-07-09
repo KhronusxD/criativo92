@@ -2,7 +2,7 @@
 // Tipos de nó:
 //   statement: tela de conteúdo (usada p/ responder objeção, mostrar resultado e investimento) -> next
 //   question:  pergunta com opções; cada opção pode ter next próprio (ramificação) e flag (qualificação)
-//   input:     campo de texto (nome) -> next
+//   form:      formulário final (nome, empresa, número, instagram) -> next
 // Flags de desqualificação: fat_baixo, sem_verba, pesquisando
 // O nó especial 'result' é renderizado pelo engine (apto/não apto).
 
@@ -69,7 +69,12 @@ export const diagnosticos = {
         { t: 'Só pesquisando por enquanto', flag: 'pesquisando' },
       ], next: 'input_nome' },
 
-      input_nome: { type: 'input', q: 'Pra fechar: como podemos te chamar?', placeholder: 'Seu nome', next: 'result' },
+      input_nome: { type: 'form', q: 'Pra fechar, seus dados:', fields: [
+        { k: 'nome', label: 'Nome', placeholder: 'Seu nome' },
+        { k: 'empresa', label: 'Nome da empresa', placeholder: 'Nome da ótica' },
+        { k: 'numero', label: 'Número (WhatsApp)', placeholder: '(92) 9 0000-0000', type: 'tel' },
+        { k: 'instagram', label: '@ do Instagram', placeholder: '@suaotica', opt: true },
+      ], next: 'result' },
     },
     apto: {
       title: 'sua ótica está pronta pra crescer.',
@@ -145,7 +150,12 @@ export const diagnosticos = {
         { t: 'Só pesquisando por enquanto', flag: 'pesquisando' },
       ], next: 'input_nome' },
 
-      input_nome: { type: 'input', q: 'Pra fechar: como podemos te chamar?', placeholder: 'Seu nome', next: 'result' },
+      input_nome: { type: 'form', q: 'Pra fechar, seus dados:', fields: [
+        { k: 'nome', label: 'Nome', placeholder: 'Seu nome' },
+        { k: 'empresa', label: 'Nome da empresa', placeholder: 'Nome do pet shop' },
+        { k: 'numero', label: 'Número (WhatsApp)', placeholder: '(92) 9 0000-0000', type: 'tel' },
+        { k: 'instagram', label: '@ do Instagram', placeholder: '@seupetshop', opt: true },
+      ], next: 'result' },
     },
     apto: {
       title: 'seu negócio pet está pronto pra crescer.',
@@ -225,7 +235,12 @@ export const diagnosticos = {
         { t: 'Só pesquisando por enquanto', flag: 'pesquisando' },
       ], next: 'input_nome' },
 
-      input_nome: { type: 'input', q: 'Pra fechar: como podemos te chamar?', placeholder: 'Seu nome', next: 'result' },
+      input_nome: { type: 'form', q: 'Pra fechar, seus dados:', fields: [
+        { k: 'nome', label: 'Nome', placeholder: 'Seu nome' },
+        { k: 'empresa', label: 'Nome da empresa', placeholder: 'Nome da loja' },
+        { k: 'numero', label: 'Número (WhatsApp)', placeholder: '(92) 9 0000-0000', type: 'tel' },
+        { k: 'instagram', label: '@ do Instagram', placeholder: '@sualoja', opt: true },
+      ], next: 'result' },
     },
     apto: {
       title: 'sua operação está pronta pra escalar.',

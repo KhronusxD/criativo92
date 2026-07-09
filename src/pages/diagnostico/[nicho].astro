@@ -63,6 +63,7 @@ const title = `Diagnóstico gratuito · ${flow.label} — Criativo 92`;
         const answers = []; // {id, q, a}
         const flags = new Set();
         let nome = '';
+        const contato = { nome: '', empresa: '', numero: '', instagram: '' };
 
         const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
         const LETTERS = 'ABCDEFGH';
@@ -143,16 +144,29 @@ const title = `Diagnóstico gratuito · ${flow.label} — Criativo 92`;
             }));
           }
 
-          if (n.type === 'input') {
+          if (n.type === 'form') {
             card.innerHTML =
               '<h1 class="dg__q">' + esc(n.q) + '</h1>' +
-              '<input class="dg__input" type="text" placeholder="' + esc(n.placeholder || '') + '" value="' + esc(nome) + '" data-inp autocomplete="given-name" />' +
+              '<div class="dg__form">' +
+              n.fields.map((f) =>
+                '<label class="dg__lab">' + esc(f.label) + (f.opt ? ' <em>(opcional)</em>' : '') +
+                '<input class="dg__input" data-k="' + f.k + '" type="' + (f.type || 'text') + '" placeholder="' + esc(f.placeholder || '') + '" value="' + esc(contato[f.k] || '') + '" /></label>'
+              ).join('') +
+              '</div>' +
               '<button class="dg__btn" data-next>Ver meu resultado →</button>' +
               '<span class="dg__hint">ou aperte <b>Enter ↵</b></span>';
-            const inp = card.querySelector('[data-inp]');
-            setTimeout(() => inp.focus(), 60);
-            inp.addEventListener('input', () => { nome = inp.value; });
-            card.querySelector('[data-next]').addEventListener('click', () => { nome = inp.value.trim(); goto(n.next); });
+            const inputs = Array.from(card.querySelectorAll('.dg__input'));
+            setTimeout(() => inputs[0].focus(), 60);
+            inputs.forEach((inp) => inp.addEventListener('input', () => { contato[inp.getAttribute('data-k')] = inp.value; inp.classList.remove('is-err'); }));
+            card.querySelector('[data-next]').addEventListener('click', () => {
+              let ok = true;
+              n.fields.forEach((f, i) => {
+                if (!f.opt && !String(contato[f.k] || '').trim()) { inputs[i].classList.add('is-err'); ok = false; }
+              });
+              if (!ok) { const first = inputs.find((i) => i.classList.contains('is-err')); if (first) first.focus(); return; }
+              nome = contato.nome.trim();
+              goto(n.next);
+            });
           }
 
           animate();
@@ -160,7 +174,10 @@ const title = `Diagnóstico gratuito · ${flow.label} — Criativo 92`;
 
         function buildWaMsg(apto) {
           let msg = 'Olá, Criativo 92! Fiz o diagnóstico de ' + NICHO + ' no site.\n';
-          if (nome) msg += 'Nome: ' + nome + '\n';
+          if (contato.nome) msg += 'Nome: ' + contato.nome.trim() + '\n';
+          if (contato.empresa) msg += 'Empresa: ' + contato.empresa.trim() + '\n';
+          if (contato.numero) msg += 'Número: ' + contato.numero.trim() + '\n';
+          if (contato.instagram) msg += 'Instagram: ' + contato.instagram.trim() + '\n';
           msg += '\n';
           answers.forEach(({ q, a }) => { msg += '• ' + q + '\n→ ' + a + '\n'; });
           msg += '\nResultado: ' + (apto ? 'apto pra começar' : 'ainda não é o momento') + '.';
@@ -270,10 +287,15 @@ const title = `Diagnóstico gratuito · ${flow.label} — Criativo 92`;
       .dg__hint { display: block; color: #8fa79b; font-size: 0.82rem; margin-top: 0.85rem; }
       .dg__hint b { color: #b9c6bf; }
 
-      .dg__input { width: 100%; max-width: 420px; display: block; padding: 1rem 1.2rem; border-radius: 12px; margin-bottom: 1.4rem;
-        border: 1.5px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.05); color: #fff; font-size: 1.1rem; }
-      .dg__input::placeholder { color: #8fa79b; }
+      .dg__form { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 1rem; margin-bottom: 1.5rem; max-width: 560px; }
+      .dg__lab { display: flex; flex-direction: column; gap: 0.4rem; color: #b9c6bf; font-weight: 600; font-size: 0.88rem; }
+      .dg__lab em { font-style: normal; font-weight: 500; color: #7d9488; font-size: 0.8rem; }
+      .dg__input { width: 100%; display: block; padding: 0.85rem 1.05rem; border-radius: 11px;
+        border: 1.5px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.05); color: #fff; font-size: 1.02rem; }
+      .dg__input::placeholder { color: #708578; }
       .dg__input:focus { outline: none; border-color: #7fd0a9; }
+      .dg__input.is-err { border-color: #e07a6a; }
+      @media (max-width: 560px) { .dg__form { grid-template-columns: 1fr; } }
 
       .dg__case { display: inline-block; padding: 0.7rem 1rem; border-radius: 10px; margin-bottom: 1.5rem;
         background: rgba(69,205,140,0.1); border: 1px solid rgba(69,205,140,0.3); color: #9fe0bf; font-weight: 600; font-size: 0.92rem; }
