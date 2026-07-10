@@ -7,6 +7,9 @@
 // O nó especial 'result' é renderizado pelo engine (apto/não apto).
 
 export const WA = 'https://wa.me/5592981074692';
+// Integração GyreHub (aba Formulários): cole aqui o slug do formulário
+// (o trecho depois de /f/ no link público). Vazio = integração desligada.
+export const GYREHUB_SLUG = 'w0va8q';
 export const INVESTIMENTO_MIN = 'R$ 3.000/mês';
 
 export const diagnosticos = {

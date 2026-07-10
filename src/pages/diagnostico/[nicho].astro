@@ -1,5 +1,5 @@
 ---
-import { diagnosticos, WA } from '../../data/diagnosticos.js';
+import { diagnosticos, WA, GYREHUB_SLUG } from '../../data/diagnosticos.js';
 import MetaPixel from '../../components/MetaPixel.astro';
 
 export function getStaticPaths() {
@@ -28,7 +28,7 @@ const title = `Diagnóstico gratuito · ${flow.label} — Criativo 92`;
     <MetaPixel />
   </head>
   <body>
-    <div class="dg" data-dg data-wa={WA} data-flow={JSON.stringify(flow)} data-nicho={flow.label} data-pixel={PIXEL_ID}>
+    <div class="dg" data-dg data-wa={WA} data-flow={JSON.stringify(flow)} data-nicho={flow.label} data-pixel={PIXEL_ID} data-gh={GYREHUB_SLUG}>
       <header class="dg__hd">
         <a href={backUrl} class="dg__logo" aria-label="Voltar para o site"><img src="/logo-c92.png" alt="Criativo 92" /></a>
         <a href={backUrl} class="dg__exit" aria-label="Sair do diagnóstico">
@@ -54,6 +54,42 @@ const title = `Diagnóstico gratuito · ${flow.label} — Criativo 92`;
         const WA = root.getAttribute('data-wa');
         const NICHO = root.getAttribute('data-nicho');
         const PIXEL_ID = root.getAttribute('data-pixel');
+
+        // ── GyreHub (Formulários): reporta início/respostas/conclusão ─────
+        // Fire-and-forget com keepalive (sobrevive ao redirect pro WhatsApp).
+        const GH_SLUG = root.getAttribute('data-gh') || '';
+        let ghReady = null; // Promise<sessao|null>; null = ainda não iniciou
+        let ghDone = false;
+        function ghPost(payload) {
+          return fetch('https://gyrehub.com.br/api/f/' + GH_SLUG + '/ingest', {
+            method: 'POST',
+            keepalive: true,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          }).then((r) => r.json());
+        }
+        function ghInicio() {
+          if (!GH_SLUG || ghReady) return;
+          const q = new URLSearchParams(location.search);
+          ghReady = ghPost({ evento: 'inicio', tracking: {
+            utm_source: q.get('utm_source') || undefined,
+            utm_medium: q.get('utm_medium') || undefined,
+            utm_campaign: q.get('utm_campaign') || undefined,
+            fbclid: q.get('fbclid') || undefined,
+            gclid: q.get('gclid') || undefined,
+            referrer: document.referrer || undefined,
+          } }).then((d) => (d && d.sessao) || null).catch(() => null);
+          ghResposta('Nicho', NICHO);
+        }
+        function ghResposta(pergunta, valor) {
+          if (!ghReady || !valor) return;
+          ghReady.then((s) => { if (s) ghPost({ evento: 'resposta', sessao: s, pergunta: pergunta, valor: valor }).catch(() => {}); });
+        }
+        function ghConcluir() {
+          if (!ghReady || ghDone) return;
+          ghDone = true;
+          ghReady.then((s) => { if (s) ghPost({ evento: 'conclusao', sessao: s }).catch(() => {}); });
+        }
         const card = root.querySelector('[data-dg-card]');
         const bar = root.querySelector('[data-dg-bar]');
         const backBtn = root.querySelector('[data-dg-back]');
@@ -83,9 +119,12 @@ const title = `Diagnóstico gratuito · ${flow.label} — Criativo 92`;
           const i = answers.findIndex((x) => x.id === id);
           if (i >= 0) answers.splice(i, answers.length - i); // refez a pergunta -> descarta dali pra frente
           answers.push({ id, q, a });
+          ghInicio(); // caso o fluxo comece direto numa pergunta
+          ghResposta(q, a);
         }
 
         function goto(next) {
+          if (cur === flow.start) ghInicio();
           history.push(cur);
           cur = next;
           render();
@@ -170,6 +209,10 @@ const title = `Diagnóstico gratuito · ${flow.label} — Criativo 92`;
               });
               if (!ok) { const first = inputs.find((i) => i.classList.contains('is-err')); if (first) first.focus(); return; }
               nome = contato.nome.trim();
+              ghResposta('Nome', contato.nome.trim());
+              ghResposta('Empresa', (contato.empresa || '').trim());
+              ghResposta('WhatsApp', (contato.numero || '').trim());
+              ghResposta('Instagram', (contato.instagram || '').trim());
               goto(n.next);
             });
           }
@@ -193,6 +236,8 @@ const title = `Diagnóstico gratuito · ${flow.label} — Criativo 92`;
         function renderResult() {
           computeFlags();
           const apto = !flags.has('fat_baixo') && !flags.has('sem_verba') && !flags.has('pesquisando');
+          ghResposta('Resultado do diagnóstico', apto ? 'Apto' : 'Não apto');
+          ghConcluir();
           // Meta Pixel: lead preencheu o formulário e chegou ao fim do diagnóstico.
           // Envia os dados coletados p/ advanced matching (o pixel normaliza e faz o hash SHA-256).
           if (!leadFired && window.fbq) {
