@@ -30,6 +30,19 @@ export const nichos = {
     },
     casesOrder: [2, 0, 1],
     deposOrder: [2, 3, 0, 1, 8, 6, 7, 9],
+    dores: {
+      titulo: 'Se você tem uma ótica, provavelmente vive isso.',
+      lead: 'Antes de falar de solução, vamos ser sinceros sobre o que trava a sua ótica hoje:',
+      itens: [
+        'O cliente experimenta a armação com você, tira foto e vai comprar na popular mais barata.',
+        'Você tem o melhor atendimento da região, mas ainda briga de igual pra igual no preço.',
+        'Sua ótica virou "mais uma". A marca não passa a autoridade que você tem de verdade.',
+        'As redes grandes têm uma verba de marketing que parece impossível de alcançar.',
+        'Você posta foto bonita de armação, mas isso não enche a agenda de exame.',
+        'No fim do mês, você não sabe dizer se algum anúncio trouxe cliente pra loja.',
+      ],
+      virada: 'A boa notícia: nada disso é sorte. Tudo tem solução, e é exatamente por aí que a gente começa.',
+    },
     estrategias: {
       titulo: 'O que faz ótica vender mais, na prática.',
       lead: 'Nada de fórmula genérica. Estas são as alavancas validadas no varejo óptico brasileiro:',
@@ -76,6 +89,19 @@ export const nichos = {
     },
     casesOrder: [1, 0, 2],
     deposOrder: [1, 0, 2, 3, 6, 8, 7, 9],
+    dores: {
+      titulo: 'Se você tem um negócio pet, provavelmente vive isso.',
+      lead: 'Antes de falar de solução, vamos ser sinceros sobre o que trava o seu negócio hoje:',
+      itens: [
+        'Seu movimento vem da vizinhança e da indicação. Quando cai, você não sabe o porquê.',
+        'Petz e Cobasi vendem ração mais barato do que você consegue comprar.',
+        'Você trabalha o dia inteiro e ainda se sente refém do preço.',
+        'O marketing é sempre improviso: um post aqui, um impulsionamento ali, sem plano.',
+        'Você tem seguidores no Instagram, mas isso não vira tutor dentro da loja.',
+        'Horário de banho e tosa vazio é dinheiro parado que você já está pagando.',
+      ],
+      virada: 'A boa notícia: nada disso é sorte. Tudo tem solução, e é exatamente por aí que a gente começa.',
+    },
     estrategias: {
       titulo: 'O que enche pet shop, na prática.',
       lead: 'O mercado pet fatura R$ 77 bilhões por ano no Brasil. Estas são as alavancas de quem cresce nele:',
@@ -122,6 +148,19 @@ export const nichos = {
     },
     casesOrder: [0, 1, 2],
     deposOrder: [0, 4, 5, 1, 2, 6, 7, 9],
+    dores: {
+      titulo: 'Se você tem loja de celular, provavelmente vive isso.',
+      lead: 'Antes de falar de solução, vamos ser sinceros sobre o que trava a sua loja hoje:',
+      itens: [
+        'Todo mês é a mesma corrida: sem promoção, o movimento simplesmente cai.',
+        'Marketplace e camelô vendem mais barato do que você consegue comprar.',
+        'Você anuncia, mas não faz ideia de qual anúncio trouxe qual venda.',
+        'O cliente pesquisa com você, mede o preço e some pro concorrente.',
+        'Você vive de giro e volume, sem nenhuma previsibilidade de quanto entra amanhã.',
+        'Já jogou dinheiro em "impulsionar post" e não veio um cliente sequer.',
+      ],
+      virada: 'A boa notícia: nada disso é sorte. Tudo tem solução, e é exatamente por aí que a gente começa.',
+    },
     estrategias: {
       titulo: 'O que enche loja de celular, na prática.',
       lead: '24 milhões de aparelhos chegam a assistências todo mês no Brasil. Estas são as alavancas de quem captura essa demanda:',

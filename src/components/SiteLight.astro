@@ -138,6 +138,7 @@ const ctaFinal = data.cta || {
   lead: 'Conte seu desafio. Em até 1 dia útil você recebe um diagnóstico e os próximos passos.',
 };
 const diagUrl = data.diagUrl || null;
+const dores = data.dores || null; // { titulo, lead, itens: [string], virada }
 const estrategias = data.estrategias || null; // { titulo, lead, itens: [{t, d}] }
 const crencas = data.crencas || null; // { titulo, lead, itens: [{crenca, resposta}] }
 const orderedCases = (data.casesOrder && data.casesOrder.map((i) => cases[i]).filter(Boolean)) || cases;
@@ -236,6 +237,31 @@ const orderedDepos = (data.deposOrder && data.deposOrder.map((i) => depos[i]).fi
         </div>
       </div>
     </section>
+
+    {dores && (
+      <section class="section panel-paper dores" id="dores">
+        <div class="container">
+          <header class="sec-head">
+            <div data-reveal>
+              <span class="eyebrow">O que trava seu crescimento</span>
+              <h2 class="h2">{dores.titulo}</h2>
+            </div>
+            {dores.lead && <p class="lead" data-reveal data-reveal-delay="1">{dores.lead}</p>}
+          </header>
+          <ul class="dores__grid">
+            {dores.itens.map((d, i) => (
+              <li class="dor" data-reveal data-reveal-delay={String((i % 2) + 1)}>
+                <span class="dor__x" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </span>
+                <span class="dor__t">{d}</span>
+              </li>
+            ))}
+          </ul>
+          {dores.virada && <p class="dores__virada" data-reveal>{dores.virada}</p>}
+        </div>
+      </section>
+    )}
 
     {estrategias && (
       <section class="section panel-dark nstrat" id="estrategias">
@@ -718,6 +744,15 @@ const orderedDepos = (data.deposOrder && data.deposOrder.map((i) => depos[i]).fi
 </LightLayout>
 
 <style>
+  /* ---------- dores do nicho ---------- */
+  .dores__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem 1.4rem; }
+  .dor { display: flex; align-items: flex-start; gap: 0.85rem; padding: 1.1rem 1.2rem; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); }
+  .dor__x { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; background: #fbecea; color: #d0563f; margin-top: 1px; }
+  .dor__x svg { width: 15px; height: 15px; }
+  .dor__t { color: var(--ink-soft); font-size: 1.02rem; line-height: 1.45; font-weight: 500; }
+  .dores__virada { margin-top: clamp(1.6rem, 3.5vw, 2.4rem); text-align: center; font-size: clamp(1.15rem, 1rem + 0.7vw, 1.5rem); font-weight: 800; letter-spacing: -0.02em; color: var(--green-700); }
+  @media (max-width: 720px) { .dores__grid { grid-template-columns: 1fr; } }
+
   /* ---------- estratégias do nicho ---------- */
   .nstrat__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
   .nstrat__card { background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius); padding: clamp(1.4rem, 3vw, 1.9rem); transition: border-color 0.25s, background 0.25s, transform 0.25s var(--ease); }
