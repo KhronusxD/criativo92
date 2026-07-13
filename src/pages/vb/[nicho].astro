@@ -7,6 +7,14 @@ export function getStaticPaths() {
 }
 const { d } = Astro.props;
 const cta = { ...VB_CTA, href: d.diagUrl };
+
+const S = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"';
+const check = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>`;
+const garIcons = {
+  bonus: `<svg ${S}><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9"/><path d="M12 8C12 8 11 3 8 3a2.5 2.5 0 0 0 0 5zM12 8c0 0 1-5 4-5a2.5 2.5 0 0 1 0 5z"/></svg>`,
+  shield: `<svg ${S}><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>`,
+  clock: `<svg ${S}><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`,
+};
 ---
 
 <LightLayout title={d.meta.title} description={d.meta.description}>
@@ -105,7 +113,7 @@ const cta = { ...VB_CTA, href: d.diagUrl };
         <ul class="vbenes">
           {d.beneficios.map((b, i) => (
             <li data-reveal data-reveal-delay={String((i % 3) + 1)}>
-              <span class="vbene__i">{b.i}</span>
+              <span class="vbene__i" set:html={check} aria-hidden="true"></span>
               <span>{b.t}</span>
             </li>
           ))}
@@ -116,7 +124,7 @@ const cta = { ...VB_CTA, href: d.diagUrl };
     <!-- PROVA -->
     <section class="vsec vsec--dark">
       <div class="vwrap">
-        <p class="veyebrow" data-reveal>Prova real</p>
+        <p class="veyebrow veyebrow--center" data-reveal>Prova real</p>
         <h2 class="vh2 vh2--light vh2--center" data-reveal>Não é promessa. É resultado publicado.</h2>
         <div class="vprova" data-reveal data-reveal-delay="1">
           <div class="vprova__media">
@@ -145,7 +153,7 @@ const cta = { ...VB_CTA, href: d.diagUrl };
         <ul class="voferta">
           {VB_OFERTA.itens.map((it, i) => (
             <li data-reveal data-reveal-delay={String((i % 2) + 1)}>
-              <span class="voferta__i">{it.i}</span>
+              <span class="voferta__i" set:html={check} aria-hidden="true"></span>
               <span>{it.t}</span>
             </li>
           ))}
@@ -160,7 +168,7 @@ const cta = { ...VB_CTA, href: d.diagUrl };
         <ul class="vgar">
           {VB_GARANTIAS.map((g, i) => (
             <li data-reveal data-reveal-delay={String((i % 3) + 1)}>
-              <span class="vgar__i">{g.i}</span>
+              <span class="vgar__i" set:html={garIcons[g.ic]} aria-hidden="true"></span>
               <h3>{g.t}</h3>
               <p>{g.d}</p>
             </li>
@@ -249,9 +257,11 @@ const cta = { ...VB_CTA, href: d.diagUrl };
     .vsec--paper { background: var(--paper); }
     .vsec--dark { background: #0a241b; color: #dfeae4; }
 
-    .veyebrow { display: inline-block; color: var(--green-600); font-weight: 800; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.9rem; }
+    .veyebrow { display: inline-flex; align-items: center; gap: 0.6em; color: var(--green-600); font-weight: 800; font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 1rem; }
+    .veyebrow::before { content: ""; width: 26px; height: 2px; background: currentColor; border-radius: 2px; }
+    .veyebrow--center { display: flex; justify-content: center; }
     .vsec--dark .veyebrow { color: #7fd0a9; }
-    .vh2 { font-size: clamp(1.7rem, 1.2rem + 2vw, 2.6rem); line-height: 1.1; letter-spacing: -0.03em; color: var(--ink); }
+    .vh2 { font-size: clamp(1.7rem, 1.2rem + 2vw, 2.6rem); line-height: 1.1; letter-spacing: -0.03em; color: var(--ink); text-wrap: balance; }
     .vh2--light { color: #fff; }
     .vh2--center { text-align: center; }
     .vlead { color: var(--ink-soft); font-size: clamp(1.05rem, 1rem + 0.4vw, 1.2rem); line-height: 1.6; margin-top: 1rem; }
@@ -270,15 +280,15 @@ const cta = { ...VB_CTA, href: d.diagUrl };
     /* hero */
     .vhero { background: radial-gradient(120% 100% at 80% -10%, #12492f 0%, #0a241b 52%, #06170f 100%); color: #eaf1ec; padding: clamp(6rem, 15vw, 8.5rem) 0 clamp(3rem, 8vw, 5rem); text-align: center; }
     .vhero__kicker { max-width: 60ch; margin: 0 auto 1.4rem; color: #9fc7b2; font-weight: 600; font-size: 0.98rem; line-height: 1.5; }
-    .vhero__h1 { font-size: clamp(2rem, 1.3rem + 3.4vw, 3.5rem); line-height: 1.06; letter-spacing: -0.035em; color: #fff; }
+    .vhero__h1 { font-size: clamp(2rem, 1.3rem + 3.4vw, 3.5rem); line-height: 1.06; letter-spacing: -0.035em; color: #fff; text-wrap: balance; }
     .vhero__sub { max-width: 62ch; margin: 1.5rem auto 0; color: #c2d3ca; font-size: clamp(1.02rem, 0.97rem + 0.4vw, 1.18rem); line-height: 1.6; }
     .vhero__badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.7rem; margin-top: 2rem; }
     .vhero__badges li { display: inline-flex; align-items: center; gap: 0.5em; padding: 0.45em 0.9em; border: 1px solid rgba(255,255,255,.16); border-radius: 999px; font-size: 0.85rem; color: #cdd8d1; background: rgba(255,255,255,.05); }
     .vhero__badges .dot { width: 7px; height: 7px; border-radius: 50%; background: #45cd8c; }
 
     /* CTA */
-    .btn--cta { background: #1e7a56; color: #fff; font-weight: 800; font-size: clamp(1rem, 0.95rem + 0.4vw, 1.15rem); padding: 1.05em 1.9em; border-radius: 12px; box-shadow: 0 16px 40px -16px rgba(30,122,86,.7); }
-    .btn--cta:hover { background: #23926a; }
+    .btn--cta { background: #1e7a56; color: #fff; font-weight: 800; font-size: clamp(1rem, 0.95rem + 0.4vw, 1.15rem); padding: 1.05em 2em; border-radius: 12px; box-shadow: 0 18px 44px -18px rgba(30,122,86,.75); transition: transform .2s var(--ease), background .2s, box-shadow .2s; }
+    .btn--cta:hover { background: #23926a; transform: translateY(-2px); box-shadow: 0 22px 50px -18px rgba(30,122,86,.85); }
     .vcta { margin-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
     .vcta--center { align-items: center; text-align: center; }
     .vcta__sub { color: #9fc7b2; font-size: 0.92rem; max-width: 42ch; }
@@ -291,29 +301,32 @@ const cta = { ...VB_CTA, href: d.diagUrl };
 
     /* pains */
     .vpains { display: grid; gap: 0.7rem; margin-top: 1.8rem; }
-    .vpains li { display: flex; gap: 0.85rem; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.15rem; color: var(--ink-soft); line-height: 1.5; }
-    .vsec--paper .vpains li { background: #fff; }
+    .vpains li { display: flex; gap: 0.85rem; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 1.05rem 1.2rem; color: var(--ink-soft); line-height: 1.5; transition: border-color .2s, box-shadow .2s, transform .2s var(--ease); }
+    .vpains li:hover { border-color: var(--line-strong); box-shadow: 0 14px 30px -22px rgba(10,36,27,.35); transform: translateY(-2px); }
     .vx { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; background: #fbecea; color: #d0563f; }
     .vx svg { width: 14px; height: 14px; }
 
     /* mecanismo */
     .vmec__intro { color: #9fc7b2; font-weight: 600; margin-bottom: 0.6rem; }
-    .vmec { list-style: none; display: grid; gap: 1.1rem; margin-top: 1.8rem; }
-    .vmec li { display: flex; gap: 1rem; align-items: flex-start; padding: 1.3rem; background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.12); border-radius: 14px; }
-    .vmec__n { flex: 0 0 auto; color: #45cd8c; font-weight: 800; font-size: 1.1rem; }
-    .vmec h3 { color: #fff; font-size: 1.15rem; letter-spacing: -0.02em; margin-bottom: 0.35rem; }
+    .vmec { list-style: none; display: grid; gap: 1rem; margin-top: 1.9rem; }
+    .vmec li { display: flex; gap: 1.1rem; align-items: flex-start; padding: 1.5rem; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); border-radius: 16px; transition: border-color .2s, background .2s; }
+    .vmec li:hover { border-color: rgba(127,208,169,.5); background: rgba(255,255,255,.07); }
+    .vmec__n { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; background: rgba(69,205,140,.14); color: #45cd8c; font-weight: 800; font-size: 0.95rem; }
+    .vmec h3 { color: #fff; font-size: 1.18rem; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
     .vmec p { color: #b9c6bf; line-height: 1.55; }
 
+    /* ícone check reutilizável (solução, benefícios, oferta) */
+    .vcheck, .vbene__i, .voferta__i { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--green-050); color: var(--green-600); }
+    .vcheck svg, .vbene__i svg, .voferta__i svg { width: 15px; height: 15px; }
+
     /* checks (solução) */
-    .vchecks { display: grid; gap: 0.7rem; margin-top: 1.8rem; }
-    .vchecks li { display: flex; gap: 0.85rem; align-items: flex-start; color: var(--ink-soft); line-height: 1.5; font-size: 1.05rem; }
-    .vcheck { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--green-050); color: var(--green-600); }
-    .vcheck svg { width: 15px; height: 15px; }
+    .vchecks { display: grid; gap: 0.85rem; margin-top: 1.9rem; }
+    .vchecks li { display: flex; gap: 0.9rem; align-items: center; color: var(--ink-soft); line-height: 1.5; font-size: 1.06rem; }
 
     /* benefícios */
-    .vbenes { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-top: 2rem; }
-    .vbenes li { display: flex; gap: 0.8rem; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem 1.2rem; color: var(--ink-soft); line-height: 1.45; }
-    .vbene__i { font-size: 1.35rem; line-height: 1; }
+    .vbenes { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-top: 2.2rem; }
+    .vbenes li { display: flex; gap: 0.85rem; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 1.15rem 1.25rem; color: var(--ink-soft); line-height: 1.45; transition: border-color .2s, box-shadow .2s, transform .2s var(--ease); }
+    .vbenes li:hover { border-color: var(--line-strong); box-shadow: 0 16px 34px -24px rgba(10,36,27,.4); transform: translateY(-3px); }
     @media (max-width: 640px) { .vbenes { grid-template-columns: 1fr; } }
 
     /* prova */
@@ -321,25 +334,27 @@ const cta = { ...VB_CTA, href: d.diagUrl };
     .vprova__media { position: relative; aspect-ratio: 9/16; border-radius: 16px; overflow: hidden; background: #06170f; display: grid; place-items: center; }
     .vprova__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     .vprova__play { position: relative; z-index: 1; width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,.94); color: var(--green-800); display: grid; place-items: center; padding-left: 3px; }
-    .vprova__stat { display: block; font-size: clamp(1.9rem, 1.4rem + 2vw, 2.8rem); font-weight: 800; letter-spacing: -0.03em; color: #fff; }
-    .vprova__statl { display: block; color: #9fe0bf; font-weight: 600; margin-top: 0.2rem; }
-    .vprova__q { margin: 1.3rem 0 0.7rem; font-size: 1.12rem; line-height: 1.5; color: #eaf1ec; }
-    .vprova__quem { color: #b9c6bf; font-size: 0.95rem; }
+    .vprova__stat { display: block; font-size: clamp(2.1rem, 1.5rem + 2.4vw, 3.1rem); font-weight: 800; letter-spacing: -0.035em; color: #fff; line-height: 1.02; }
+    .vprova__statl { display: block; color: #9fe0bf; font-weight: 600; margin-top: 0.35rem; }
+    .vprova__q { margin: 1.5rem 0 0.7rem; font-size: 1.15rem; line-height: 1.55; color: #eaf1ec; padding-left: 1rem; border-left: 3px solid #1e7a56; }
+    .vprova__quem { color: #b9c6bf; font-size: 0.95rem; padding-left: 1rem; }
     .vprova__quem strong { color: #fff; }
-    .vprova__logos { text-align: center; margin-top: 2rem; color: #7fa090; font-size: 0.9rem; }
+    .vprova__logos { text-align: center; margin-top: 2.4rem; padding-top: 1.8rem; border-top: 1px solid rgba(255,255,255,.1); color: #7fa090; font-size: 0.85rem; letter-spacing: 0.02em; }
     @media (max-width: 620px) { .vprova { grid-template-columns: 1fr; } .vprova__media { max-width: 240px; margin-inline: auto; } }
 
     /* oferta */
-    .voferta { display: grid; gap: 0.7rem; margin-top: 1.8rem; }
-    .voferta li { display: flex; gap: 0.85rem; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 1.05rem 1.2rem; color: var(--ink-soft); line-height: 1.5; }
-    .voferta__i { font-size: 1.2rem; line-height: 1.2; }
+    .voferta { display: grid; gap: 0.75rem; margin-top: 1.9rem; }
+    .voferta li { display: flex; gap: 0.9rem; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 1.1rem 1.25rem; color: var(--ink-soft); line-height: 1.5; transition: border-color .2s, box-shadow .2s, transform .2s var(--ease); }
+    .voferta li:hover { border-color: var(--line-strong); box-shadow: 0 16px 34px -24px rgba(10,36,27,.4); transform: translateY(-2px); }
 
     /* garantias */
     .vgar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-    .vgar li { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 1.4rem; }
-    .vgar__i { font-size: 1.6rem; }
-    .vgar h3 { margin: 0.6rem 0 0.4rem; font-size: 1.1rem; }
-    .vgar p { color: var(--ink-soft); font-size: 0.96rem; line-height: 1.5; }
+    .vgar li { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1.6rem; transition: border-color .2s, box-shadow .2s, transform .2s var(--ease); }
+    .vgar li:hover { border-color: var(--line-strong); box-shadow: 0 20px 44px -30px rgba(10,36,27,.4); transform: translateY(-3px); }
+    .vgar__i { display: inline-grid; place-items: center; width: 48px; height: 48px; border-radius: 13px; background: var(--green-050); color: var(--green-700); }
+    .vgar__i svg { width: 24px; height: 24px; }
+    .vgar h3 { margin: 0.9rem 0 0.45rem; font-size: 1.12rem; letter-spacing: -0.01em; }
+    .vgar p { color: var(--ink-soft); font-size: 0.96rem; line-height: 1.55; }
     @media (max-width: 720px) { .vgar { grid-template-columns: 1fr; } }
 
     /* faq */

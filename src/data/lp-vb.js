@@ -57,12 +57,12 @@ export const lpVB = {
       fecho: 'Você continua fazendo o que faz de melhor, atender bem e vender óculos. A gente cuida de encher a sua agenda.',
     },
     beneficios: [
-      { i: '📅', t: 'Agenda de exame cheia, inclusive na semana, não só no fim de mês.' },
-      { i: '👓', t: 'Mais óculos completos vendidos, porque o exame puxa a venda maior (lente + armação).' },
-      { i: '📊', t: 'Você enxerga o retorno: um painel mostra quanto cada anúncio trouxe de volta em venda.' },
-      { i: '🛡️', t: 'Sai da guerra de preço: o cliente chega já valorizando sua ótica.' },
-      { i: '🔁', t: 'Cliente voltando: estrutura pra trazer de volta quem já comprou.' },
-      { i: '📍', t: 'Achado no Google local: quem procura ótica perto encontra você primeiro.' },
+      { t: 'Agenda de exame cheia, inclusive na semana, não só no fim de mês.' },
+      { t: 'Mais óculos completos vendidos, porque o exame puxa a venda maior (lente + armação).' },
+      { t: 'Você enxerga o retorno: um painel mostra quanto cada anúncio trouxe de volta em venda.' },
+      { t: 'Sai da guerra de preço: o cliente chega já valorizando sua ótica.' },
+      { t: 'Cliente voltando: estrutura pra trazer de volta quem já comprou.' },
+      { t: 'Achado no Google local: quem procura ótica perto encontra você primeiro.' },
     ],
     prova: {
       stat: { n: 'R$ 150k → R$ 300k', l: 'por mês, na Óticas Veja' },
@@ -135,12 +135,12 @@ export const lpVB = {
       fecho: 'Você continua fazendo o que ama, cuidar dos bichos e atender bem. A gente cuida de encher a sua agenda e trazer o cliente de volta.',
     },
     beneficios: [
-      { i: '🛁', t: 'Agenda de banho e tosa cheia, inclusive no meio da semana.' },
-      { i: '🔁', t: 'Cliente voltando todo mês: o ouro do pet shop é a recorrência de banho, tosa e ração.' },
-      { i: '📊', t: 'Você enxerga o retorno: um painel mostra quanto cada anúncio trouxe de volta em venda.' },
-      { i: '🛒', t: 'Ticket maior: combos, planos de banho e produto vendidos junto, não só o serviço avulso.' },
-      { i: '📍', t: 'Achado no Google local: quem procura "pet shop perto de mim" encontra você primeiro.' },
-      { i: '🐶', t: 'Feito pra pet shop: quem fala com você entende de recorrência, de bairro e da rotina da loja.' },
+      { t: 'Agenda de banho e tosa cheia, inclusive no meio da semana.' },
+      { t: 'Cliente voltando todo mês: o ouro do pet shop é a recorrência de banho, tosa e ração.' },
+      { t: 'Você enxerga o retorno: um painel mostra quanto cada anúncio trouxe de volta em venda.' },
+      { t: 'Ticket maior: combos, planos de banho e produto vendidos junto, não só o serviço avulso.' },
+      { t: 'Achado no Google local: quem procura "pet shop perto de mim" encontra você primeiro.' },
+      { t: 'Feito pra pet shop: quem fala com você entende de recorrência, de bairro e da rotina da loja.' },
     ],
     prova: {
       stat: { n: 'R$ 2,5k → R$ 65k', l: 'de mídia por mês, na Rações Fortaleza' },
@@ -213,12 +213,12 @@ export const lpVB = {
       fecho: 'Você continua fazendo o que faz melhor, vender. A gente cuida de encher a sua loja do cliente certo e te mostrar o retorno de cada real.',
     },
     beneficios: [
-      { i: '📲', t: 'WhatsApp e loja cheios de comprador, não de curioso caçando o menor preço.' },
-      { i: '📊', t: 'ROI na tela: você vê quanto cada anúncio custou e quanto trouxe em venda.' },
-      { i: '⚡', t: 'Movimento rápido: campanha no ar em poucos dias, resultado que aparece cedo.' },
-      { i: '💰', t: 'Ticket maior: acessório, seguro e crediário vendidos junto, não deixados na mesa.' },
-      { i: '🥊', t: 'Sai da guerra de preço: quando você mede o retorno, para de depender só de promoção.' },
-      { i: '🔁', t: 'Cliente antigo voltando: estrutura pra recompra e upgrade de quem já comprou.' },
+      { t: 'WhatsApp e loja cheios de comprador, não de curioso caçando o menor preço.' },
+      { t: 'ROI na tela: você vê quanto cada anúncio custou e quanto trouxe em venda.' },
+      { t: 'Movimento rápido: campanha no ar em poucos dias, resultado que aparece cedo.' },
+      { t: 'Ticket maior: acessório, seguro e crediário vendidos junto, não deixados na mesa.' },
+      { t: 'Sai da guerra de preço: quando você mede o retorno, para de depender só de promoção.' },
+      { t: 'Cliente antigo voltando: estrutura pra recompra e upgrade de quem já comprou.' },
     ],
     prova: {
       stat: { n: 'R$ 1,5k → R$ 50k', l: 'por mês em cada uma das 9 lojas, na Celularis' },
@@ -246,18 +246,18 @@ export const VB_OFERTA = {
   titulo: 'Antes de qualquer proposta, a gente te mostra o mapa.',
   intro: 'No Diagnóstico de Crescimento gratuito, a Criativo 92 senta com você (uns 30 minutos, presencial ou online) e te entrega:',
   itens: [
-    { i: '🔍', t: 'Onde seu negócio está perdendo cliente hoje: os furos entre "alguém te procura" e "alguém compra".' },
-    { i: '🗺️', t: 'O plano pra encher sua agenda ou seu WhatsApp do cliente certo.' },
-    { i: '📈', t: 'Como seria o rastreamento no seu caso: o que dá pra medir e acompanhar de verdade.' },
-    { i: '💡', t: 'Pelo menos uma ação prática que você aplica mesmo que não feche nada com a gente.' },
+    { t: 'Onde seu negócio está perdendo cliente hoje: os furos entre "alguém te procura" e "alguém compra".' },
+    { t: 'O plano pra encher sua agenda ou seu WhatsApp do cliente certo.' },
+    { t: 'Como seria o rastreamento no seu caso: o que dá pra medir e acompanhar de verdade.' },
+    { t: 'Pelo menos uma ação prática que você aplica mesmo que não feche nada com a gente.' },
   ],
   fecho: 'Sem custo. Sem enrolação. Você sai da conversa com clareza, decidindo com informação, não no escuro.',
 };
 
 export const VB_GARANTIAS = [
-  { i: '🎁', t: 'Bônus', d: 'Ao agendar, você recebe antes da reunião o Dossiê de Resultados da Criativo 92: o que trava o seu nicho hoje, como a gente resolve e resultados reais. Você já chega sabendo com quem está falando.' },
-  { i: '🛡️', t: 'Risco zero', d: 'O diagnóstico é gratuito e sem compromisso. Se no fim da conversa você achar que não é pra você agora, tudo bem: sai com o diagnóstico na mão do mesmo jeito.' },
-  { i: '⏳', t: 'Poucas vagas', d: 'Cada diagnóstico é feito à mão, um a um. Por isso o Fernando abre poucas vagas por semana. E enquanto você pensa, o concorrente do lado está anunciando pro seu cliente agora.' },
+  { ic: 'bonus', t: 'Bônus', d: 'Ao agendar, você recebe antes da reunião o Dossiê de Resultados da Criativo 92: o que trava o seu nicho hoje, como a gente resolve e resultados reais. Você já chega sabendo com quem está falando.' },
+  { ic: 'shield', t: 'Risco zero', d: 'O diagnóstico é gratuito e sem compromisso. Se no fim da conversa você achar que não é pra você agora, tudo bem: sai com o diagnóstico na mão do mesmo jeito.' },
+  { ic: 'clock', t: 'Poucas vagas', d: 'Cada diagnóstico é feito à mão, um a um. Por isso o Fernando abre poucas vagas por semana. E enquanto você pensa, o concorrente do lado está anunciando pro seu cliente agora.' },
 ];
 
 export const VB_CTA = { label: 'Quero meu Diagnóstico de Crescimento gratuito', sub: 'Responda 4 perguntas rápidas (menos de 2 minutos) e o Fernando entra em contato pra marcar.' };
