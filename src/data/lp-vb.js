@@ -9,6 +9,12 @@ export const lpVB = {
     slug: 'oticas',
     label: 'Óticas',
     diagUrl: '/diagnostico/oticas',
+    img: {
+      trabalho: '/vb/oticas-trabalho.webp', trabalhoAlt: 'Atendente de ótica ajustando o óculos no rosto de um cliente sorrindo, em Manaus',
+      trabalhoCap: 'A cadeira de exame cheia e a agenda girando, do jeito que tem que ser.',
+      cliente: '/vb/oticas-cliente.webp', clienteAlt: 'Exame de vista sendo feito numa ótica em Manaus',
+      clienteCap: 'Cliente saindo com o óculos completo, não com um "vou pensar".',
+    },
     meta: {
       title: 'Encha a agenda da sua ótica — Criativo 92',
       description: 'O sistema que enche sua ótica de exames agendados e mostra, em número, quanto cada real de anúncio voltou em venda de óculos. Diagnóstico gratuito.',
@@ -87,6 +93,12 @@ export const lpVB = {
     slug: 'petshop',
     label: 'Pet shop',
     diagUrl: '/diagnostico/petshop',
+    img: {
+      trabalho: '/vb/petshop-trabalho.webp', trabalhoAlt: 'Banho e tosa de um cachorro numa pet shop em Manaus',
+      trabalhoCap: 'Agenda de banho e tosa girando o mês inteiro, não só na sorte.',
+      cliente: '/vb/petshop-cliente.webp', clienteAlt: 'Tutor comprando ração no balcão de uma pet shop em Manaus',
+      clienteCap: 'Tutor voltando todo mês, não só quando lembra.',
+    },
     meta: {
       title: 'Encha a agenda da sua pet shop — Criativo 92',
       description: 'O sistema que enche sua pet shop de clientes e faz o tutor voltar todo mês, com cada real de anúncio rastreado até a venda. Diagnóstico gratuito.',
@@ -165,6 +177,12 @@ export const lpVB = {
     slug: 'celulares',
     label: 'Lojas de celular',
     diagUrl: '/diagnostico/celulares',
+    img: {
+      trabalho: '/vb/celulares-trabalho.webp', trabalhoAlt: 'Técnico trocando a tela de um celular na bancada de uma loja em Manaus',
+      trabalhoCap: 'Bancada cheia e conserto no mesmo dia, do jeito que fecha venda.',
+      cliente: '/vb/celulares-cliente.webp', clienteAlt: 'Vendedor mostrando um celular a um casal no balcão de uma loja em Manaus',
+      clienteCap: 'Comprador de verdade fechando no balcão, não curioso.',
+    },
     meta: {
       title: 'Encha sua loja de celular de compradores — Criativo 92',
       description: 'Pare de brigar de preço com o marketplace. Venda volume com anúncios rastreados que mostram, em número, quanto cada real voltou em venda. Diagnóstico gratuito.',
