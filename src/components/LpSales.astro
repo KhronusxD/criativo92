@@ -253,8 +253,6 @@ const garIcons = {
     </div>
   </footer>
 
-  <a href={cta.href} class="vsticky">Fazer diagnóstico gratuito</a>
-
   <script>
     document.querySelectorAll('[data-faq]').forEach((btn) => {
       const item = btn.closest('.vfaq__item');
@@ -397,7 +395,7 @@ const garIcons = {
     .vprova__quem { color: #b9c6bf; font-size: 0.95rem; padding-left: 1rem; }
     .vprova__quem strong { color: #fff; }
     .vprova__logos { text-align: center; margin-top: 2.4rem; padding-top: 1.8rem; border-top: 1px solid rgba(255,255,255,.1); color: #7fa090; font-size: 0.85rem; letter-spacing: 0.02em; }
-    @media (max-width: 620px) { .vprova { grid-template-columns: 1fr; } .vprova__media { max-width: 240px; margin-inline: auto; } }
+    @media (max-width: 620px) { .vprova { grid-template-columns: 1fr; } .vprova__media { max-width: min(82vw, 360px); margin-inline: auto; } }
 
     /* oferta */
     .voferta { display: grid; gap: 0.75rem; margin-top: 1.9rem; }
@@ -433,8 +431,8 @@ const garIcons = {
     .vft__in { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-size: 0.85rem; }
     .vft a { color: #9fe0bf; font-weight: 600; }
 
-    /* sticky mobile CTA */
-    .vsticky { display: none; position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 90; text-align: center; background: #1e7a56; color: #fff; font-weight: 800; padding: 1em; border-radius: 12px; box-shadow: 0 12px 30px -8px rgba(0,0,0,.45); }
-    @media (max-width: 720px) { .vsticky { display: block; } .vhd__cta { display: none; } }
+    /* botão flutuante mobile removido; CTA fica no header (visível também no mobile) */
+    .vsticky { display: none !important; }
+    @media (max-width: 480px) { .vhd__cta { padding: 0.5em 0.85em; font-size: 0.82rem; } }
   </style>
 </LightLayout>
