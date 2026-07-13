@@ -22,7 +22,7 @@ export const nichos = {
       ctaPrimary: 'Fazer diagnóstico gratuito',
       ctaGhost: 'Ver resultados',
       ctaGhostHref: '#cases',
-      badges: ['Óticas Veja: R$150k → R$300k/mês', 'House Vision no portfólio'],
+      badges: ['Óticas Veja: +R$ 600 mil/ano', 'House Vision no portfólio'],
     },
     cta: {
       title: 'Pronto pra sua ótica vender mais?',

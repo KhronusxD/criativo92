@@ -37,7 +37,7 @@ export const diagnosticos = {
       ] },
 
       st_atrair: { type: 'statement', eyebrow: 'O que funciona', title: 'Cliente não aparece por acaso. Ele pesquisa.', body: '76% de quem busca "perto de mim" no Google visita um negócio em até 24 horas. Quem aparece nessa hora leva o cliente; quem não aparece, doa ele pro concorrente. Anúncio local com oferta certa, caindo no WhatsApp, é o caminho mais curto pra encher o caixa.', next: 'q_anuncios' },
-      st_preco: { type: 'statement', eyebrow: 'O que funciona', title: 'Quem briga por preço perde pra quem briga por marca.', body: 'Quando o negócio constrói autoridade (conteúdo, prova social, presença constante), o cliente para de comparar centavos e passa a comprar confiança. Foi assim que a Óticas Veja dobrou o faturamento, de R$ 150 mil pra R$ 300 mil/mês, sem baixar preço.', next: 'q_anuncios' },
+      st_preco: { type: 'statement', eyebrow: 'O que funciona', title: 'Quem briga por preço perde pra quem briga por marca.', body: 'Quando o negócio constrói autoridade (conteúdo, prova social, presença constante), o cliente para de comparar centavos e passa a comprar confiança. Foi assim que a Óticas Veja cresceu R$ 50 mil por mês em poucos meses, de R$ 150 mil pra R$ 200 mil, sem baixar preço.', next: 'q_anuncios' },
       st_marca: { type: 'statement', eyebrow: 'O que funciona', title: 'Marca desconhecida é loja vazia em rua movimentada.', body: 'Presença digital constante muda isso mais rápido do que você imagina: perfil ativo, vídeos do dia a dia, avaliações no Google e anúncio local. Primeira lembrança do bairro vira primeira compra.', next: 'q_anuncios' },
       st_recompra: { type: 'statement', eyebrow: 'O que funciona', title: 'Seu maior ativo é quem já comprou de você.', body: 'Com a base organizada e campanhas de retorno (WhatsApp + remarketing), a segunda venda custa uma fração da primeira. Pouco negócio faz isso direito. Quem faz, fatura.', next: 'q_anuncios' },
 
@@ -101,7 +101,7 @@ export const diagnosticos = {
   // ============================================================ ÓTICAS
   oticas: {
     label: 'Óticas',
-    caseRef: 'Óticas Veja: de R$ 150 mil para R$ 300 mil/mês',
+    caseRef: 'Óticas Veja: de R$ 150 mil a R$ 200 mil/mês em poucos meses (R$ 600 mil a mais no ano)',
     start: 'intro',
     nodes: {
       intro: { type: 'statement', eyebrow: 'Diagnóstico gratuito · Óticas', title: 'Sua ótica tem espaço pra vender mais. Vamos descobrir quanto.', body: 'Algumas perguntas rápidas (leva uns 2 minutos). No caminho, você já vê o que funciona pra óticas como a sua. No final, a gente te diz com honestidade se faz sentido conversar.', cta: 'Começar →', next: 'q_lojas' },
@@ -118,8 +118,8 @@ export const diagnosticos = {
       ] },
 
       st_atrair: { type: 'statement', eyebrow: 'O que funciona', title: 'Cliente de ótica não aparece por acaso. Ele pesquisa.', body: '"Ótica perto de mim", "exame de vista", "lente pra miopia". 76% de quem busca "perto de mim" visita uma loja em até 24 horas. Quem aparece nessa hora leva o cliente; quem não aparece, doa ele pro concorrente. Campanha local no Google + Instagram com oferta de exame de vista é o caminho mais curto pra encher a loja.', next: 'q_anuncios' },
-      st_preco: { type: 'statement', eyebrow: 'O que funciona', title: 'Quem briga por preço perde pra quem briga por marca.', body: 'Óculos é saúde e estética, não commodity. Quando a ótica constrói autoridade (conteúdo, prova social, vitrine digital), o cliente para de comparar centavos e passa a comprar confiança. Foi assim que a Óticas Veja dobrou: de R$ 150 mil pra R$ 300 mil/mês, sem baixar preço.', next: 'q_anuncios' },
-      st_marca: { type: 'statement', eyebrow: 'O que funciona', title: 'Marca desconhecida é loja vazia em rua movimentada.', body: 'Presença digital constante muda isso mais rápido do que você imagina: perfil ativo, vídeos da loja, avaliações no Google e anúncio local. A Óticas Veja virou referência na região e dobrou a meta de vendas com esse combo.', next: 'q_anuncios' },
+      st_preco: { type: 'statement', eyebrow: 'O que funciona', title: 'Quem briga por preço perde pra quem briga por marca.', body: 'Óculos é saúde e estética, não commodity. Quando a ótica constrói autoridade (conteúdo, prova social, vitrine digital), o cliente para de comparar centavos e passa a comprar confiança. Foi assim que a Óticas Veja cresceu R$ 50 mil por mês, de R$ 150 mil pra R$ 200 mil, em poucos meses e sem baixar preço.', next: 'q_anuncios' },
+      st_marca: { type: 'statement', eyebrow: 'O que funciona', title: 'Marca desconhecida é loja vazia em rua movimentada.', body: 'Presença digital constante muda isso mais rápido do que você imagina: perfil ativo, vídeos da loja, avaliações no Google e anúncio local. A Óticas Veja virou referência na região e ganhou R$ 50 mil por mês (R$ 600 mil a mais no ano) com esse combo.', next: 'q_anuncios' },
       st_recompra: { type: 'statement', eyebrow: 'O que funciona', title: 'Seu maior ativo é quem já comprou de você.', body: 'Receita de óculos vence, lente arranha, armação sai de moda. Com a base organizada e campanhas de retorno (WhatsApp + remarketing), a segunda venda custa uma fração da primeira. Pouca ótica faz isso. Quem faz, fatura.', next: 'q_anuncios' },
 
       q_anuncios: { type: 'question', q: 'Você já investe em anúncios (Meta ou Google)?', opts: [
@@ -145,7 +145,7 @@ export const diagnosticos = {
         { t: 'Acima de R$ 300 mil' },
       ], next: 'st_investimento' },
 
-      st_investimento: { type: 'statement', eyebrow: 'Transparência antes de tudo', title: 'Nosso trabalho começa em R$ 3.000/mês.', body: 'Isso cobre estratégia, criativos, gestão e a verba de anúncios pra começar com força. Pra calibrar a régua: a Óticas Veja opera nessa lógica e saiu de R$ 150 mil pra R$ 300 mil/mês. Investimento sem retorno é custo; nosso trabalho é fazer virar receita.', next: 'q_verba' },
+      st_investimento: { type: 'statement', eyebrow: 'Transparência antes de tudo', title: 'Nosso trabalho começa em R$ 3.000/mês.', body: 'Isso cobre estratégia, criativos, gestão e a verba de anúncios pra começar com força. Pra calibrar a régua: a Óticas Veja opera nessa lógica e saiu de R$ 150 mil pra R$ 200 mil/mês, R$ 600 mil a mais no ano. Investimento sem retorno é custo; nosso trabalho é fazer virar receita.', next: 'q_verba' },
       q_verba: { type: 'question', q: 'Um investimento a partir de R$ 3.000/mês cabe no seu momento?', opts: [
         { t: 'Cabe, se trouxer retorno' },
         { t: 'Agora não cabe', flag: 'sem_verba' },

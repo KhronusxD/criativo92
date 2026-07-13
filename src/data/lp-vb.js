@@ -17,7 +17,7 @@ export const lpVB = {
     },
     heroC: {
       eyebrow: 'Para óticas de Manaus',
-      headline: 'Levamos a Óticas Veja de R$ 150 mil a R$ 300 mil por mês. Dá pra fazer o mesmo pela sua ótica.',
+      headline: 'Colocamos R$ 600 mil a mais por ano no caixa da Óticas Veja, em poucos meses. Dá pra fazer o mesmo pela sua ótica.',
       sub: 'Anúncios rastreados do clique até o óculos vendido. Você atende; a Criativo 92 enche a agenda.',
       trust: 'Óticas Veja e outras óticas de Manaus confiam na Criativo 92.',
     },
@@ -29,7 +29,7 @@ export const lpVB = {
       kicker: 'Para donos de ótica em Manaus cansados de virar "consultório de graça": o cliente faz o exame, experimenta a armação com você e compra no mais barato.',
       headline: 'Encha a agenda da sua ótica de exames e pare de perder o cliente pro "mais barato" depois que ele já experimentou o óculos com você.',
       sub: 'Chega de postar bonito e torcer pra alguém aparecer. A Criativo 92 monta pra sua ótica um sistema de marketing rastreado, do anúncio até o óculos vendido, feito por quem já trabalha com óticas aqui de Manaus. Você cuida da loja; a gente enche a agenda.',
-      badges: ['+100 marcas atendidas', 'Case Óticas Veja: R$150k → R$300k/mês', 'Sem compromisso'],
+      badges: ['+100 marcas atendidas', 'Óticas Veja: +R$ 600 mil por ano', 'Sem compromisso'],
     },
     lead: [
       'Você conhece essa cena de cor.',
@@ -77,9 +77,9 @@ export const lpVB = {
       { t: 'Achado no Google local: quem procura ótica perto encontra você primeiro.' },
     ],
     prova: {
-      stat: { n: 'R$ 150k → R$ 300k', l: 'por mês, na Óticas Veja' },
+      stat: { n: '+R$ 600 mil', l: 'por ano na Óticas Veja (de R$ 150 mil a R$ 200 mil/mês)' },
       video: { src: `${R2}/video-oticas-veja.mp4`, poster: '/fotos/case-otica-veja.jpg' },
-      depo: { q: 'O branding novo colocou a marca em outro patamar. Saímos de R$ 150 mil para R$ 300 mil por mês.', quem: 'Carlos Vega', loja: 'Óticas Veja' },
+      depo: { q: 'Em poucos meses saímos de R$ 150 mil para R$ 200 mil por mês. São R$ 50 mil a mais todo mês, R$ 600 mil no ano.', quem: 'Carlos Vega', loja: 'Óticas Veja' },
     },
     fechamento: {
       p1: 'Sua ótica não precisa de mais um post bonito. Precisa de gente sentando na cadeira de exame toda semana, e saindo de lá com um óculos completo.',
