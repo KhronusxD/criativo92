@@ -15,6 +15,12 @@ export const lpVB = {
       cliente: '/vb/oticas-cliente.webp', clienteAlt: 'Exame de vista sendo feito numa ótica em Manaus',
       clienteCap: 'Cliente saindo com o óculos completo, não com um "vou pensar".',
     },
+    heroC: {
+      eyebrow: 'Para óticas de Manaus',
+      headline: 'Levamos a Óticas Veja de R$ 150 mil a R$ 300 mil por mês. Dá pra fazer o mesmo pela sua ótica.',
+      sub: 'Anúncios rastreados do clique até o óculos vendido. Você atende; a Criativo 92 enche a agenda.',
+      trust: 'Óticas Veja e outras óticas de Manaus confiam na Criativo 92.',
+    },
     meta: {
       title: 'Encha a agenda da sua ótica — Criativo 92',
       description: 'O sistema que enche sua ótica de exames agendados e mostra, em número, quanto cada real de anúncio voltou em venda de óculos. Diagnóstico gratuito.',
@@ -99,6 +105,12 @@ export const lpVB = {
       cliente: '/vb/petshop-cliente.webp', clienteAlt: 'Tutor comprando ração no balcão de uma pet shop em Manaus',
       clienteCap: 'Tutor voltando todo mês, não só quando lembra.',
     },
+    heroC: {
+      eyebrow: 'Para pet shops de Manaus',
+      headline: 'A Rações Fortaleza investe R$ 2,5 mil e tira R$ 65 mil por mês. Dá pra fazer o mesmo pela sua pet shop.',
+      sub: 'Anúncios rastreados até a venda no balcão, feitos pra recorrência. Você cuida dos bichos; a Criativo 92 enche a agenda.',
+      trust: 'Rações Fortaleza e outras marcas pet de Manaus confiam na Criativo 92.',
+    },
     meta: {
       title: 'Encha a agenda da sua pet shop — Criativo 92',
       description: 'O sistema que enche sua pet shop de clientes e faz o tutor voltar todo mês, com cada real de anúncio rastreado até a venda. Diagnóstico gratuito.',
@@ -182,6 +194,12 @@ export const lpVB = {
       trabalhoCap: 'Bancada cheia e conserto no mesmo dia, do jeito que fecha venda.',
       cliente: '/vb/celulares-cliente.webp', clienteAlt: 'Vendedor mostrando um celular a um casal no balcão de uma loja em Manaus',
       clienteCap: 'Comprador de verdade fechando no balcão, não curioso.',
+    },
+    heroC: {
+      eyebrow: 'Para lojas de celular de Manaus',
+      headline: 'Na Celularis, R$ 1,5 mil por loja viraram R$ 50 mil por mês. Em 9 lojas. Dá pra fazer o mesmo pela sua.',
+      sub: 'Anúncios rastreados do clique até a venda, sem brigar de preço com o marketplace. Você vende; a Criativo 92 traz o cliente.',
+      trust: 'Celularis, iPro e outras lojas de celular de Manaus confiam na Criativo 92.',
     },
     meta: {
       title: 'Encha sua loja de celular de compradores — Criativo 92',

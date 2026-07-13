@@ -1,0 +1,440 @@
+---
+// Sales page long-form reutilizável para as variações B e C das LPs de nicho.
+// variant 'B' = hero promessa (kicker + headline + sub + badges).
+// variant 'C' = hero enxuto de PROVA (eyebrow + headline de prova + sub 1 linha + CTA + trust strip + imagem real).
+// O corpo (lead, problema, mecanismo, solução, bandas, benefícios, prova, oferta, garantias, faq, fechamento) é o mesmo.
+import LightLayout from '../layouts/LightLayout.astro';
+import { VB_OFERTA, VB_GARANTIAS, VB_CTA } from '../data/lp-vb.js';
+
+const { d, variant = 'B' } = Astro.props;
+const cta = { ...VB_CTA, href: d.diagUrl };
+const logos = [1, 2, 4, 6, 7, 9].map((n) => `/clientes/cliente-${n}.png`);
+
+const S = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"';
+const check = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>`;
+const garIcons = {
+  bonus: `<svg ${S}><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9"/><path d="M12 8C12 8 11 3 8 3a2.5 2.5 0 0 0 0 5zM12 8c0 0 1-5 4-5a2.5 2.5 0 0 1 0 5z"/></svg>`,
+  shield: `<svg ${S}><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>`,
+  clock: `<svg ${S}><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`,
+};
+---
+
+<LightLayout title={d.meta.title} description={d.meta.description}>
+  <header class="vhd" data-vhd>
+    <div class="vhd__in">
+      <a href={`/${d.slug}`} class="vhd__logo" aria-label="Criativo 92"><img src="/logo-c92.png" alt="Criativo 92" /></a>
+      <a href={cta.href} class="btn btn--primary vhd__cta">Diagnóstico gratuito</a>
+    </div>
+  </header>
+
+  <main class="vb">
+    {variant === 'C' ? (
+      <!-- HERO C · enxuto, headline de prova, trust strip, imagem real -->
+      <section class="vhero vhero--lean">
+        <div class="vwrap">
+          <p class="vheroC__eyebrow" data-reveal>{d.heroC.eyebrow}</p>
+          <h1 class="vhero__h1" data-reveal data-reveal-delay="1">{d.heroC.headline}</h1>
+          <p class="vhero__sub" data-reveal data-reveal-delay="2">{d.heroC.sub}</p>
+          <div class="vcta" data-reveal data-reveal-delay="2">
+            <a href={cta.href} class="btn btn--cta">{cta.label}</a>
+            <span class="vcta__sub">{cta.sub}</span>
+          </div>
+          <div class="vtrust" data-reveal data-reveal-delay="3">
+            <span class="vtrust__line">{d.heroC.trust}</span>
+            <ul class="vtrust__logos">
+              {logos.map((l) => <li><img src={l} alt="Cliente da Criativo 92" loading="lazy" /></li>)}
+            </ul>
+          </div>
+        </div>
+        <figure class="vhero__img" data-reveal data-reveal-delay="2">
+          <img src={d.img.trabalho} alt={d.img.trabalhoAlt} width="1400" height="933" fetchpriority="high" />
+        </figure>
+      </section>
+    ) : (
+      <!-- HERO B · promessa -->
+      <section class="vhero">
+        <div class="vwrap">
+          <p class="vhero__kicker" data-reveal>{d.hero.kicker}</p>
+          <h1 class="vhero__h1" data-reveal data-reveal-delay="1">{d.hero.headline}</h1>
+          <p class="vhero__sub" data-reveal data-reveal-delay="2">{d.hero.sub}</p>
+          <div class="vcta" data-reveal data-reveal-delay="3">
+            <a href={cta.href} class="btn btn--cta">{cta.label}</a>
+            <span class="vcta__sub">{cta.sub}</span>
+          </div>
+          <ul class="vhero__badges" data-reveal data-reveal-delay="3">
+            {d.hero.badges.map((b) => <li><span class="dot"></span>{b}</li>)}
+          </ul>
+        </div>
+      </section>
+    )}
+
+    <!-- LEAD / ABERTURA -->
+    <section class="vsec vsec--paper">
+      <div class="vwrap vprose" data-reveal>
+        {d.lead.map((p) => <p>{p}</p>)}
+      </div>
+    </section>
+
+    <!-- PROBLEMA + AGITAÇÃO -->
+    <section class="vsec">
+      <div class="vwrap">
+        <h2 class="vh2" data-reveal>{d.problema.titulo}</h2>
+        <p class="vlead" data-reveal>{d.problema.intro}</p>
+        <ul class="vpains">
+          {d.problema.bullets.map((b, i) => (
+            <li data-reveal data-reveal-delay={String((i % 2) + 1)}>
+              <span class="vx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+              <span>{b}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="vfecho" data-reveal>{d.problema.fecho}</p>
+      </div>
+    </section>
+
+    <!-- MECANISMO -->
+    <section class="vsec vsec--dark">
+      <div class="vwrap">
+        <p class="veyebrow" data-reveal>A virada</p>
+        <p class="vmec__intro" data-reveal>{d.mecanismo.intro}</p>
+        <h2 class="vh2 vh2--light" data-reveal>{d.mecanismo.destaque}</h2>
+        <ol class="vmec">
+          {d.mecanismo.pontos.map((p, i) => (
+            <li data-reveal data-reveal-delay={String((i % 3) + 1)}>
+              <span class="vmec__n">{String(i + 1).padStart(2, '0')}</span>
+              <div><h3>{p.t}</h3><p>{p.d}</p></div>
+            </li>
+          ))}
+        </ol>
+        <p class="vfecho vfecho--light" data-reveal>{d.mecanismo.fecho}</p>
+      </div>
+    </section>
+
+    <!-- SOLUÇÃO -->
+    <section class="vsec vsec--paper">
+      <div class="vwrap">
+        <p class="veyebrow" data-reveal>A solução</p>
+        <h2 class="vh2" data-reveal>É exatamente isso que a Criativo 92 faz.</h2>
+        <p class="vlead" data-reveal>{d.solucao.intro}</p>
+        <ul class="vchecks">
+          {d.solucao.itens.map((it, i) => (
+            <li data-reveal data-reveal-delay={String((i % 2) + 1)}>
+              <span class="vcheck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+              <span>{it}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="vfecho" data-reveal>{d.solucao.fecho}</p>
+        <div class="vcta vcta--center" data-reveal>
+          <a href={cta.href} class="btn btn--cta">{cta.label}</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- BANDA 1 · O TRABALHO -->
+    <figure class="vband" data-reveal>
+      <img src={d.img.trabalho} alt={d.img.trabalhoAlt} loading="lazy" width="1400" height="933" />
+      <figcaption>{d.img.trabalhoCap}</figcaption>
+    </figure>
+
+    <!-- BENEFÍCIOS -->
+    <section class="vsec">
+      <div class="vwrap">
+        <h2 class="vh2 vh2--center" data-reveal>O que muda no seu negócio.</h2>
+        <ul class="vbenes">
+          {d.beneficios.map((b, i) => (
+            <li data-reveal data-reveal-delay={String((i % 3) + 1)}>
+              <span class="vbene__i" set:html={check} aria-hidden="true"></span>
+              <span>{b.t}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- BANDA 2 · O CLIENTE -->
+    <figure class="vband" data-reveal>
+      <img src={d.img.cliente} alt={d.img.clienteAlt} loading="lazy" width="1400" height="933" />
+      <figcaption>{d.img.clienteCap}</figcaption>
+    </figure>
+
+    <!-- PROVA -->
+    <section class="vsec vsec--dark">
+      <div class="vwrap">
+        <p class="veyebrow veyebrow--center" data-reveal>Prova real</p>
+        <h2 class="vh2 vh2--light vh2--center" data-reveal>Não é promessa. É resultado publicado.</h2>
+        <div class="vprova" data-reveal data-reveal-delay="1">
+          <div class="vprova__media">
+            <video class="vprova__video" src={d.prova.video.src} poster={d.prova.video.poster} playsinline preload="metadata"></video>
+            <button class="vprova__play" type="button" data-vplay aria-label="Assistir case">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M8 5v14l11-7z" /></svg>
+            </button>
+          </div>
+          <div class="vprova__body">
+            <span class="vprova__stat">{d.prova.stat.n}</span>
+            <span class="vprova__statl">{d.prova.stat.l}</span>
+            <blockquote class="vprova__q">“{d.prova.depo.q}”</blockquote>
+            <span class="vprova__quem"><strong>{d.prova.depo.quem}</strong> · {d.prova.depo.loja}</span>
+          </div>
+        </div>
+        <p class="vprova__logos" data-reveal>Óticas Veja · Rações Fortaleza · Celularis · iPro · House Vision · +100 marcas de todo o Amazonas</p>
+      </div>
+    </section>
+
+    <!-- OFERTA -->
+    <section class="vsec vsec--paper">
+      <div class="vwrap">
+        <p class="veyebrow" data-reveal>{VB_OFERTA.eyebrow}</p>
+        <h2 class="vh2" data-reveal>{VB_OFERTA.titulo}</h2>
+        <p class="vlead" data-reveal>{VB_OFERTA.intro}</p>
+        <ul class="voferta">
+          {VB_OFERTA.itens.map((it, i) => (
+            <li data-reveal data-reveal-delay={String((i % 2) + 1)}>
+              <span class="voferta__i" set:html={check} aria-hidden="true"></span>
+              <span>{it.t}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="vfecho" data-reveal>{VB_OFERTA.fecho}</p>
+      </div>
+    </section>
+
+    <!-- GARANTIAS -->
+    <section class="vsec">
+      <div class="vwrap">
+        <ul class="vgar">
+          {VB_GARANTIAS.map((g, i) => (
+            <li data-reveal data-reveal-delay={String((i % 3) + 1)}>
+              <span class="vgar__i" set:html={garIcons[g.ic]} aria-hidden="true"></span>
+              <h3>{g.t}</h3>
+              <p>{g.d}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="vsec vsec--paper">
+      <div class="vwrap vwrap--narrow">
+        <h2 class="vh2 vh2--center" data-reveal>Perguntas que a gente sempre ouve.</h2>
+        <ul class="vfaq">
+          {d.faq.map((f) => (
+            <li class="vfaq__item" data-reveal>
+              <button class="vfaq__q" type="button" data-faq aria-expanded="false">
+                <span>{f.q}</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path class="vfaq__v" d="M12 5v14"/></svg>
+              </button>
+              <div class="vfaq__a"><p>{f.a}</p></div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- FECHAMENTO -->
+    <section class="vsec vsec--dark vclose">
+      <div class="vwrap" data-reveal>
+        <h2 class="vh2 vh2--light vh2--center">{d.fechamento.p1}</h2>
+        <p class="vlead vlead--light vlead--center">{d.fechamento.p2}</p>
+        <div class="vcta vcta--center">
+          <a href={cta.href} class="btn btn--cta">{cta.label}</a>
+          <span class="vcta__sub vcta__sub--light">{cta.sub}</span>
+        </div>
+        <p class="vps"><strong>P.S.</strong> {d.fechamento.ps}</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="vft">
+    <div class="vwrap vft__in">
+      <span>© 2026 Criativo 92 · Marketing e estratégia com método. Manaus, Amazonas.</span>
+      <a href={`/${d.slug}`}>Ver versão completa do site →</a>
+    </div>
+  </footer>
+
+  <a href={cta.href} class="vsticky">Fazer diagnóstico gratuito</a>
+
+  <script>
+    document.querySelectorAll('[data-faq]').forEach((btn) => {
+      const item = btn.closest('.vfaq__item');
+      const ans = item.querySelector('.vfaq__a');
+      btn.addEventListener('click', () => {
+        const open = item.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0';
+      });
+    });
+    const pv = document.querySelector('[data-vplay]');
+    if (pv) {
+      pv.addEventListener('click', () => {
+        const v = pv.previousElementSibling;
+        v.setAttribute('controls', '');
+        pv.style.display = 'none';
+        v.play();
+      });
+    }
+    const vhd = document.querySelector('[data-vhd]');
+    if (vhd) {
+      const on = () => vhd.classList.toggle('is-stuck', window.scrollY > 8);
+      on(); window.addEventListener('scroll', on, { passive: true });
+    }
+  </script>
+
+  <style is:global>
+    /* ============ Sales page (variações B e C) ============ */
+    .vb { --vgreen: #124b36; --vgreen2: #1e7a56; }
+    .vwrap { width: 100%; max-width: 760px; margin-inline: auto; padding-inline: clamp(1.25rem, 5vw, 2rem); }
+    .vwrap--narrow { max-width: 680px; }
+    .vsec { padding-block: clamp(3rem, 7vw, 5.5rem); }
+    .vsec--paper { background: var(--paper); }
+    .vsec--dark { background: #0a241b; color: #dfeae4; }
+
+    .veyebrow { display: inline-flex; align-items: center; gap: 0.6em; color: var(--green-600); font-weight: 800; font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 1rem; }
+    .veyebrow::before { content: ""; width: 26px; height: 2px; background: currentColor; border-radius: 2px; }
+    .veyebrow--center { display: flex; justify-content: center; }
+    .vsec--dark .veyebrow { color: #7fd0a9; }
+    .vh2 { font-size: clamp(1.7rem, 1.2rem + 2vw, 2.6rem); line-height: 1.1; letter-spacing: -0.03em; color: var(--ink); text-wrap: balance; }
+    .vh2--light { color: #fff; }
+    .vh2--center { text-align: center; }
+    .vlead { color: var(--ink-soft); font-size: clamp(1.05rem, 1rem + 0.4vw, 1.2rem); line-height: 1.6; margin-top: 1rem; }
+    .vlead--light { color: #b9c6bf; }
+    .vlead--center { text-align: center; margin-inline: auto; max-width: 60ch; }
+    .vfecho { margin-top: 1.5rem; font-weight: 700; font-size: 1.1rem; color: var(--green-700); letter-spacing: -0.01em; }
+    .vfecho--light { color: #9fe0bf; }
+
+    /* header */
+    .vhd { position: fixed; top: 0; left: 0; right: 0; z-index: 100; transition: background .3s, box-shadow .3s; }
+    .vhd.is-stuck { background: rgba(8,23,16,.82); backdrop-filter: blur(12px); }
+    .vhd__in { max-width: 1000px; margin-inline: auto; display: flex; align-items: center; justify-content: space-between; padding: 0.7rem clamp(1rem, 4vw, 2rem); }
+    .vhd__logo img { height: 30px; display: block; }
+    .vhd__cta { padding: 0.55em 1em; font-size: 0.9rem; }
+
+    /* hero */
+    .vhero { background: radial-gradient(120% 100% at 80% -10%, #12492f 0%, #0a241b 52%, #06170f 100%); color: #eaf1ec; padding: clamp(6rem, 15vw, 8.5rem) 0 clamp(3rem, 8vw, 5rem); text-align: center; }
+    .vhero--lean { padding-bottom: clamp(3rem, 7vw, 4.5rem); }
+    .vhero__kicker { max-width: 60ch; margin: 0 auto 1.4rem; color: #9fc7b2; font-weight: 600; font-size: 0.98rem; line-height: 1.5; }
+    .vheroC__eyebrow { display: inline-block; color: #7fd0a9; font-weight: 800; font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 1.1rem; }
+    .vhero__h1 { font-size: clamp(2rem, 1.3rem + 3.4vw, 3.5rem); line-height: 1.06; letter-spacing: -0.035em; color: #fff; text-wrap: balance; }
+    .vhero--lean .vhero__h1 { font-size: clamp(1.9rem, 1.2rem + 3vw, 3.1rem); max-width: 20ch; margin-inline: auto; }
+    .vhero__sub { max-width: 62ch; margin: 1.5rem auto 0; color: #c2d3ca; font-size: clamp(1.02rem, 0.97rem + 0.4vw, 1.18rem); line-height: 1.6; }
+    .vhero--lean .vhero__sub { max-width: 52ch; }
+    .vhero__badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.7rem; margin-top: 2rem; }
+    .vhero__badges li { display: inline-flex; align-items: center; gap: 0.5em; padding: 0.45em 0.9em; border: 1px solid rgba(255,255,255,.16); border-radius: 999px; font-size: 0.85rem; color: #cdd8d1; background: rgba(255,255,255,.05); }
+    .vhero__badges .dot { width: 7px; height: 7px; border-radius: 50%; background: #45cd8c; }
+
+    /* trust strip (hero C) */
+    .vtrust { margin-top: clamp(2rem, 5vw, 2.8rem); }
+    .vtrust__line { display: block; color: #9fc7b2; font-size: 0.9rem; margin-bottom: 1.1rem; }
+    .vtrust__logos { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: clamp(1.3rem, 4vw, 2.4rem); }
+    .vtrust__logos img { height: 26px; width: auto; max-width: 96px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.55; }
+
+    /* imagem do hero (C) */
+    .vhero__img { margin: clamp(2.6rem, 6vw, 3.6rem) auto 0; max-width: 980px; padding-inline: clamp(1.25rem, 5vw, 2rem); }
+    .vhero__img img { width: 100%; height: clamp(230px, 40vw, 420px); object-fit: cover; border-radius: 18px; box-shadow: 0 30px 70px -30px rgba(0,0,0,.6); }
+
+    /* CTA */
+    .btn--cta { background: #1e7a56; color: #fff; font-weight: 800; font-size: clamp(1rem, 0.95rem + 0.4vw, 1.15rem); padding: 1.05em 2em; border-radius: 12px; box-shadow: 0 18px 44px -18px rgba(30,122,86,.75); transition: transform .2s var(--ease), background .2s, box-shadow .2s; }
+    .btn--cta:hover { background: #23926a; transform: translateY(-2px); box-shadow: 0 22px 50px -18px rgba(30,122,86,.85); }
+    .vcta { margin-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
+    .vcta--center { align-items: center; text-align: center; }
+    .vcta__sub { color: #9fc7b2; font-size: 0.92rem; max-width: 42ch; }
+    .vcta__sub--light { color: #9fc7b2; }
+    .vsec--paper .vcta__sub, .vsec:not(.vsec--dark) .vcta__sub { color: var(--muted); }
+
+    /* banda de imagem (dia a dia) */
+    .vband { position: relative; margin: 0; max-width: 1100px; margin-inline: auto; padding-inline: clamp(1.25rem, 5vw, 2rem); }
+    .vband img { display: block; width: 100%; height: clamp(280px, 46vw, 520px); object-fit: cover; border-radius: 18px; }
+    .vband figcaption { position: absolute; left: clamp(2rem, 7vw, 3.5rem); right: clamp(2rem, 7vw, 3.5rem); bottom: clamp(1.4rem, 3vw, 2.2rem);
+      color: #fff; font-weight: 800; font-size: clamp(1.1rem, 0.95rem + 0.8vw, 1.55rem); letter-spacing: -0.02em; line-height: 1.2; text-wrap: balance;
+      text-shadow: 0 2px 20px rgba(0,0,0,.5); }
+    .vband::after { content: ''; position: absolute; inset: 0; border-radius: 18px; pointer-events: none;
+      margin-inline: clamp(1.25rem, 5vw, 2rem);
+      background: linear-gradient(0deg, rgba(6,23,15,.82) 0%, rgba(6,23,15,.32) 34%, rgba(6,23,15,0) 60%); }
+
+    /* prose (lead) */
+    .vprose p { color: var(--ink-soft); font-size: clamp(1.08rem, 1rem + 0.5vw, 1.28rem); line-height: 1.7; margin-bottom: 1.1rem; }
+    .vprose p:first-child { font-weight: 700; color: var(--ink); }
+
+    /* pains */
+    .vpains { display: grid; gap: 0.7rem; margin-top: 1.8rem; }
+    .vpains li { display: flex; gap: 0.85rem; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 1.05rem 1.2rem; color: var(--ink-soft); line-height: 1.5; transition: border-color .2s, box-shadow .2s, transform .2s var(--ease); }
+    .vpains li:hover { border-color: var(--line-strong); box-shadow: 0 14px 30px -22px rgba(10,36,27,.35); transform: translateY(-2px); }
+    .vx { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; background: #fbecea; color: #d0563f; }
+    .vx svg { width: 14px; height: 14px; }
+
+    /* mecanismo */
+    .vmec__intro { color: #9fc7b2; font-weight: 600; margin-bottom: 0.6rem; }
+    .vmec { list-style: none; display: grid; gap: 1rem; margin-top: 1.9rem; }
+    .vmec li { display: flex; gap: 1.1rem; align-items: flex-start; padding: 1.5rem; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); border-radius: 16px; transition: border-color .2s, background .2s; }
+    .vmec li:hover { border-color: rgba(127,208,169,.5); background: rgba(255,255,255,.07); }
+    .vmec__n { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; background: rgba(69,205,140,.14); color: #45cd8c; font-weight: 800; font-size: 0.95rem; }
+    .vmec h3 { color: #fff; font-size: 1.18rem; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
+    .vmec p { color: #b9c6bf; line-height: 1.55; }
+
+    /* ícone check reutilizável */
+    .vcheck, .vbene__i, .voferta__i { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--green-050); color: var(--green-600); }
+    .vcheck svg, .vbene__i svg, .voferta__i svg { width: 15px; height: 15px; }
+
+    /* checks (solução) */
+    .vchecks { display: grid; gap: 0.85rem; margin-top: 1.9rem; }
+    .vchecks li { display: flex; gap: 0.9rem; align-items: center; color: var(--ink-soft); line-height: 1.5; font-size: 1.06rem; }
+
+    /* benefícios */
+    .vbenes { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-top: 2.2rem; }
+    .vbenes li { display: flex; gap: 0.85rem; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 1.15rem 1.25rem; color: var(--ink-soft); line-height: 1.45; transition: border-color .2s, box-shadow .2s, transform .2s var(--ease); }
+    .vbenes li:hover { border-color: var(--line-strong); box-shadow: 0 16px 34px -24px rgba(10,36,27,.4); transform: translateY(-3px); }
+    @media (max-width: 640px) { .vbenes { grid-template-columns: 1fr; } }
+
+    /* prova */
+    .vprova { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(1.2rem, 3vw, 2rem); align-items: center; margin-top: 2rem; }
+    .vprova__media { position: relative; aspect-ratio: 9/16; border-radius: 16px; overflow: hidden; background: #06170f; display: grid; place-items: center; }
+    .vprova__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .vprova__play { position: relative; z-index: 1; width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,.94); color: var(--green-800); display: grid; place-items: center; padding-left: 3px; }
+    .vprova__stat { display: block; font-size: clamp(2.1rem, 1.5rem + 2.4vw, 3.1rem); font-weight: 800; letter-spacing: -0.035em; color: #fff; line-height: 1.02; }
+    .vprova__statl { display: block; color: #9fe0bf; font-weight: 600; margin-top: 0.35rem; }
+    .vprova__q { margin: 1.5rem 0 0.7rem; font-size: 1.15rem; line-height: 1.55; color: #eaf1ec; padding-left: 1rem; border-left: 3px solid #1e7a56; }
+    .vprova__quem { color: #b9c6bf; font-size: 0.95rem; padding-left: 1rem; }
+    .vprova__quem strong { color: #fff; }
+    .vprova__logos { text-align: center; margin-top: 2.4rem; padding-top: 1.8rem; border-top: 1px solid rgba(255,255,255,.1); color: #7fa090; font-size: 0.85rem; letter-spacing: 0.02em; }
+    @media (max-width: 620px) { .vprova { grid-template-columns: 1fr; } .vprova__media { max-width: 240px; margin-inline: auto; } }
+
+    /* oferta */
+    .voferta { display: grid; gap: 0.75rem; margin-top: 1.9rem; }
+    .voferta li { display: flex; gap: 0.9rem; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 1.1rem 1.25rem; color: var(--ink-soft); line-height: 1.5; transition: border-color .2s, box-shadow .2s, transform .2s var(--ease); }
+    .voferta li:hover { border-color: var(--line-strong); box-shadow: 0 16px 34px -24px rgba(10,36,27,.4); transform: translateY(-2px); }
+
+    /* garantias */
+    .vgar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .vgar li { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1.6rem; transition: border-color .2s, box-shadow .2s, transform .2s var(--ease); }
+    .vgar li:hover { border-color: var(--line-strong); box-shadow: 0 20px 44px -30px rgba(10,36,27,.4); transform: translateY(-3px); }
+    .vgar__i { display: inline-grid; place-items: center; width: 48px; height: 48px; border-radius: 13px; background: var(--green-050); color: var(--green-700); }
+    .vgar__i svg { width: 24px; height: 24px; }
+    .vgar h3 { margin: 0.9rem 0 0.45rem; font-size: 1.12rem; letter-spacing: -0.01em; }
+    .vgar p { color: var(--ink-soft); font-size: 0.96rem; line-height: 1.55; }
+    @media (max-width: 720px) { .vgar { grid-template-columns: 1fr; } }
+
+    /* faq */
+    .vfaq { display: grid; gap: 0.6rem; margin-top: 2rem; }
+    .vfaq__item { background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+    .vfaq__q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; text-align: left; padding: 1.1rem 1.3rem; font-weight: 700; color: var(--ink); font-size: 1.02rem; }
+    .vfaq__q svg { flex: 0 0 auto; width: 20px; height: 20px; color: var(--green-600); transition: transform .3s; }
+    .vfaq__item.is-open .vfaq__v { opacity: 0; }
+    .vfaq__a { max-height: 0; overflow: hidden; transition: max-height .35s var(--ease); }
+    .vfaq__a p { padding: 0 1.3rem 1.2rem; color: var(--ink-soft); line-height: 1.6; }
+
+    /* fechamento */
+    .vclose .vcta { margin-top: 2.2rem; }
+    .vps { margin-top: 2.2rem; padding-top: 1.6rem; border-top: 1px solid rgba(255,255,255,.12); color: #b9c6bf; line-height: 1.6; font-size: 0.98rem; }
+    .vps strong { color: #fff; }
+
+    /* footer */
+    .vft { background: var(--ink); color: #c8cdc6; padding-block: 1.8rem; }
+    .vft__in { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-size: 0.85rem; }
+    .vft a { color: #9fe0bf; font-weight: 600; }
+
+    /* sticky mobile CTA */
+    .vsticky { display: none; position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 90; text-align: center; background: #1e7a56; color: #fff; font-weight: 800; padding: 1em; border-radius: 12px; box-shadow: 0 12px 30px -8px rgba(0,0,0,.45); }
+    @media (max-width: 720px) { .vsticky { display: block; } .vhd__cta { display: none; } }
+  </style>
+</LightLayout>
