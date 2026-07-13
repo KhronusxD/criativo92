@@ -263,7 +263,7 @@ export const diagnosticos = {
   // ============================================================ CELULARES
   celulares: {
     label: 'Lojas de celular',
-    caseRef: 'Celularis: R$ 1,5 mil por loja virando R$ 50 mil/mês, em 9 lojas',
+    caseRef: 'Celularis: R$ 1,5 mil por loja virando R$ 50 mil/mês (33x), em 8 lojas (+R$ 400 mil/mês)',
     start: 'intro',
     nodes: {
       intro: { type: 'statement', eyebrow: 'Diagnóstico gratuito · Lojas de celular', title: 'Cada loja sua pode vender mais. Vamos descobrir quanto.', body: 'Algumas perguntas rápidas (2 minutos). No caminho, você vê o que funciona nesse mercado de verdade. No final, a gente fala com honestidade se faz sentido conversar.', cta: 'Começar →', next: 'q_lojas' },
@@ -286,7 +286,7 @@ export const diagnosticos = {
       st_atrair: { type: 'statement', eyebrow: 'O que funciona', title: 'Quem quebra a tela procura conserto AGORA.', body: '"Trocar tela perto de mim", "iPhone usado", "assistência". 52% dos brasileiros já quebraram a tela, e quem quebra procura AGORA, sem celular na mão. Quem aparece primeiro leva. Anúncio local + WhatsApp respondendo rápido é a máquina de encher loja mais previsível desse mercado.', next: 'q_anuncios' },
       st_preco: { type: 'statement', eyebrow: 'O que funciona', title: 'Contra marketplace, sua arma é o que ele não tem: agilidade e confiança.', body: 'Conserto no mesmo dia, aparelho na mão na hora, trade-in do usado, garantia local com rosto. Quem comunica isso bem para de competir por preço com a internet inteira e passa a vender conveniência, com margem.', next: 'q_anuncios' },
       st_marca: { type: 'statement', eyebrow: 'O que funciona', title: 'Nesse mercado, confiança vale mais que desconto.', body: 'Celular é compra de valor alto e medo de golpe. Marca com presença constante, avaliações, vitrine em vídeo e prova social vende mais caro que o concorrente informal. A Celularis construiu isso e cada loja virou máquina de R$ 50 mil/mês.', next: 'q_anuncios' },
-      st_escala: { type: 'statement', eyebrow: 'O que funciona', title: 'Escalar loja a loja é jogo de método, não de sorte.', body: 'Campanha por raio de cada unidade, verba distribuída pelo potencial de cada loja e leitura semanal dos números. Foi exatamente assim que a Celularis levou 9 lojas a retornar R$ 50 mil/mês cada, investindo R$ 1,5 mil por unidade.', next: 'q_anuncios' },
+      st_escala: { type: 'statement', eyebrow: 'O que funciona', title: 'Escalar loja a loja é jogo de método, não de sorte.', body: 'Campanha por raio de cada unidade, verba distribuída pelo potencial de cada loja e leitura semanal dos números. Foi exatamente assim que a Celularis levou 8 lojas a retornar R$ 50 mil/mês cada, investindo R$ 1,5 mil por unidade: +R$ 400 mil por mês no total.', next: 'q_anuncios' },
 
       q_anuncios: { type: 'question', q: 'Você já investe em anúncios (Meta ou Google)?', opts: [
         { t: 'Nunca investi', next: 'st_nunca' },

@@ -81,7 +81,7 @@ export const nichos = {
       ctaPrimary: 'Fazer diagnóstico gratuito',
       ctaGhost: 'Ver resultados',
       ctaGhostHref: '#cases',
-      badges: ['Rações Fortaleza: R$2,5k → R$65k/mês', 'Especialistas em varejo pet'],
+      badges: ['Rações Fortaleza: R$ 2,5 mil viram R$ 65 mil (26x)', 'Especialistas em varejo pet'],
     },
     cta: {
       title: 'Pronto pra lotar seu pet shop?',
@@ -140,7 +140,7 @@ export const nichos = {
       ctaPrimary: 'Fazer diagnóstico gratuito',
       ctaGhost: 'Ver resultados',
       ctaGhostHref: '#cases',
-      badges: ['Celularis: R$1,5k → R$50k/mês por loja', '9 lojas escaladas'],
+      badges: ['Celularis: R$ 1,5 mil viram R$ 50 mil por loja (33x)', '8 lojas escaladas'],
     },
     cta: {
       title: 'Pronto pra escalar suas lojas?',

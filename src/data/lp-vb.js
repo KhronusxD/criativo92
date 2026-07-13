@@ -107,7 +107,7 @@ export const lpVB = {
     },
     heroC: {
       eyebrow: 'Para pet shops de Manaus',
-      headline: 'A Rações Fortaleza investe R$ 2,5 mil e tira R$ 65 mil por mês. Dá pra fazer o mesmo pela sua pet shop.',
+      headline: 'A Rações Fortaleza investe R$ 2,5 mil e tira R$ 65 mil por mês, 26x o investimento. Dá pra fazer o mesmo pela sua pet shop.',
       sub: 'Anúncios rastreados até a venda no balcão, feitos pra recorrência. Você cuida dos bichos; a Criativo 92 enche a agenda.',
       trust: 'Rações Fortaleza e outras marcas pet de Manaus confiam na Criativo 92.',
     },
@@ -119,7 +119,7 @@ export const lpVB = {
       kicker: 'Para donos de pet shop em Manaus que trabalham de sol a sol, amam o que fazem, mas cansaram de depender da sorte, da indicação e de baixar preço pra encher a agenda.',
       headline: 'Encha a agenda de banho e tosa da sua pet shop e faça o cliente voltar todo mês, sem viver na base do desconto.',
       sub: 'Chega de postar foto de cachorro fofo e torcer pra alguém aparecer. A Criativo 92 monta pra sua pet shop um sistema de marketing rastreado, do anúncio até a venda no balcão, feito por quem já trabalha com pet shop aqui de Manaus. Você cuida dos bichos; a gente enche a agenda.',
-      badges: ['+100 marcas atendidas', 'Case Rações Fortaleza: R$2,5k → R$65k/mês', 'Sem compromisso'],
+      badges: ['+100 marcas atendidas', 'Rações Fortaleza: R$ 2,5 mil viram R$ 65 mil (26x)', 'Sem compromisso'],
     },
     lead: [
       'Você abre a loja todo dia com a mesma pergunta na cabeça: "hoje o movimento vem?".',
@@ -167,7 +167,7 @@ export const lpVB = {
       { t: 'Feito pra pet shop: quem fala com você entende de recorrência, de bairro e da rotina da loja.' },
     ],
     prova: {
-      stat: { n: 'R$ 2,5k → R$ 65k', l: 'de mídia por mês, na Rações Fortaleza' },
+      stat: { n: '26x', l: 'o retorno na Rações Fortaleza: R$ 2,5 mil de mídia viram R$ 65 mil por mês' },
       video: { src: `${R2}/video-racoes-fortaleza.mp4`, poster: '/fotos/case-fortaleza.jpg' },
       depo: { q: 'Investimos R$ 2,5 mil e voltaram R$ 65 mil no mês. A Criativo 92 entende de resultado, não de vaidade.', quem: 'Fernanda Lopes', loja: 'Rações Fortaleza' },
     },
@@ -197,7 +197,7 @@ export const lpVB = {
     },
     heroC: {
       eyebrow: 'Para lojas de celular de Manaus',
-      headline: 'Na Celularis, R$ 1,5 mil por loja viraram R$ 50 mil por mês. Em 9 lojas. Dá pra fazer o mesmo pela sua.',
+      headline: 'Na Celularis, cada R$ 1,5 mil por loja virou R$ 50 mil por mês. 33x, em 8 lojas. Dá pra fazer o mesmo pela sua.',
       sub: 'Anúncios rastreados do clique até a venda, sem brigar de preço com o marketplace. Você vende; a Criativo 92 traz o cliente.',
       trust: 'Celularis, iPro e outras lojas de celular de Manaus confiam na Criativo 92.',
     },
@@ -209,7 +209,7 @@ export const lpVB = {
       kicker: 'Para donos de loja de celular em Manaus cansados de brigar de preço com o marketplace e de anunciar sem saber se o dinheiro voltou.',
       headline: 'Encha sua loja de celular de clientes com dinheiro no bolso e veja, em número, quanto cada real de anúncio voltou em venda.',
       sub: 'Chega de impulsionar promoção e torcer pra dar movimento. A Criativo 92 monta pra sua loja um sistema de anúncios rastreado, do clique até a venda no balcão ou no WhatsApp, feito por quem já trabalha com loja de celular aqui de Manaus. Você vende; a gente traz o cliente certo.',
-      badges: ['+100 marcas atendidas', 'Case Celularis: R$1,5k → R$50k/mês por loja', 'Sem compromisso'],
+      badges: ['+100 marcas atendidas', 'Celularis: R$ 1,5 mil viram R$ 50 mil por loja (33x)', 'Sem compromisso'],
     },
     lead: [
       'Você conhece esse ciclo.',
@@ -257,9 +257,9 @@ export const lpVB = {
       { t: 'Cliente antigo voltando: estrutura pra recompra e upgrade de quem já comprou.' },
     ],
     prova: {
-      stat: { n: 'R$ 1,5k → R$ 50k', l: 'por mês em cada uma das 9 lojas, na Celularis' },
+      stat: { n: '33x', l: 'o retorno na Celularis: R$ 1,5 mil viram R$ 50 mil por loja, em 8 lojas (+R$ 400 mil/mês)' },
       video: { src: `${R2}/video-ipro.mp4`, poster: '/fotos/case-celularis.jpg' },
-      depo: { q: 'Cada loja virou uma máquina de vendas. R$ 1.500 investidos voltam como R$ 50 mil por mês, e isso em 9 unidades.', quem: 'Rodrigo Nunes', loja: 'Celularis' },
+      depo: { q: 'Cada loja virou uma máquina de vendas. R$ 1.500 investidos por loja voltam como R$ 50 mil por mês, e isso em 8 lojas.', quem: 'Rodrigo Nunes', loja: 'Celularis' },
     },
     fechamento: {
       p1: 'Sua loja não precisa de mais uma promoção que come a margem. Precisa de comprador no WhatsApp e de saber, em número, o que traz venda.',
