@@ -51,10 +51,10 @@ const cases = [
 ];
 
 const equipe = [
-  { nome: 'Tiago Paixão', cargo: 'Gestor de Tráfego', foto: '/fotos/equipe-tiago.jpg' },
-  { nome: 'Lucas Lacke', cargo: 'Especialista Audiovisual', foto: '/fotos/equipe-lucas.jpg' },
-  { nome: 'Fernando Gutierrez', cargo: 'Closer', foto: '/fotos/equipe-fernando.png' },
-  { nome: 'Alex Moura', cargo: 'Editor de Vídeo', foto: '/fotos/equipe-editor.jpg', zoom: true },
+  { nome: 'Tiago Paixão', cargo: 'Gestor de Tráfego', foto: '/fotos/equipe-thiago.webp' },
+  { nome: 'Lucas Lacke', cargo: 'Especialista Audiovisual', foto: '/fotos/equipe-lucas.webp' },
+  { nome: 'Fernando Gutierrez', cargo: 'Closer', foto: '/fotos/equipe-fernando.webp' },
+  { nome: 'Alex Moura', cargo: 'Editor de Vídeo', foto: '/fotos/equipe-alex.webp' },
 ];
 
 const videos = [
@@ -818,7 +818,7 @@ const orderedDepos = (data.deposOrder && data.deposOrder.map((i) => depos[i]).fi
   .hero { position: relative; min-height: clamp(520px, 70vh, 690px); display: flex; align-items: center; overflow: hidden;
     background-color: #06170f; color: #e9f1ec; }
   .hero::before { content: ''; position: absolute; inset: 0; z-index: 0;
-    background: url('/fundo-agora.webp') center right / cover no-repeat; }
+    background: url('/novo-fundo-21-07.webp') center right / cover no-repeat; }
   .hero::after { content: ''; position: absolute; inset: 0; z-index: 1;
     background: linear-gradient(90deg, rgba(4,17,11,0.94) 0%, rgba(4,17,11,0.82) 30%, rgba(4,17,11,0.45) 52%, rgba(4,17,11,0.12) 74%, rgba(4,17,11,0.05) 100%); }
   .hero__inner { position: relative; z-index: 2; width: 100%; padding-inline: clamp(1.5rem, 3.8vw, 3.5rem); }
@@ -1065,6 +1065,8 @@ const orderedDepos = (data.deposOrder && data.deposOrder.map((i) => depos[i]).fi
   #videos .videocard__cliente { color: #eef2ef; }
   #videos .deps-btn { border-color: rgba(255,255,255,0.25); color: #eaf1ec; }
   #videos .deps-btn:hover { border-color: var(--green-500); background: var(--green-600); color: #fff; }
+  /* contorno dos vídeos na mesma cor do fundo da seção */
+  #videos .videocard__frame { border-color: #04100C; }
   /* texto alinhado ao container à esquerda; carrossel estende até a borda direita da página */
   .videos-sec { display: grid; grid-template-columns: minmax(280px, 0.7fr) 1.3fr; gap: clamp(2rem, 5vw, 4rem); align-items: center;
     padding-left: max(var(--gutter), calc((100% - var(--container)) / 2 + var(--gutter))); padding-right: 0; }
