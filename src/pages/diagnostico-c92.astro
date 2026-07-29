@@ -52,7 +52,6 @@ const title = 'Diagnóstico gratuito — Criativo 92';
           nodes: {
             intro: {
               type: 'statement',
-              photo: '/novo-fundo-21-07.webp',
               eyebrow: 'Diagnóstico gratuito',
               title: 'Você é dono de negócio local?',
               body: 'A Criativo 92 ajuda negócios locais a venderem mais, todo santo dia. Responda 4 perguntas rápidas (leva 1 minuto) e a gente te mostra o próximo passo pra faturar mais.',
@@ -61,7 +60,6 @@ const title = 'Diagnóstico gratuito — Criativo 92';
             },
             q_segmento: {
               type: 'question',
-              photo: '/fotos/escritorio-c92.jpg',
               q: 'Em qual opção você melhor se encaixa?',
               sub: 'Assim a gente entende o seu momento e te mostra o que funciona pra um negócio como o seu.',
               opts: [
@@ -74,7 +72,6 @@ const title = 'Diagnóstico gratuito — Criativo 92';
             },
             q_faturamento: {
               type: 'question',
-              photo: '/fotos/sobre-a-criativo.jpg',
               q: 'Quanto seu negócio fatura por mês, hoje?',
               sub: 'Fica entre a gente. É só pra desenhar o plano do tamanho certo pro seu momento.',
               opts: [
@@ -254,7 +251,6 @@ const title = 'Diagnóstico gratuito — Criativo 92';
           const ola = nome ? (nome.split(' ')[0] + ', ') : '';
           const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
           card.innerHTML =
-            '<div class="dg__photo dg__photo--ok"><img src="/novo-fundo-21-07.webp" alt="Equipe Criativo 92" /></div>' +
             '<span class="dg__eyebrow dg__eyebrow--ok">✓ Diagnóstico concluído</span>' +
             '<h1 class="dg__title">' + esc(cap(ola) + 'recebemos suas respostas!') + '</h1>' +
             '<p class="dg__body">Um especialista da Criativo 92 vai te chamar no WhatsApp com o próximo passo pro seu negócio faturar mais. Quer adiantar? Fala com a gente agora.</p>' +
