@@ -1,0 +1,352 @@
+---
+import { WA, GYREHUB_SLUG } from '../data/diagnosticos.js';
+import MetaPixel from '../components/MetaPixel.astro';
+
+const PIXEL_ID = '1217455870239799';
+const title = 'Diagnóstico gratuito — Criativo 92';
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23124b36'/%3E%3Ctext x='50' y='70' font-size='52' font-family='Arial' font-weight='900' text-anchor='middle' fill='%23ffffff'%3E92%3C/text%3E%3C/svg%3E" />
+    <title>{title}</title>
+    <meta name="description" content="Diagnóstico gratuito da Criativo 92: responda 4 perguntas rápidas e descubra o próximo passo pra fazer seu negócio local faturar mais." />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#ffffff" />
+    <MetaPixel />
+  </head>
+  <body>
+    <div class="dg" data-dg data-wa={WA} data-pixel={PIXEL_ID} data-gh={GYREHUB_SLUG}>
+      <header class="dg__hd">
+        <a href="/" class="dg__logo" aria-label="Criativo 92"><img src="/logo-c92.png" alt="Criativo 92" /></a>
+        <a href="/" class="dg__exit" aria-label="Sair">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </a>
+      </header>
+      <div class="dg__progress"><span data-dg-bar></span></div>
+
+      <main class="dg__main">
+        <div class="dg__card" data-dg-card></div>
+      </main>
+
+      <footer class="dg__ft">
+        <button class="dg__back" type="button" data-dg-back hidden>← Voltar</button>
+        <span class="dg__brand">Criativo 92 · sem compromisso</span>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        const root = document.querySelector('[data-dg]');
+        const WA = root.getAttribute('data-wa');
+        const PIXEL_ID = root.getAttribute('data-pixel');
+        const GH_SLUG = root.getAttribute('data-gh') || '';
+        const NICHO = 'Negócio local (C92)';
+
+        // ── Fluxo curto (sem desqualificação) ───────────────────────────
+        const flow = {
+          start: 'intro',
+          nodes: {
+            intro: {
+              type: 'statement',
+              photo: '/novo-fundo-21-07.webp',
+              eyebrow: 'Diagnóstico gratuito',
+              title: 'Você é dono de negócio local?',
+              body: 'A Criativo 92 ajuda negócios locais a venderem mais, todo santo dia. Responda 4 perguntas rápidas (leva 1 minuto) e a gente te mostra o próximo passo pra faturar mais.',
+              cta: 'Bora começar →',
+              next: 'q_segmento',
+            },
+            q_segmento: {
+              type: 'question',
+              photo: '/fotos/escritorio-c92.jpg',
+              q: 'Em qual opção você melhor se encaixa?',
+              sub: 'Assim a gente entende o seu momento e te mostra o que funciona pra um negócio como o seu.',
+              opts: [
+                { t: 'Comércio / loja física' },
+                { t: 'Serviços (clínica, salão, oficina...)' },
+                { t: 'Alimentação (restaurante, delivery...)' },
+                { t: 'Outro tipo de negócio' },
+              ],
+              next: 'q_faturamento',
+            },
+            q_faturamento: {
+              type: 'question',
+              photo: '/fotos/sobre-a-criativo.jpg',
+              q: 'Quanto seu negócio fatura por mês, hoje?',
+              sub: 'Fica entre a gente. É só pra desenhar o plano do tamanho certo pro seu momento.',
+              opts: [
+                { t: 'Até R$ 10 mil por mês' },
+                { t: 'R$ 10 mil a R$ 30 mil por mês' },
+                { t: 'R$ 30 mil a R$ 100 mil por mês' },
+                { t: 'Acima de R$ 100 mil por mês' },
+              ],
+              next: 'form',
+            },
+            form: {
+              type: 'form',
+              q: 'Falta só o seu contato pra fechar o diagnóstico.',
+              sub: 'A gente te chama no WhatsApp com o próximo passo, sem compromisso.',
+              fields: [
+                { k: 'nome', label: 'Seu nome', placeholder: 'Como podemos te chamar?' },
+                { k: 'numero', label: 'WhatsApp', type: 'tel', placeholder: '(92) 9 0000-0000' },
+                { k: 'instagram', label: '@ do seu negócio', placeholder: '@seunegocio', opt: true },
+              ],
+              next: 'final',
+            },
+          },
+        };
+
+        // ── GyreHub (Formulários) ───────────────────────────────────────
+        let ghReady = null, ghDone = false;
+        function ghPost(payload) {
+          return fetch('https://gyrehub.com.br/api/f/' + GH_SLUG + '/ingest', {
+            method: 'POST', keepalive: true,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          }).then((r) => r.json());
+        }
+        function ghInicio() {
+          if (!GH_SLUG || ghReady) return;
+          const q = new URLSearchParams(location.search);
+          ghReady = ghPost({ evento: 'inicio', tracking: {
+            utm_source: q.get('utm_source') || undefined,
+            utm_medium: q.get('utm_medium') || undefined,
+            utm_campaign: q.get('utm_campaign') || undefined,
+            utm_content: q.get('utm_content') || undefined,
+            fbclid: q.get('fbclid') || undefined,
+            gclid: q.get('gclid') || undefined,
+            referrer: document.referrer || undefined,
+          } }).then((d) => (d && d.sessao) || null).catch(() => null);
+          ghResposta('Origem', NICHO);
+        }
+        function ghResposta(pergunta, valor) {
+          if (!ghReady || !valor) return;
+          ghReady.then((s) => { if (s) ghPost({ evento: 'resposta', sessao: s, pergunta, valor }).catch(() => {}); });
+        }
+        function ghConcluir() {
+          if (!ghReady || ghDone) return;
+          ghDone = true;
+          ghReady.then((s) => { if (s) ghPost({ evento: 'conclusao', sessao: s }).catch(() => {}); });
+        }
+
+        const card = root.querySelector('[data-dg-card]');
+        const bar = root.querySelector('[data-dg-bar]');
+        const backBtn = root.querySelector('[data-dg-back]');
+        const nodes = flow.nodes;
+        const TOTAL = Object.keys(nodes).length + 1;
+
+        let cur = flow.start;
+        const history = [];
+        const answers = [];
+        let nome = '', leadFired = false;
+        const contato = { nome: '', numero: '', instagram: '' };
+        const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+        const LETTERS = 'ABCDEFGH';
+
+        function setBar() {
+          const visited = history.length + 1;
+          const pct = cur === 'final' ? 100 : Math.min(90, Math.round((visited / TOTAL) * 100));
+          bar.style.width = pct + '%';
+        }
+        function photoHTML(n) {
+          return n && n.photo ? '<div class="dg__photo"><img src="' + n.photo + '" alt="Criativo 92" loading="eager" /></div>' : '';
+        }
+        function recordAnswer(id, q, a) {
+          const i = answers.findIndex((x) => x.id === id);
+          if (i >= 0) answers.splice(i, answers.length - i);
+          answers.push({ id, q, a });
+          ghInicio(); ghResposta(q, a);
+        }
+        function goto(next) { if (cur === flow.start) ghInicio(); history.push(cur); cur = next; render(); }
+        function goBack() { if (!history.length) return; cur = history.pop(); render(); }
+        function animate() { card.classList.remove('dg-in'); void card.offsetWidth; card.classList.add('dg-in'); }
+
+        function render() {
+          setBar();
+          backBtn.hidden = history.length === 0 || cur === flow.start;
+          if (cur === 'final') return renderFinal();
+          const n = nodes[cur];
+          if (!n) return;
+
+          if (n.type === 'statement') {
+            card.innerHTML = photoHTML(n) +
+              (n.eyebrow ? '<span class="dg__eyebrow">' + esc(n.eyebrow) + '</span>' : '') +
+              '<h1 class="dg__title">' + esc(n.title) + '</h1>' +
+              (n.body ? '<p class="dg__body">' + esc(n.body) + '</p>' : '') +
+              '<button class="dg__btn" data-next>' + esc(n.cta || 'Continuar →') + '</button>' +
+              '<span class="dg__hint">ou aperte <b>Enter ↵</b></span>';
+            card.querySelector('[data-next]').addEventListener('click', () => goto(n.next));
+          }
+
+          if (n.type === 'question') {
+            card.innerHTML = photoHTML(n) +
+              '<h1 class="dg__q">' + esc(n.q) + '</h1>' +
+              (n.sub ? '<p class="dg__body">' + esc(n.sub) + '</p>' : '') +
+              '<div class="dg__opts">' +
+              n.opts.map((o, i) => '<button class="dg__opt" data-i="' + i + '"><span class="dg__key">' + LETTERS[i] + '</span><span>' + esc(o.t) + '</span></button>').join('') +
+              '</div>';
+            card.querySelectorAll('.dg__opt').forEach((b) => b.addEventListener('click', () => {
+              const opt = n.opts[+b.getAttribute('data-i')];
+              b.classList.add('is-sel');
+              recordAnswer(cur, n.q, opt.t);
+              setTimeout(() => goto(opt.next || n.next), 170);
+            }));
+          }
+
+          if (n.type === 'form') {
+            card.innerHTML = photoHTML(n) +
+              '<h1 class="dg__q">' + esc(n.q) + '</h1>' +
+              (n.sub ? '<p class="dg__body">' + esc(n.sub) + '</p>' : '') +
+              '<div class="dg__form">' +
+              n.fields.map((f) =>
+                '<label class="dg__lab">' + esc(f.label) + (f.opt ? ' <em>(opcional)</em>' : '') +
+                '<input class="dg__input" data-k="' + f.k + '" type="' + (f.type || 'text') + '" placeholder="' + esc(f.placeholder || '') + '" value="' + esc(contato[f.k] || '') + '" /></label>'
+              ).join('') +
+              '</div>' +
+              '<button class="dg__btn" data-next>Finalizar →</button>' +
+              '<span class="dg__hint">ou aperte <b>Enter ↵</b></span>';
+            const inputs = Array.from(card.querySelectorAll('.dg__input'));
+            setTimeout(() => inputs[0].focus(), 60);
+            inputs.forEach((inp) => inp.addEventListener('input', () => { contato[inp.getAttribute('data-k')] = inp.value; inp.classList.remove('is-err'); }));
+            card.querySelector('[data-next]').addEventListener('click', () => {
+              let ok = true;
+              n.fields.forEach((f, i) => { if (!f.opt && !String(contato[f.k] || '').trim()) { inputs[i].classList.add('is-err'); ok = false; } });
+              if (!ok) { const first = inputs.find((i) => i.classList.contains('is-err')); if (first) first.focus(); return; }
+              nome = contato.nome.trim();
+              ghResposta('Nome', contato.nome.trim());
+              ghResposta('WhatsApp', contato.numero.trim());
+              ghResposta('Instagram', (contato.instagram || '').trim());
+              goto(n.next);
+            });
+          }
+          animate();
+        }
+
+        function buildWaMsg() {
+          let msg = 'Olá, Criativo 92! Acabei de fazer o diagnóstico no site.\n';
+          if (contato.nome) msg += 'Nome: ' + contato.nome.trim() + '\n';
+          if (contato.numero) msg += 'WhatsApp: ' + contato.numero.trim() + '\n';
+          if (contato.instagram) msg += 'Instagram: ' + contato.instagram.trim() + '\n';
+          msg += '\n';
+          answers.forEach(({ q, a }) => { msg += '• ' + q + '\n→ ' + a + '\n'; });
+          msg += '\nQuero saber como fazer meu negócio faturar mais.';
+          return WA + '?text=' + encodeURIComponent(msg);
+        }
+
+        function renderFinal() {
+          ghResposta('Diagnóstico', 'Concluído');
+          ghConcluir();
+          if (!leadFired && window.fbq) {
+            const parts = (contato.nome || '').trim().split(/\s+/).filter(Boolean);
+            let ph = (contato.numero || '').replace(/\D/g, '');
+            if (ph && ph.length >= 10 && ph.length <= 11) ph = '55' + ph;
+            const am = {};
+            if (parts[0]) am.fn = parts[0].toLowerCase();
+            if (parts.length > 1) am.ln = parts.slice(1).join(' ').toLowerCase();
+            if (ph) am.ph = ph;
+            try { if (PIXEL_ID && Object.keys(am).length) window.fbq('init', PIXEL_ID, am); } catch (e) {}
+            window.fbq('track', 'Lead', { content_name: 'Diagnóstico C92', content_category: 'negocio-local' });
+            leadFired = true;
+          }
+          const ola = nome ? (nome.split(' ')[0] + ', ') : '';
+          const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+          card.innerHTML =
+            '<div class="dg__photo dg__photo--ok"><img src="/novo-fundo-21-07.webp" alt="Equipe Criativo 92" /></div>' +
+            '<span class="dg__eyebrow dg__eyebrow--ok">✓ Diagnóstico concluído</span>' +
+            '<h1 class="dg__title">' + esc(cap(ola) + 'recebemos suas respostas!') + '</h1>' +
+            '<p class="dg__body">Um especialista da Criativo 92 vai te chamar no WhatsApp com o próximo passo pro seu negócio faturar mais. Quer adiantar? Fala com a gente agora.</p>' +
+            '<a class="dg__btn dg__btn--wa" href="' + buildWaMsg() + '" target="_blank" rel="noopener">Falar no WhatsApp agora</a>' +
+            '<span class="dg__hint">Suas respostas já vão na mensagem. Sem compromisso.</span>';
+          animate();
+        }
+
+        document.addEventListener('keydown', (e) => {
+          if (cur === 'final') return;
+          const n = nodes[cur];
+          if (!n) return;
+          if (e.key === 'Enter') { const nx = card.querySelector('[data-next]'); if (nx) nx.click(); }
+          else if (n.type === 'question') {
+            const idx = LETTERS.indexOf(e.key.toUpperCase());
+            if (idx >= 0 && idx < n.opts.length) { const btn = card.querySelector('.dg__opt[data-i="' + idx + '"]'); if (btn) btn.click(); }
+          }
+        });
+        backBtn.addEventListener('click', goBack);
+        render();
+      })();
+    </script>
+
+    <style is:global>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { -webkit-font-smoothing: antialiased; }
+      body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #ffffff; color: #0e1c15; min-height: 100dvh; }
+      button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+      a { color: inherit; text-decoration: none; }
+
+      .dg { min-height: 100dvh; display: flex; flex-direction: column; background: #ffffff; }
+      .dg__hd { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem clamp(1.2rem, 4vw, 2.5rem); border-bottom: 1px solid #eceee9; }
+      .dg__logo img { height: 30px; width: auto; display: block; }
+      .dg__exit { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: #6a7b71; background: #f2f4f0; transition: background 0.2s; }
+      .dg__exit svg { width: 17px; height: 17px; }
+      .dg__exit:hover { background: #e6e9e3; color: #0e1c15; }
+      .dg__progress { height: 4px; background: #eceee9; }
+      .dg__progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #1e7a56, #45cd8c); transition: width 0.45s cubic-bezier(0.22,1,0.36,1); }
+
+      .dg__main { flex: 1; display: flex; align-items: center; justify-content: center; padding: clamp(1.5rem, 4vw, 3rem); }
+      .dg__card { width: 100%; max-width: 620px; }
+      .dg-in { animation: dgin 0.4s cubic-bezier(0.22,1,0.36,1); }
+      @keyframes dgin { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+      .dg__photo { width: 100%; height: clamp(150px, 26vw, 210px); border-radius: 16px; overflow: hidden; margin-bottom: 1.5rem; background: #eef1ec; }
+      .dg__photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; }
+      .dg__photo--ok { height: clamp(160px, 28vw, 220px); }
+
+      .dg__eyebrow { display: inline-block; color: #1e7a56; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.85rem; }
+      .dg__eyebrow--ok { color: #17a05e; }
+      .dg__title { color: #0b1712; font-weight: 800; font-size: clamp(1.7rem, 1.2rem + 2.4vw, 2.6rem); line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 1rem; }
+      .dg__q { color: #0b1712; font-weight: 800; font-size: clamp(1.4rem, 1.1rem + 1.5vw, 2rem); line-height: 1.14; letter-spacing: -0.025em; margin-bottom: 0.9rem; }
+      .dg__body { color: #566b60; font-size: clamp(1rem, 0.95rem + 0.3vw, 1.1rem); line-height: 1.6; margin-bottom: 1.5rem; max-width: 56ch; }
+
+      .dg__opts { display: flex; flex-direction: column; gap: 0.65rem; }
+      .dg__opt { display: flex; align-items: center; gap: 0.85rem; text-align: left; width: 100%; padding: 1rem 1.15rem; border-radius: 12px;
+        border: 1.5px solid #dde2dc; background: #fff; color: #17291f; font-weight: 600; font-size: 1.02rem;
+        transition: border-color 0.18s, background 0.18s, transform 0.14s, box-shadow 0.18s; }
+      .dg__opt:hover { border-color: #45cd8c; background: #f3fbf6; transform: translateX(3px); box-shadow: 0 8px 22px -14px rgba(30,122,86,0.5); }
+      .dg__opt.is-sel { border-color: #1e7a56; background: #e9f7ef; }
+      .dg__key { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 6px; display: grid; place-items: center;
+        border: 1px solid #cfd8d0; font-size: 0.78rem; font-weight: 700; color: #6a7b71; }
+      .dg__opt:hover .dg__key { border-color: #45cd8c; color: #1e7a56; }
+
+      .dg__btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5em; padding: 0.95em 1.7em; border-radius: 11px;
+        background: #1e7a56; color: #fff; font-weight: 700; font-size: 1.02rem; transition: background 0.2s, transform 0.2s; }
+      .dg__btn:hover { background: #17673f; transform: translateY(-2px); }
+      .dg__btn--wa { background: #25d366; color: #06170f; }
+      .dg__btn--wa:hover { background: #1fbd5b; }
+      .dg__hint { display: block; color: #8a998f; font-size: 0.82rem; margin-top: 0.85rem; }
+      .dg__hint b { color: #566b60; }
+
+      .dg__form { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 1rem; margin-bottom: 1.4rem; }
+      .dg__form label:first-child { grid-column: 1 / -1; }
+      .dg__lab { display: flex; flex-direction: column; gap: 0.4rem; color: #566b60; font-weight: 600; font-size: 0.88rem; }
+      .dg__lab em { font-style: normal; font-weight: 500; color: #93a299; font-size: 0.8rem; }
+      .dg__input { width: 100%; display: block; padding: 0.85rem 1.05rem; border-radius: 11px;
+        border: 1.5px solid #d5dcd5; background: #fff; color: #0e1c15; font-size: 1.02rem; }
+      .dg__input::placeholder { color: #a5b0a8; }
+      .dg__input:focus { outline: none; border-color: #45cd8c; box-shadow: 0 0 0 3px rgba(69,205,140,0.15); }
+      .dg__input.is-err { border-color: #e07a6a; }
+      @media (max-width: 560px) { .dg__form { grid-template-columns: 1fr; } }
+
+      .dg__ft { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.1rem clamp(1.2rem, 4vw, 2.5rem); border-top: 1px solid #eceee9; }
+      .dg__back { color: #8a998f; font-weight: 600; font-size: 0.92rem; transition: color 0.2s; }
+      .dg__back:hover { color: #1e7a56; }
+      .dg__brand { color: #a5b0a8; font-size: 0.8rem; margin-left: auto; }
+
+      @media (max-width: 560px) {
+        .dg__main { align-items: flex-start; padding-top: clamp(1.5rem, 6vw, 2.5rem); }
+        .dg__btn { width: 100%; }
+      }
+    </style>
+  </body>
+</html>
